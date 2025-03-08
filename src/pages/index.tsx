@@ -51,7 +51,6 @@ export default function Index() {
       ) : null}
       <div className={classNames.menu}>
         <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton>
-        <SurfaceButton internalHref="/registration/">Register</SurfaceButton>
       </div>
     </>
   );
