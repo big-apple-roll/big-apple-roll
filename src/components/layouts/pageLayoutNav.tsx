@@ -46,9 +46,9 @@ export default function PageLayoutNav(props: Props): React.JSX.Element | null {
       >
         Gallery
       </TextButton>
-      <TextButton internalHref="/shop/" location={location} onClick={onClick}>
+      {/* <TextButton internalHref="/shop/" location={location} onClick={onClick}>
         Shop
-      </TextButton>
+      </TextButton> */}
       <IconButton
         iconName={IconName.Instagram}
         externalHref="https://www.instagram.com/bigappleroll/"
