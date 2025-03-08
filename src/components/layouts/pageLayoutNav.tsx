@@ -6,6 +6,7 @@ import IconButton from "src/components/buttons/iconButton";
 import TextButton from "src/components/buttons/textButton";
 import { IconName } from "src/components/icon";
 import * as classNames from "src/components/layouts/pageLayoutNav.module.css";
+import { formatDate } from "src/helpers/date";
 
 type Props = {
   location: PageProps["location"];
@@ -39,13 +40,15 @@ export default function PageLayoutNav(props: Props): React.JSX.Element | null {
       <TextButton internalHref="/sponsors/" location={location} onClick={onClick}>
         Sponsors
       </TextButton>
-      <TextButton
-        internalHref={`/gallery/${metadata?.frontmatter?.year}/`}
-        location={location}
-        onClick={onClick}
-      >
-        Gallery
-      </TextButton>
+      {metadata?.frontmatter?.start_date ? (
+        <TextButton
+          internalHref={`/gallery/${formatDate(metadata.frontmatter.start_date, { format: "year" })}/`}
+          location={location}
+          onClick={onClick}
+        >
+          Gallery
+        </TextButton>
+      ) : null}
       {/* <TextButton internalHref="/shop/" location={location} onClick={onClick}>
         Shop
       </TextButton> */}

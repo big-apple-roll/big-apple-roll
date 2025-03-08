@@ -7,7 +7,12 @@ export const metadataFragment = graphql`
     fileRelativeDirectory
     frontmatter {
       title
-      year
+      start_date
+      end_date
+      next_year {
+        start_date
+        end_date
+      }
     }
   }
 `;

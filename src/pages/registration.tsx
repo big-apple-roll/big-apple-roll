@@ -7,7 +7,7 @@ import TextButton from "src/components/buttons/textButton";
 import TextInput from "src/components/form/textInput";
 import HeadLayout from "src/components/layouts/headLayout";
 import assertNever from "src/helpers/assertNever";
-import { currentDateInput } from "src/helpers/date";
+import { currentDateInput, formatDate } from "src/helpers/date";
 import * as classNames from "src/pages/registration.module.css";
 
 enum Page {
@@ -172,9 +172,12 @@ export default function Registration(): React.JSX.Element {
     <>
       <h1>Registration</h1>
       <p>
-        Welcome to Big Apple Roll {metadata?.frontmatter?.year}! All skaters are required to
-        complete this registration form and sign the Release of Participation before attending any
-        Big Apple Roll skates.
+        Welcome to Big Apple Roll{" "}
+        {metadata?.frontmatter?.start_date
+          ? formatDate(metadata.frontmatter.start_date, { format: "year" })
+          : ""}
+        ! All skaters are required to complete this registration form and sign the Release of
+        Participation before attending any Big Apple Roll skates.
       </p>
       {(() => {
         switch (page) {

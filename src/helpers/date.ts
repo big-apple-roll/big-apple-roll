@@ -8,7 +8,7 @@ const parseDate = (date: string): DateTime => {
 
 export const formatDate = (
   date: string,
-  options: { format?: "huge" | "short" | "weekday" } = {},
+  options: { format?: "huge" | "short" | "weekday" | "year" } = {},
 ): string => {
   const { format = "huge" } = options;
 
@@ -26,6 +26,11 @@ export const formatDate = (
       case "weekday": {
         return {
           weekday: "long",
+        };
+      }
+      case "year": {
+        return {
+          year: "numeric",
         };
       }
       default: {
@@ -49,6 +54,13 @@ export const formatDateTime = (date: string): string => {
     weekday: "long",
     hour: "numeric",
   });
+};
+
+export const formatDateInterval = (start: string, end: string): string => {
+  const startDate = parseDate(start);
+  const endDate = parseDate(end);
+  const interval = startDate.until(endDate);
+  return interval.toLocaleString(DateTime.DATE_FULL);
 };
 
 export const currentDateInput = () => {

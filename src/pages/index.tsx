@@ -1,11 +1,22 @@
+import clsx from "clsx";
+import { graphql, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
 import SurfaceButton from "src/components/buttons/surfaceButton";
 import HeadLayout from "src/components/layouts/headLayout";
+import { formatDateInterval } from "src/helpers/date";
 import * as classNames from "src/pages/index.module.css";
 
 export default function Index() {
+  const { metadata } = useStaticQuery<Queries.IndexQuery>(graphql`
+    query Index {
+      metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
+        ...MetadataFragment
+      }
+    }
+  `);
+
   return (
     <>
       <div className={classNames.logo}>
@@ -17,7 +28,27 @@ export default function Index() {
           width={500}
         />
       </div>
-      <h2 className={classNames.date}>August 1-4, 2024</h2>
+      {metadata?.frontmatter?.start_date && metadata.frontmatter.end_date ? (
+        <h2 className={classNames.date}>
+          <div
+            className={clsx({
+              [classNames.expiredDate]: metadata?.frontmatter?.next_year,
+            })}
+          >
+            {formatDateInterval(metadata.frontmatter.start_date, metadata.frontmatter.end_date)}
+          </div>
+          {metadata?.frontmatter?.next_year?.start_date &&
+          metadata.frontmatter.next_year.end_date ? (
+            <div>
+              Join us next year:{" "}
+              {formatDateInterval(
+                metadata.frontmatter.next_year.start_date,
+                metadata.frontmatter.next_year.end_date,
+              )}
+            </div>
+          ) : null}
+        </h2>
+      ) : null}
       <div className={classNames.menu}>
         <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton>
         <SurfaceButton internalHref="/registration/">Register</SurfaceButton>
