@@ -20,8 +20,8 @@ export type ScheduleEventTemplateContext = {
 export const query = graphql`
   query ScheduleEventTemplate(
     $scheduleEventId: String!
-    $previousScheduleEventId: String
-    $nextScheduleEventId: String
+    $previousScheduleEventId: String = ""
+    $nextScheduleEventId: String = ""
   ) {
     scheduleEvent: markdownRemark(id: { eq: $scheduleEventId }) {
       ...ScheduleEventFragment

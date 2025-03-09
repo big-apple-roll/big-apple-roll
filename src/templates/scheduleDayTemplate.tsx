@@ -17,8 +17,8 @@ export type ScheduleDayTemplateContext = {
 export const query = graphql`
   query ScheduleDayTemplate(
     $scheduleDayId: String!
-    $previousScheduleDayId: String
-    $nextScheduleDayId: String
+    $previousScheduleDayId: String = ""
+    $nextScheduleDayId: String = ""
     $scheduleEventsSlugRegex: String!
   ) {
     scheduleDay: markdownRemark(id: { eq: $scheduleDayId }) {

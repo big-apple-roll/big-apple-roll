@@ -18,8 +18,8 @@ export type GalleryYearTemplateContext = {
 export const query = graphql`
   query GalleryYearTemplate(
     $galleryYearId: String!
-    $previousGalleryYearId: String
-    $nextGalleryYearId: String
+    $previousGalleryYearId: String = ""
+    $nextGalleryYearId: String = ""
   ) {
     galleryYear: markdownRemark(id: { eq: $galleryYearId }) {
       ...GalleryYearFragment
