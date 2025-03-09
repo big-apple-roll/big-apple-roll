@@ -43,7 +43,7 @@ const config: GatsbyConfig = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `content`,
-        path: `./content/2024/`,
+        path: `./content`,
       },
     },
     {
