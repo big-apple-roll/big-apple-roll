@@ -8,7 +8,7 @@
     "lint:tsc": "tsc --noEmit",
     "lint": "concurrently --names \"prettier,eslint,stylelint,tsc\" --prefix-colors gray --pad-prefix --group \"yarn lint:prettier\" \"yarn lint:eslint\" \"yarn lint:stylelint\" \"yarn lint:tsc\"",
     "dev": "gatsby clean && gatsby develop",
-    "prod": "gatsby clean && gatsby build && gatsby serve",
+    "prod": "gatsby clean && gatsby build && gatsby serve --port 8000",
     "build": "gatsby build --prefix-paths"
   },
   "devDependencies": {

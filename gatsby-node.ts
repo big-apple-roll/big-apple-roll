@@ -1,8 +1,7 @@
 import path from "node:path";
 
-import { GatsbyNode } from "gatsby";
+import { GatsbyNode, Node } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
-import { sortBy } from "lodash";
 import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
 
 import { GalleryYearTemplateContext } from "src/templates/galleryYearTemplate";
@@ -156,20 +155,15 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
   createTypes(`
     type MarkdownRemark implements Node {
+      slug: String! @proxy(from: "fields.slug")
       fileName: String! @proxy(from: "fields.fileName")
       fileRelativeDirectory: String! @proxy(from: "fields.fileRelativeDirectory")
-      linkedFiles: [File!]! @link(from: "fields.linkedFiles___NODE")
-      slug: String! @proxy(from: "fields.slug")
+      linkedFiles: [File!]!
     }
   `);
 };
 
-export const onCreateNode: GatsbyNode["onCreateNode"] = ({
-  node,
-  getNode,
-  getNodesByType,
-  actions,
-}) => {
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
   // Add file information on MarkdownRemark nodes
@@ -199,30 +193,60 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
           name: "fileRelativeDirectory",
           value: fileRelativeDirectory,
         });
-
-        if (typeof fileName === "string") {
-          const allFileNodes = getNodesByType(`File`);
-          const linkedFileNodes = sortBy(
-            allFileNodes.filter((fileNode) => {
-              return (
-                fileNode.relativeDirectory === fileRelativeDirectory &&
-                typeof fileNode.name === "string" &&
-                fileNode.name.startsWith?.(fileName) &&
-                fileNode.extension !== parentNode.extension
-              );
-            }),
-            (fileNode) => fileNode.name,
-          );
-
-          createNodeField({
-            node,
-            name: "linkedFiles___NODE",
-            value: linkedFileNodes.map((fileNode) => fileNode.id),
-          });
-        }
       }
     }
   }
+};
+
+interface FileNode extends Node {
+  extension: string;
+  name: string;
+  relativeDirectory: string;
+}
+
+interface MarkdownRemarkNode extends Node {
+  fields: {
+    slug: string;
+    fileName: string;
+    fileRelativeDirectory: string;
+  };
+}
+
+interface ResolverContext {
+  nodeModel: {
+    findAll: <N extends Node>(options?: {
+      type: string;
+    }) => Promise<{
+      entries: Iterable<N>;
+    }>;
+  };
+}
+
+export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers }) => {
+  createResolvers({
+    MarkdownRemark: {
+      linkedFiles: {
+        type: "[File!]!",
+        resolve: async (source: MarkdownRemarkNode, args: object, context: ResolverContext) => {
+          const allFileNodes = (await context.nodeModel.findAll<FileNode>({ type: `File` }))
+            .entries;
+
+          const linkedFileNodes: Array<FileNode> = [];
+          for (const fileNode of allFileNodes) {
+            if (
+              fileNode.relativeDirectory === source.fields.fileRelativeDirectory &&
+              fileNode.name.startsWith(source.fields.fileName) &&
+              fileNode.id !== source.parent
+            ) {
+              linkedFileNodes.push(fileNode);
+            }
+          }
+
+          return linkedFileNodes;
+        },
+      },
+    },
+  });
 };
 
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {

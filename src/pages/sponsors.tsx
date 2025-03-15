@@ -14,7 +14,7 @@ export default function Sponsors(): React.JSX.Element {
     query Sponsors {
       groupedSponsors: allMarkdownRemark(
         filter: { fileRelativeDirectory: { eq: "sponsors" } }
-        sort: { fileName: ASC }
+        sort: { fields: { fileName: ASC } }
       ) {
         group(field: { frontmatter: { type: SELECT } }) {
           nodes {
@@ -78,6 +78,8 @@ export default function Sponsors(): React.JSX.Element {
                 const { title, url } = sponsor.frontmatter ?? {};
                 const sponsorLogo = sponsor.linkedFiles?.[0];
                 if (!title || !url || !sponsorLogo) {
+                  // eslint-disable-next-line no-console
+                  console.error("Missing logo", title, url, sponsorLogo);
                   return null;
                 }
 
