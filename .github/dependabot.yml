@@ -9,3 +9,13 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+    groups:
+      group_minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
