@@ -1,7 +1,7 @@
 import { graphql } from "gatsby";
 
-export const galleryYearFragment = graphql`
-  fragment GalleryYearFragment on MarkdownRemark {
+export const galleryFragment = graphql`
+  fragment GalleryFragment on MarkdownRemark {
     id
     fileName
     fileRelativeDirectory

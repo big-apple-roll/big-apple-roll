@@ -11,6 +11,8 @@ export enum IconName {
   ArrowRight = "arrow_right_alt",
   Close = "close",
   Instagram = "instagram",
+  KeyboardArrowDown = "keyboard_arrow_down",
+  KeyboardArrowRight = "keyboard_arrow_right",
   Menu = "menu",
 }
 
@@ -25,6 +27,8 @@ export default function Icon(props: Props): React.JSX.Element | null {
   switch (name) {
     case IconName.ArrowLeft:
     case IconName.ArrowRight:
+    case IconName.KeyboardArrowDown:
+    case IconName.KeyboardArrowRight:
     case IconName.Close:
     case IconName.Menu: {
       return (

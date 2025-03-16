@@ -4,7 +4,6 @@ import { GatsbyNode, Node } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
 import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
 
-import { GalleryYearTemplateContext } from "src/templates/galleryYearTemplate";
 import { ScheduleDayTemplateContext } from "src/templates/scheduleDayTemplate";
 import { ScheduleEventTemplateContext } from "src/templates/scheduleEventTemplate";
 import { ShopProductTemplateContext } from "src/templates/shopProductTemplate";
@@ -15,23 +14,6 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
 
   const result = await graphql<Queries.CreatePagesQuery>(`
     query CreatePages {
-      galleryYears: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { eq: "gallery" } }
-        sort: { fileName: ASC }
-      ) {
-        edges {
-          node {
-            id
-            slug
-          }
-          previous {
-            id
-          }
-          next {
-            id
-          }
-        }
-      }
       scheduleDays: allMarkdownRemark(
         filter: { fileRelativeDirectory: { eq: "schedule" } }
         sort: { frontmatter: { date: ASC } }
@@ -81,23 +63,6 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
     reporter.panicOnBuild(`Error while running GraphQL query.`);
     return;
   }
-
-  // Gallery year templates
-  result.data.galleryYears.edges.forEach(({ node, previous, next }) => {
-    if (!node.slug) {
-      return;
-    }
-    const context: GalleryYearTemplateContext = {
-      galleryYearId: node.id,
-      previousGalleryYearId: previous?.id,
-      nextGalleryYearId: next?.id,
-    };
-    createPage({
-      component: path.resolve(`./src/templates/galleryYearTemplate.tsx`),
-      path: node.slug,
-      context,
-    });
-  });
 
   // Schedule day templates
   result.data.scheduleDays.edges.forEach(({ node, previous, next }) => {

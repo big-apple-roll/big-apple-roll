@@ -1,12 +1,11 @@
 import clsx from "clsx";
-import { graphql, PageProps, useStaticQuery } from "gatsby";
+import { PageProps } from "gatsby";
 import React from "react";
 
 import IconButton from "src/components/buttons/iconButton";
 import TextButton from "src/components/buttons/textButton";
 import { IconName } from "src/components/icon";
 import * as classNames from "src/components/layouts/pageLayoutNav.module.css";
-import { formatDate } from "src/helpers/date";
 
 type Props = {
   location: PageProps["location"];
@@ -16,14 +15,6 @@ type Props = {
 
 export default function PageLayoutNav(props: Props): React.JSX.Element | null {
   const { location, mobile, onClick } = props;
-
-  const { metadata } = useStaticQuery<Queries.PageLayoutNavQuery>(graphql`
-    query PageLayoutNav {
-      metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
-        ...MetadataFragment
-      }
-    }
-  `);
 
   return (
     <nav
@@ -40,15 +31,9 @@ export default function PageLayoutNav(props: Props): React.JSX.Element | null {
       <TextButton internalHref="/sponsors/" location={location} onClick={onClick}>
         Sponsors
       </TextButton>
-      {metadata?.frontmatter?.start_date ? (
-        <TextButton
-          internalHref={`/gallery/${formatDate(metadata.frontmatter.start_date, { format: "year" })}/`}
-          location={location}
-          onClick={onClick}
-        >
-          Gallery
-        </TextButton>
-      ) : null}
+      <TextButton internalHref="/gallery/" location={location} onClick={onClick}>
+        Gallery
+      </TextButton>
       {/* <TextButton internalHref="/shop/" location={location} onClick={onClick}>
         Shop
       </TextButton> */}
