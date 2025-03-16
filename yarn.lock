@@ -3404,16 +3404,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@paypal/react-paypal-js@npm:^8.8.1":
-  version: 8.8.1
-  resolution: "@paypal/react-paypal-js@npm:8.8.1"
+"@paypal/react-paypal-js@npm:^8.8.2":
+  version: 8.8.2
+  resolution: "@paypal/react-paypal-js@npm:8.8.2"
   dependencies:
     "@paypal/paypal-js": "npm:^8.1.2"
     "@paypal/sdk-constants": "npm:^1.0.122"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
     react-dom: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/ff8dde61ef5eeb4cb3d79717eebe60f32825ebb55a8d0283e664968d13406cbf1f090c92f124d2d3830ace86be89b67fdb5fadff9a66de37a3921a3c875ac248
+  checksum: 10c0/a2438b9def69fe6e3332db6ac338d1532e4b369c6d87bcc9e0f410cac0906a66010877654884cb3c38191c9a45b4f3deb746aba4e99b2e68c7fdee1baf1db0ec
   languageName: node
   linkType: hard
 
@@ -12276,7 +12276,7 @@ __metadata:
     "@csstools/postcss-global-data": "npm:^3.0.0"
     "@eslint/compat": "npm:^1.2.5"
     "@eslint/js": "npm:^9.19.0"
-    "@paypal/react-paypal-js": "npm:^8.8.1"
+    "@paypal/react-paypal-js": "npm:^8.8.2"
     "@reduxjs/toolkit": "npm:^2.5.0"
     "@types/babel__core": "npm:^7.20.5"
     "@types/eslint": "npm:^9.6.1"
