@@ -1,9 +1,8 @@
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
-  pathPrefix: "/big-apple-roll",
   siteMetadata: {
-    siteUrl: "https://big-apple-roll.github.io/",
+    siteUrl: "https://bigappleroll.org",
   },
   graphqlTypegen: true,
   plugins: [

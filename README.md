@@ -1,6 +1,6 @@
 # Big Apple Roll
 
-This repo contains the code for the Big Apple Roll website: [https://big-apple-roll.github.io/big-apple-roll/](https://big-apple-roll.github.io/big-apple-roll/)
+This repo contains the code for the Big Apple Roll website: [https://bigappleroll.org/](https://bigappleroll.org/)
 
 ## Table of contents
 
