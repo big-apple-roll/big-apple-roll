@@ -3,14 +3,17 @@ import { graphql, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
-import SurfaceButton from "src/components/buttons/surfaceButton";
+import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import { formatDateInterval } from "src/helpers/date";
 import * as classNames from "src/pages/index.module.css";
 
 export default function Index() {
-  const { metadata } = useStaticQuery<Queries.IndexQuery>(graphql`
+  const { logo, metadata } = useStaticQuery<Queries.IndexQuery>(graphql`
     query Index {
+      logo: file(relativePath: { eq: "logo/tmp-logo.jpg" }) {
+        ...ImageFragment
+      }
       metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
         ...MetadataFragment
       }
@@ -20,12 +23,10 @@ export default function Index() {
   return (
     <>
       <div className={classNames.logo}>
-        <StaticImage
-          src="../components/images/logo.png"
-          alt="Logo"
-          placeholder="none"
-          layout="constrained"
-          width={500}
+        <Image
+          className={classNames.logoImage}
+          image={logo?.childImageSharp?.gatsbyImageData}
+          alt="Big Apple Roll"
         />
       </div>
       {metadata?.frontmatter?.start_date && metadata.frontmatter.end_date ? (
