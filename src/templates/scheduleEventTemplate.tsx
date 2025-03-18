@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { graphql, PageProps } from "gatsby";
 import React from "react";
 
+import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
 import { ScheduleEventDifficulty } from "src/fragments/schedule/scheduleEventFragment";
@@ -142,10 +143,7 @@ export default function ScheduleEventTemplate(
         </div>
       ) : null}
       {scheduleEvent.html ? (
-        <div
-          className={classNames.description}
-          dangerouslySetInnerHTML={{ __html: scheduleEvent.html }}
-        ></div>
+        <HTML className={classNames.description} html={scheduleEvent.html} />
       ) : null}
       {scheduleEvent.frontmatter.route_map ? (
         <>

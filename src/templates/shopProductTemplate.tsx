@@ -6,6 +6,7 @@ import useAppDispatch from "src/app/hooks/useAppDispatch";
 import cartSlice from "src/app/slices/cart/cartSlice";
 import SurfaceButton, { SurfaceButtonColor } from "src/components/buttons/surfaceButton";
 import useCallbackId from "src/components/hooks/useCallbackId";
+import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import ShopNavigation from "src/components/shop/shopNavigation";
@@ -113,7 +114,7 @@ export default function ShopProductTemplate(
           })}
         </div>
         <div className={classNames.shopProductDetails}>
-          <div dangerouslySetInnerHTML={{ __html: shopProduct.html ?? "" }}></div>
+          <HTML html={shopProduct.html} />
           {needsSize ? (
             <div>
               <div className={classNames.sizeLabel}>Size:</div>

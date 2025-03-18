@@ -5,6 +5,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import SurfaceButton from "src/components/buttons/surfaceButton";
 import TextButton from "src/components/buttons/textButton";
 import TextInput from "src/components/form/textInput";
+import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import assertNever from "src/helpers/assertNever";
 import { currentDateInput, formatDate } from "src/helpers/date";
@@ -214,7 +215,7 @@ export default function Registration(): React.JSX.Element {
             return (
               <>
                 <h2>Release for Participation</h2>
-                <div dangerouslySetInnerHTML={{ __html: releaseOfParticipation?.html ?? "" }}></div>
+                <HTML html={releaseOfParticipation?.html} />
                 <form className={classNames.form}>
                   <label className={classNames.label}>
                     <span className={clsx(classNames.labelLabel, classNames.isRequired)}>

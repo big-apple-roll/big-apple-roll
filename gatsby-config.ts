@@ -48,7 +48,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-transformer-remark",
       options: {
-        plugins: ["gatsby-remark-images"],
+        plugins: ["gatsby-remark-external-links", "gatsby-remark-images"],
       },
     },
     "gatsby-transformer-sharp",
