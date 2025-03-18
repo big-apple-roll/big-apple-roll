@@ -3,9 +3,6 @@ import { graphql } from "gatsby";
 export const indexFragment = graphql`
   fragment IndexFragment on MarkdownRemark {
     id
-    fileName
-    fileRelativeDirectory
-    slug
     frontmatter {
       title
       start_date
@@ -19,5 +16,8 @@ export const indexFragment = graphql`
     linkedFiles {
       ...ImageFragment
     }
+    name
+    relativeDirectory
+    slug
   }
 `;

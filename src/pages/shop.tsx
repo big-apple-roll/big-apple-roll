@@ -13,7 +13,7 @@ export default function Shop(): React.JSX.Element {
     query Shop {
       allShopProducts: allMarkdownRemark(
         sort: { frontmatter: { order_index: ASC } }
-        filter: { fileRelativeDirectory: { eq: "shop" } }
+        filter: { relativeDirectory: { eq: "shop" } }
       ) {
         nodes {
           ...ShopProductFragment
@@ -30,7 +30,7 @@ export default function Shop(): React.JSX.Element {
       <h1>Shop</h1>
       <div className={classNames.shopProducts}>
         {allShopProducts.nodes.map((shopProductNode) => {
-          if (!shopProductNode.fileName || !shopProductNode.frontmatter) {
+          if (!shopProductNode.name || !shopProductNode.frontmatter) {
             return null;
           }
 

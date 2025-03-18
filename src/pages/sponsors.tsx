@@ -13,8 +13,8 @@ export default function Sponsors(): React.JSX.Element {
   const { groupedSponsors } = useStaticQuery<Queries.SponsorsQuery>(graphql`
     query Sponsors {
       groupedSponsors: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { eq: "sponsors" } }
-        sort: { fields: { fileName: ASC } }
+        filter: { relativeDirectory: { eq: "sponsors" } }
+        sort: { name: ASC }
       ) {
         group(field: { frontmatter: { type: SELECT } }) {
           nodes {

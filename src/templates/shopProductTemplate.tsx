@@ -24,7 +24,7 @@ export const query = graphql`
   query ShopProductTemplate($shopProductId: String!) {
     allShopProducts: allMarkdownRemark(
       sort: { frontmatter: { order_index: ASC } }
-      filter: { fileRelativeDirectory: { eq: "shop" } }
+      filter: { relativeDirectory: { eq: "shop" } }
     ) {
       nodes {
         ...ShopProductFragment
@@ -78,7 +78,7 @@ export default function ShopProductTemplate(
   }, []);
 
   const handleAddToCart = useCallback(() => {
-    const shopProductName = shopProduct?.fileName;
+    const shopProductName = shopProduct?.name;
     if (!shopProductName || (needsSize && !size)) {
       return;
     }
@@ -90,7 +90,7 @@ export default function ShopProductTemplate(
         count,
       }),
     );
-  }, [count, dispatch, needsSize, shopProduct?.fileName, size]);
+  }, [count, dispatch, needsSize, shopProduct?.name, size]);
 
   if (!shopProduct) {
     return <></>;

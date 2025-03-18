@@ -15,8 +15,8 @@ export default function Gallery(): React.JSX.Element {
   const { galleries } = useStaticQuery<Queries.GalleryQuery>(graphql`
     query Gallery {
       galleries: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { eq: "galleries" } }
-        sort: { fields: { fileName: DESC } }
+        filter: { relativeDirectory: { eq: "galleries" } }
+        sort: { name: DESC }
       ) {
         nodes {
           ...GalleryFragment
@@ -43,7 +43,7 @@ export default function Gallery(): React.JSX.Element {
                       : IconName.KeyboardArrowRight
                   }
                 />{" "}
-                {node.fileName}
+                {node.name}
               </h2>
             </TextButton>
             {node.id === openedGallery ? (

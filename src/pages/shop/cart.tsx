@@ -33,7 +33,7 @@ export default function Cart(): React.JSX.Element {
     query Cart {
       allShopProducts: allMarkdownRemark(
         sort: { frontmatter: { order_index: ASC } }
-        filter: { fileRelativeDirectory: { eq: "shop" } }
+        filter: { relativeDirectory: { eq: "shop" } }
       ) {
         nodes {
           ...ShopProductFragment

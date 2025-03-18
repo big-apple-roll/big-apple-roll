@@ -10,7 +10,7 @@ export default function Schedule(): React.JSX.Element {
   const data = useStaticQuery<Queries.ScheduleQuery>(graphql`
     query Schedule {
       scheduleDays: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { eq: "schedule" } }
+        filter: { relativeDirectory: { eq: "schedule" } }
         sort: { frontmatter: { date: ASC } }
       ) {
         nodes {

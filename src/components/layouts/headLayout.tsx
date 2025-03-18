@@ -10,7 +10,7 @@ export default function HeadLayout(props: Props): React.JSX.Element {
 
   const { metadata } = useStaticQuery<Queries.LayoutHeadQuery>(graphql`
     query LayoutHead {
-      metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
+      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
         ...MetadataFragment
       }
     }

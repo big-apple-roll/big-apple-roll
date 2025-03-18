@@ -53,13 +53,13 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
     const shopProductsByName = allShopProducts.nodes.reduce<
       Record<string, Queries.ShopQuery["allShopProducts"]["nodes"][number]>
     >((acc, shopItemNode) => {
-      if (!shopItemNode.fileName) {
+      if (!shopItemNode.name) {
         return acc;
       }
 
       return {
         ...acc,
-        [shopItemNode.fileName]: shopItemNode,
+        [shopItemNode.name]: shopItemNode,
       };
     }, {});
 

@@ -8,6 +8,133 @@ import { ScheduleDayTemplateContext } from "src/templates/scheduleDayTemplate";
 import { ScheduleEventTemplateContext } from "src/templates/scheduleEventTemplate";
 import { ShopProductTemplateContext } from "src/templates/shopProductTemplate";
 
+interface FileNode extends Node {
+  name: string;
+  relativeDirectory: string;
+  relativePath: string;
+}
+
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }) => {
+  const { createTypes } = actions;
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      linkedFiles: [File!]!
+      name: String!
+      relativeDirectory: String!
+      relativePath: String!
+      slug: String!
+    }
+  `);
+};
+
+interface ResolverContext {
+  // https://www.gatsbyjs.com/docs/reference/graphql-data-layer/node-model/
+  nodeModel: {
+    findAll: <N extends Node>(options?: {
+      type?: string;
+      query?: {
+        filter?: object;
+        sort?: object;
+        limit?: number;
+        skip?: number;
+      };
+    }) => Promise<{
+      entries: Iterable<N>;
+    }>;
+    findOne: <N extends Node>(options?: {
+      type: string;
+      query: {
+        filter?: object;
+        sort?: object;
+        limit?: number;
+        skip?: number;
+      };
+    }) => Promise<N>;
+    getNodeById: <N extends Node>(options: { id: string; type?: string }) => N;
+  };
+}
+
+export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers }) => {
+  const getParentFileNode = (source: Node, context: ResolverContext): FileNode | null => {
+    return source.parent
+      ? context.nodeModel.getNodeById<FileNode>({
+          id: source.parent,
+          type: "File",
+        })
+      : null;
+  };
+
+  createResolvers({
+    MarkdownRemark: {
+      linkedFiles: {
+        type: "[File!]!",
+        resolve: async (source: Node, args: object, context: ResolverContext) => {
+          const parentFileNode = getParentFileNode(source, context);
+          if (!parentFileNode) {
+            return [];
+          }
+
+          const allFileNodes = (
+            await context.nodeModel.findAll<FileNode>({
+              type: `File`,
+              query: {
+                filter: { relativeDirectory: { eq: parentFileNode.relativeDirectory } },
+              },
+            })
+          ).entries;
+
+          const linkedFileNodes = Array.from(allFileNodes).filter((fileNode) => {
+            return (
+              fileNode.id !== parentFileNode.id && fileNode.name.startsWith(parentFileNode.name)
+            );
+          });
+          return linkedFileNodes;
+        },
+      },
+      name: {
+        type: "String!",
+        resolve: (source: Node, args: object, context: ResolverContext) => {
+          return getParentFileNode(source, context)?.name ?? "";
+        },
+      },
+      relativeDirectory: {
+        type: "String!",
+        resolve: (source: Node, args: object, context: ResolverContext) => {
+          return getParentFileNode(source, context)?.relativeDirectory ?? "";
+        },
+      },
+      relativePath: {
+        type: "String!",
+        resolve: (source: Node, args: object, context: ResolverContext) => {
+          return getParentFileNode(source, context)?.relativePath ?? "";
+        },
+      },
+      slug: {
+        type: "String!",
+        resolve: (source: Node, args: object, context: ResolverContext) => {
+          return createFilePath({
+            node: source,
+            getNode: (id: string) => {
+              return context.nodeModel.getNodeById({ id, type: "File" });
+            },
+          });
+        },
+      },
+    },
+  });
+};
+
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new FilterWarningsPlugin({
+        exclude: /mini-css-extract-plugin[^]*Conflicting order. Following module has been added:/,
+      }),
+    ],
+  });
+};
+
 export const createPages: GatsbyNode["createPages"] = async (args) => {
   const { actions, graphql, reporter } = args;
   const { createPage } = actions;
@@ -15,7 +142,7 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
   const result = await graphql<Queries.CreatePagesQuery>(`
     query CreatePages {
       scheduleDays: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { eq: "schedule" } }
+        filter: { relativeDirectory: { eq: "schedule" } }
         sort: { frontmatter: { date: ASC } }
       ) {
         edges {
@@ -32,7 +159,7 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
         }
       }
       scheduleEvents: allMarkdownRemark(
-        filter: { fileRelativeDirectory: { regex: "/^schedule/.*/" } }
+        filter: { relativeDirectory: { regex: "/^schedule/.*/" } }
         sort: { frontmatter: { date: ASC } }
       ) {
         edges {
@@ -48,7 +175,7 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
           }
         }
       }
-      shopProducts: allMarkdownRemark(filter: { fileRelativeDirectory: { eq: "shop" } }) {
+      shopProducts: allMarkdownRemark(filter: { relativeDirectory: { eq: "shop" } }) {
         edges {
           node {
             id
@@ -112,114 +239,5 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
       path: node.slug,
       context,
     });
-  });
-};
-
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }) => {
-  const { createTypes } = actions;
-
-  createTypes(`
-    type MarkdownRemark implements Node {
-      slug: String! @proxy(from: "fields.slug")
-      fileName: String! @proxy(from: "fields.fileName")
-      fileRelativeDirectory: String! @proxy(from: "fields.fileRelativeDirectory")
-      linkedFiles: [File!]!
-    }
-  `);
-};
-
-export const onCreateNode: GatsbyNode["onCreateNode"] = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions;
-
-  // Add file information on MarkdownRemark nodes
-  if (node.internal.type === "MarkdownRemark") {
-    // Create slug field on markdown nodes
-    const slug = createFilePath({ node, getNode });
-    createNodeField({
-      node,
-      name: "slug",
-      value: slug,
-    });
-
-    // Create file fields on markdown nodes
-    if (node.parent) {
-      const parentNode = getNode(node.parent);
-      if (parentNode) {
-        const fileName = parentNode.name;
-        createNodeField({
-          node,
-          name: "fileName",
-          value: fileName,
-        });
-
-        const fileRelativeDirectory = parentNode.relativeDirectory;
-        createNodeField({
-          node,
-          name: "fileRelativeDirectory",
-          value: fileRelativeDirectory,
-        });
-      }
-    }
-  }
-};
-
-interface FileNode extends Node {
-  extension: string;
-  name: string;
-  relativeDirectory: string;
-}
-
-interface MarkdownRemarkNode extends Node {
-  fields: {
-    slug: string;
-    fileName: string;
-    fileRelativeDirectory: string;
-  };
-}
-
-interface ResolverContext {
-  nodeModel: {
-    findAll: <N extends Node>(options?: {
-      type: string;
-    }) => Promise<{
-      entries: Iterable<N>;
-    }>;
-  };
-}
-
-export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers }) => {
-  createResolvers({
-    MarkdownRemark: {
-      linkedFiles: {
-        type: "[File!]!",
-        resolve: async (source: MarkdownRemarkNode, args: object, context: ResolverContext) => {
-          const allFileNodes = (await context.nodeModel.findAll<FileNode>({ type: `File` }))
-            .entries;
-
-          const linkedFileNodes: Array<FileNode> = [];
-          for (const fileNode of allFileNodes) {
-            if (
-              fileNode.relativeDirectory === source.fields.fileRelativeDirectory &&
-              fileNode.name.startsWith(source.fields.fileName) &&
-              fileNode.id !== source.parent
-            ) {
-              linkedFileNodes.push(fileNode);
-            }
-          }
-
-          return linkedFileNodes;
-        },
-      },
-    },
-  });
-};
-
-export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new FilterWarningsPlugin({
-        exclude: /mini-css-extract-plugin[^]*Conflicting order. Following module has been added:/,
-      }),
-    ],
   });
 };

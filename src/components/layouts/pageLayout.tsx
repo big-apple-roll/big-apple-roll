@@ -17,7 +17,7 @@ export default function PageLayout(props: Omit<PageProps, "children"> & Props): 
 
   const { metadata } = useStaticQuery<Queries.LayoutQuery>(graphql`
     query Layout {
-      metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
+      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
         ...MetadataFragment
       }
     }

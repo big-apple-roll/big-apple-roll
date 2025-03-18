@@ -11,7 +11,7 @@ import * as classNames from "src/pages/index.module.css";
 export default function Index() {
   const { index } = useStaticQuery<Queries.IndexQuery>(graphql`
     query Index {
-      index: markdownRemark(fileRelativeDirectory: { eq: "index" }, fileName: { eq: "index" }) {
+      index: markdownRemark(relativePath: { eq: "index/index.md" }) {
         ...IndexFragment
       }
     }

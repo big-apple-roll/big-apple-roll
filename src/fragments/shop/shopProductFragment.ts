@@ -9,9 +9,6 @@ export enum ShopProductButtonColor {
 export const shopProductFragment = graphql`
   fragment ShopProductFragment on MarkdownRemark {
     id
-    fileName
-    fileRelativeDirectory
-    slug
     frontmatter {
       title
       title_plural
@@ -28,5 +25,8 @@ export const shopProductFragment = graphql`
     linkedFiles {
       ...ImageFragment
     }
+    name
+    relativeDirectory
+    slug
   }
 `;

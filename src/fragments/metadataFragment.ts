@@ -3,8 +3,8 @@ import { graphql } from "gatsby";
 export const metadataFragment = graphql`
   fragment MetadataFragment on MarkdownRemark {
     id
-    fileName
-    fileRelativeDirectory
+    name
+    relativeDirectory
     frontmatter {
       title
       start_date

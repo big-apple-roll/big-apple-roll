@@ -7,7 +7,7 @@ import HeadLayout from "src/components/layouts/headLayout";
 export default function Hotel(): React.JSX.Element {
   const { hotel } = useStaticQuery<Queries.HotelQuery>(graphql`
     query Hotel {
-      hotel: markdownRemark(fileName: { eq: "hotel" }, fileRelativeDirectory: { eq: "hotel" }) {
+      hotel: markdownRemark(name: { eq: "hotel" }, relativeDirectory: { eq: "hotel" }) {
         html
       }
     }

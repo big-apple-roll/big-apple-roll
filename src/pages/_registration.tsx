@@ -36,12 +36,12 @@ const findPage = (currentPage: Page, offset: number): Page => {
 export default function Registration(): React.JSX.Element {
   const { metadata, releaseOfParticipation } = useStaticQuery<Queries.RegistrationQuery>(graphql`
     query Registration {
-      metadata: markdownRemark(fileName: { eq: "metadata" }, fileRelativeDirectory: { eq: "" }) {
+      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
         ...MetadataFragment
       }
       releaseOfParticipation: markdownRemark(
-        fileRelativeDirectory: { eq: "registration" }
-        fileName: { eq: "release-of-participation" }
+        relativeDirectory: { eq: "registration" }
+        name: { eq: "release-of-participation" }
       ) {
         html
       }

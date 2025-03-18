@@ -10,10 +10,6 @@ export enum ScheduleEventDifficulty {
 export const scheduleEventFragment = graphql`
   fragment ScheduleEventFragment on MarkdownRemark {
     id
-    fileName
-    fileRelativeDirectory
-    html
-    slug
     frontmatter {
       title
       date # Format: YYYY-MM-DD HH:mm:ss
@@ -28,5 +24,9 @@ export const scheduleEventFragment = graphql`
       highlights # string, optional
       route_map # Link to google maps, optional
     }
+    html
+    name
+    relativeDirectory
+    slug
   }
 `;
