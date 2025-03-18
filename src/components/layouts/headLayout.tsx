@@ -8,17 +8,17 @@ type Props = {
 export default function HeadLayout(props: Props): React.JSX.Element {
   const { pageTitle } = props;
 
-  const { metadata } = useStaticQuery<Queries.LayoutHeadQuery>(graphql`
+  const { index } = useStaticQuery<Queries.LayoutHeadQuery>(graphql`
     query LayoutHead {
-      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
-        ...MetadataFragment
+      index: markdownRemark(relativePath: { eq: "index/index.md" }) {
+        ...IndexFragment
       }
     }
   `);
 
   return (
     <>
-      <title>{`${pageTitle ? `${pageTitle} - ` : ""}${metadata?.frontmatter?.title ?? ""}`}</title>
+      <title>{`${pageTitle ? `${pageTitle} - ` : ""}${index?.frontmatter?.title ?? ""}`}</title>
     </>
   );
 }

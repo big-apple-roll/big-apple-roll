@@ -15,10 +15,10 @@ type Props = {
 export default function PageLayout(props: Omit<PageProps, "children"> & Props): React.JSX.Element {
   const { location, children } = props;
 
-  const { metadata } = useStaticQuery<Queries.LayoutQuery>(graphql`
+  const { index } = useStaticQuery<Queries.LayoutQuery>(graphql`
     query Layout {
-      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
-        ...MetadataFragment
+      index: markdownRemark(relativePath: { eq: "index/index.md" }) {
+        ...IndexFragment
       }
     }
   `);
@@ -38,7 +38,7 @@ export default function PageLayout(props: Omit<PageProps, "children"> & Props): 
       <header className={classNames.header}>
         <div className={clsx(classNames.headerContent, classNames.content)}>
           <LinkButton internalHref="/" noDecoration>
-            <span className={classNames.headerLogo}>{metadata?.frontmatter?.title ?? ""}</span>
+            <span className={classNames.headerLogo}>{index?.frontmatter?.title ?? ""}</span>
           </LinkButton>
           <div className={classNames.desktopNav}>
             <PageLayoutNav location={location} />
@@ -55,7 +55,7 @@ export default function PageLayout(props: Omit<PageProps, "children"> & Props): 
             <IconButton iconName={IconName.Close} onClick={handleCloseMenu} />
           </div>
           <LinkButton internalHref="/" noDecoration onClick={handleCloseMenu}>
-            <span className={classNames.headerLogo}>{metadata?.frontmatter?.title ?? ""}</span>
+            <span className={classNames.headerLogo}>{index?.frontmatter?.title ?? ""}</span>
           </LinkButton>
           <PageLayoutNav location={location} mobile onClick={handleCloseMenu} />
         </div>

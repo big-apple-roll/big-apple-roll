@@ -34,10 +34,10 @@ const findPage = (currentPage: Page, offset: number): Page => {
 };
 
 export default function Registration(): React.JSX.Element {
-  const { metadata, releaseOfParticipation } = useStaticQuery<Queries.RegistrationQuery>(graphql`
+  const { index, releaseOfParticipation } = useStaticQuery<Queries.RegistrationQuery>(graphql`
     query Registration {
-      metadata: markdownRemark(name: { eq: "metadata" }, relativeDirectory: { eq: "" }) {
-        ...MetadataFragment
+      index: markdownRemark(relativePath: { eq: "index/index.md" }) {
+        ...IndexFragment
       }
       releaseOfParticipation: markdownRemark(
         relativeDirectory: { eq: "registration" }
@@ -174,8 +174,8 @@ export default function Registration(): React.JSX.Element {
       <h1>Registration</h1>
       <p>
         Welcome to Big Apple Roll{" "}
-        {metadata?.frontmatter?.start_date
-          ? formatDate(metadata.frontmatter.start_date, { format: "year" })
+        {index?.frontmatter?.start_date
+          ? formatDate(index.frontmatter.start_date, { format: "year" })
           : ""}
         ! All skaters are required to complete this registration form and sign the Release of
         Participation before attending any Big Apple Roll skates.
