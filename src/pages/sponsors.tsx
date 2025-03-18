@@ -77,7 +77,7 @@ export default function Sponsors(): React.JSX.Element {
             >
               {sponsors.map((sponsor) => {
                 const { title, url } = sponsor.frontmatter ?? {};
-                const sponsorLogo = sponsor.linkedFiles?.[0];
+                const sponsorLogo = sponsor.linkedFiles?.[0] ?? sponsor.linkedImages?.[0];
                 if (!title || !url || !sponsorLogo) {
                   // eslint-disable-next-line no-console
                   console.error("Missing logo", title, url, sponsorLogo);
@@ -92,19 +92,7 @@ export default function Sponsors(): React.JSX.Element {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {sponsorLogo.childImageSharp?.gatsbyImageData ? (
-                      <Image
-                        className={classNames.sponsorLogo}
-                        image={sponsorLogo.childImageSharp.gatsbyImageData}
-                        alt={title}
-                      />
-                    ) : (
-                      <img
-                        className={classNames.sponsorLogo}
-                        src={sponsorLogo.publicURL ?? undefined}
-                        alt={title}
-                      />
-                    )}
+                    <Image className={classNames.sponsorLogo} src={sponsorLogo} alt={title} />
                   </a>
                 );
               })}

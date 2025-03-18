@@ -3,24 +3,34 @@ import React from "react";
 
 type Props = {
   className?: string;
-  image: IGatsbyImageData | null | undefined;
+  src:
+    | {
+        publicURL?: string | null;
+        childImageSharp?: {
+          gatsbyImageData: IGatsbyImageData;
+        } | null;
+      }
+    | null
+    | undefined;
   alt: string | null | undefined;
 };
 
 export default function Image(props: Props): React.JSX.Element | null {
-  const { className, image, alt } = props;
+  const { className, src, alt } = props;
 
-  if (!image) {
-    return null;
+  if (src?.childImageSharp) {
+    return (
+      <GatsbyImage
+        className={className}
+        image={src.childImageSharp.gatsbyImageData}
+        alt={alt ?? ""}
+        objectFit="contain"
+        draggable={false}
+      />
+    );
+  } else if (src?.publicURL) {
+    return <img className={className} src={src.publicURL} alt={alt ?? undefined} />;
   }
 
-  return (
-    <GatsbyImage
-      className={className}
-      image={image}
-      alt={alt ?? ""}
-      objectFit="contain"
-      draggable={false}
-    />
-  );
+  return null;
 }

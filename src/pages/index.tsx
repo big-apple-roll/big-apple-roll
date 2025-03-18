@@ -22,7 +22,7 @@ export default function Index() {
       <div className={classNames.logo}>
         <Image
           className={classNames.logoImage}
-          image={index?.linkedFiles[0]?.childImageSharp?.gatsbyImageData}
+          src={index?.linkedFiles?.[0] ?? index?.linkedImages?.[0]}
           alt="Big Apple Roll"
         />
       </div>

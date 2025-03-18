@@ -15,6 +15,9 @@ export const sponsorFragment = graphql`
       url # string
     }
     linkedFiles {
+      ...FileFragment
+    }
+    linkedImages {
       ...ImageFragment
     }
     name

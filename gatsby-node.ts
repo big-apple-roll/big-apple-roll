@@ -8,7 +8,10 @@ import { ScheduleDayTemplateContext } from "src/templates/scheduleDayTemplate";
 import { ScheduleEventTemplateContext } from "src/templates/scheduleEventTemplate";
 import { ShopProductTemplateContext } from "src/templates/shopProductTemplate";
 
+const SUPPORTED_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp"]);
+
 interface FileNode extends Node {
+  extension: string; // no leading dot
   name: string;
   relativeDirectory: string;
   relativePath: string;
@@ -20,6 +23,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
   createTypes(`
     type MarkdownRemark implements Node {
       linkedFiles: [File!]!
+      linkedImages: [File!]!
       name: String!
       relativeDirectory: String!
       relativePath: String!
@@ -52,6 +56,7 @@ interface ResolverContext {
       };
     }) => Promise<N>;
     getNodeById: <N extends Node>(options: { id: string; type?: string }) => N;
+    getFieldValue: (node: Node, fieldPath: string) => Promise<unknown>;
   };
 }
 
@@ -65,31 +70,58 @@ export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers
       : null;
   };
 
+  const getLinkedFileNodes = async (
+    source: Node,
+    context: ResolverContext,
+    options: {
+      includeImages: boolean;
+    },
+  ): Promise<Array<FileNode>> => {
+    const parentFileNode = getParentFileNode(source, context);
+    if (!parentFileNode) {
+      return [];
+    }
+
+    const allFileNodes = (
+      await context.nodeModel.findAll<FileNode>({
+        type: `File`,
+        query: {
+          filter: { relativeDirectory: { eq: parentFileNode.relativeDirectory } },
+        },
+      })
+    ).entries;
+
+    const linkedFileNodes = Array.from(allFileNodes).filter((fileNode) => {
+      if (fileNode.id === parentFileNode.id) {
+        return false;
+      }
+
+      if (!fileNode.name.startsWith(parentFileNode.name)) {
+        return false;
+      }
+
+      if (options.includeImages) {
+        return SUPPORTED_IMAGE_EXTENSIONS.has(fileNode.extension);
+      } else {
+        return !SUPPORTED_IMAGE_EXTENSIONS.has(fileNode.extension);
+      }
+    });
+
+    return linkedFileNodes;
+  };
+
   createResolvers({
     MarkdownRemark: {
       linkedFiles: {
         type: "[File!]!",
         resolve: async (source: Node, args: object, context: ResolverContext) => {
-          const parentFileNode = getParentFileNode(source, context);
-          if (!parentFileNode) {
-            return [];
-          }
-
-          const allFileNodes = (
-            await context.nodeModel.findAll<FileNode>({
-              type: `File`,
-              query: {
-                filter: { relativeDirectory: { eq: parentFileNode.relativeDirectory } },
-              },
-            })
-          ).entries;
-
-          const linkedFileNodes = Array.from(allFileNodes).filter((fileNode) => {
-            return (
-              fileNode.id !== parentFileNode.id && fileNode.name.startsWith(parentFileNode.name)
-            );
-          });
-          return linkedFileNodes;
+          return await getLinkedFileNodes(source, context, { includeImages: false });
+        },
+      },
+      linkedImages: {
+        type: "[File!]!",
+        resolve: async (source: Node, args: object, context: ResolverContext) => {
+          return await getLinkedFileNodes(source, context, { includeImages: true });
         },
       },
       name: {

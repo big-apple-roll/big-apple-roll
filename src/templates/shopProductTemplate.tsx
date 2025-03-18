@@ -102,16 +102,18 @@ export default function ShopProductTemplate(
       <h1>{shopProduct.frontmatter?.title}</h1>
       <div className={classNames.shopProduct}>
         <div className={classNames.shopProductImages}>
-          {shopProduct.linkedFiles.map((shopProductLinkedFile) => {
-            return (
-              <Image
-                key={shopProductLinkedFile.id}
-                className={classNames.shopProductImage}
-                image={shopProductLinkedFile.childImageSharp?.gatsbyImageData}
-                alt={shopProduct.frontmatter?.title}
-              />
-            );
-          })}
+          {[...shopProduct.linkedFiles, ...shopProduct.linkedImages].map(
+            (shopProductLinkedFile) => {
+              return (
+                <Image
+                  key={shopProductLinkedFile.id}
+                  className={classNames.shopProductImage}
+                  src={shopProductLinkedFile}
+                  alt={shopProduct.frontmatter?.title}
+                />
+              );
+            },
+          )}
         </div>
         <div className={classNames.shopProductDetails}>
           <HTML html={shopProduct.html} />

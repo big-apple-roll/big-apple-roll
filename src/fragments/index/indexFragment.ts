@@ -14,9 +14,13 @@ export const indexFragment = graphql`
     }
     html
     linkedFiles {
+      ...FileFragment
+    }
+    linkedImages {
       ...ImageFragment
     }
     name
+    relativePath
     relativeDirectory
     slug
   }

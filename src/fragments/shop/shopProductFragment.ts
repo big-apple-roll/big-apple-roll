@@ -23,9 +23,13 @@ export const shopProductFragment = graphql`
     }
     html
     linkedFiles {
+      ...FileFragment
+    }
+    linkedImages {
       ...ImageFragment
     }
     name
+    relativePath
     relativeDirectory
     slug
   }

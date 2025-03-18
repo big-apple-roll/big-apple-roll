@@ -129,7 +129,9 @@ export default function Cart(): React.JSX.Element {
                 <div>
                   <Image
                     className={classNames.cartItemImage}
-                    image={cartItem.shopProduct.linkedFiles[0]?.childImageSharp?.gatsbyImageData}
+                    src={
+                      cartItem.shopProduct.linkedFiles[0] ?? cartItem.shopProduct.linkedImages[0]
+                    }
                     alt={cartItem.shopProduct.frontmatter?.title}
                   />
                 </div>

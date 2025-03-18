@@ -39,7 +39,7 @@ export default function Shop(): React.JSX.Element {
               <LinkButton internalHref={shopProductNode.slug} noDecoration>
                 <Image
                   className={classNames.shopProductImage}
-                  image={shopProductNode.linkedFiles?.[0]?.childImageSharp?.gatsbyImageData}
+                  src={shopProductNode.linkedFiles?.[0] ?? shopProductNode.linkedImages?.[0]}
                   alt={shopProductNode.frontmatter.title}
                 />
                 <div>{shopProductNode.frontmatter.title}</div>
