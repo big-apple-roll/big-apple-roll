@@ -1,4 +1,4 @@
 ---
 title: Friday
-date: 2025-08-01
+date: 2024-08-02
 ---

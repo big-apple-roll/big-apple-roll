@@ -1,5 +1,5 @@
 ---
 title: Wednesday
-date: 2025-07-30
+date: 2024-07-31
 pre_bar: true
 ---

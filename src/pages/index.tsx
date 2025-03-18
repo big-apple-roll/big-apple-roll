@@ -32,13 +32,16 @@ export default function Index() {
         <h2 className={classNames.date}>
           <div
             className={clsx({
-              [classNames.expiredDate]: metadata?.frontmatter?.next_year,
+              [classNames.expiredDate]:
+                metadata?.frontmatter?.next_year &&
+                metadata.frontmatter.next_year.start_date !== metadata.frontmatter.start_date,
             })}
           >
             {formatDateInterval(metadata.frontmatter.start_date, metadata.frontmatter.end_date)}
           </div>
           {metadata?.frontmatter?.next_year?.start_date &&
-          metadata.frontmatter.next_year.end_date ? (
+          metadata.frontmatter.next_year.end_date &&
+          metadata.frontmatter.next_year.start_date !== metadata.frontmatter.start_date ? (
             <div>
               Join us next year:{" "}
               {formatDateInterval(
@@ -50,7 +53,7 @@ export default function Index() {
         </h2>
       ) : null}
       <div className={classNames.menu}>
-        <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton>
+        {/* <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton> */}
       </div>
     </>
   );

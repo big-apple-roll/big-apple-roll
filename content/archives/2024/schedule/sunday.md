@@ -1,4 +1,4 @@
 ---
 title: Sunday
-date: 2025-08-03
+date: 2024-08-04
 ---

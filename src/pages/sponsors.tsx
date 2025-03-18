@@ -62,6 +62,7 @@ export default function Sponsors(): React.JSX.Element {
                 support.
               </p>
             ) : null}
+            {!sponsors.length ? <p>No sponsors yet</p> : null}
             <div
               className={clsx(
                 classNames.sponsors,

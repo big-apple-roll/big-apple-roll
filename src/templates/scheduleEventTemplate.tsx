@@ -133,6 +133,14 @@ export default function ScheduleEventTemplate(
           </div>
         ) : null}
       </div>
+      {scheduleEvent.frontmatter.teaser ? (
+        <div>
+          <p>
+            Our team is hard at work planning the best skates for you. Check back soon for more
+            details.
+          </p>
+        </div>
+      ) : null}
       {scheduleEvent.html ? (
         <div
           className={classNames.description}

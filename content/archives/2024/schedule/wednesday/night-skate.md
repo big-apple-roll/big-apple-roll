@@ -1,6 +1,6 @@
 ---
 title: Wednesday night skate
-date: 2025-07-30 20:00:00
+date: 2024-07-31 20:00:00
 
 difficulty: moderate
 start: Union Square Park
