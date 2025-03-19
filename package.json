@@ -50,6 +50,7 @@
     "@csstools/postcss-global-data": "^3.0.0",
     "@paypal/react-paypal-js": "^8.8.2",
     "@reduxjs/toolkit": "^2.5.0",
+    "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "gatsby": "^5.14.1",

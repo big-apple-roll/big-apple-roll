@@ -7,6 +7,7 @@ const config = {
     }),
     require("postcss-custom-media")(),
     require("postcss-hover-media-feature"),
+    require("autoprefixer")(),
   ],
 };
 
