@@ -8,7 +8,7 @@ import TextInput from "src/components/form/textInput";
 import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import assertNever from "src/helpers/assertNever";
-import { currentDateInput, formatDate } from "src/helpers/date";
+import { currentDateInput, formatDate } from "src/helpers/date/format";
 import * as classNames from "src/pages/registration.module.css";
 
 enum Page {

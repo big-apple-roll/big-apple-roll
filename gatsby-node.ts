@@ -2,6 +2,7 @@ import path from "node:path";
 
 import { GatsbyNode, Node } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
+import { uniq } from "lodash";
 import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
 
 import { ScheduleDayTemplateContext } from "src/templates/scheduleDayTemplate";
@@ -86,7 +87,9 @@ export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers
       await context.nodeModel.findAll<FileNode>({
         type: `File`,
         query: {
-          filter: { relativeDirectory: { eq: parentFileNode.relativeDirectory } },
+          filter: {
+            relativeDirectory: { eq: parentFileNode.relativeDirectory },
+          },
         },
       })
     ).entries;
@@ -115,13 +118,17 @@ export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers
       linkedFiles: {
         type: "[File!]!",
         resolve: async (source: Node, args: object, context: ResolverContext) => {
-          return await getLinkedFileNodes(source, context, { includeImages: false });
+          return await getLinkedFileNodes(source, context, {
+            includeImages: false,
+          });
         },
       },
       linkedImages: {
         type: "[File!]!",
         resolve: async (source: Node, args: object, context: ResolverContext) => {
-          return await getLinkedFileNodes(source, context, { includeImages: true });
+          return await getLinkedFileNodes(source, context, {
+            includeImages: true,
+          });
         },
       },
       name: {
@@ -173,25 +180,8 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
 
   const result = await graphql<Queries.CreatePagesQuery>(`
     query CreatePages {
-      scheduleDays: allMarkdownRemark(
-        filter: { relativeDirectory: { eq: "schedule" } }
-        sort: { frontmatter: { date: ASC } }
-      ) {
-        edges {
-          node {
-            id
-            slug
-          }
-          previous {
-            id
-          }
-          next {
-            id
-          }
-        }
-      }
       scheduleEvents: allMarkdownRemark(
-        filter: { relativeDirectory: { regex: "/^schedule/.*/" } }
+        filter: { relativeDirectory: { regex: "/^schedule/" } }
         sort: { frontmatter: { date: ASC } }
       ) {
         edges {
@@ -224,19 +214,26 @@ export const createPages: GatsbyNode["createPages"] = async (args) => {
   }
 
   // Schedule day templates
-  result.data.scheduleDays.edges.forEach(({ node, previous, next }) => {
-    if (!node.slug) {
-      return;
-    }
+  const prefixLength = "schedule/".length + 1;
+  const scheduleDays = uniq(
+    result.data.scheduleEvents.edges.reduce<Array<string>>((acc, { node }) => {
+      const { slug } = node;
+      const day = slug.substring(prefixLength, slug.indexOf("/", prefixLength));
+      return [...acc, day];
+    }, []),
+  );
+  scheduleDays.forEach((scheduleDay, scheduleDayIndex) => {
+    const slug = `/schedule/${scheduleDay}`;
     const context: ScheduleDayTemplateContext = {
-      scheduleDayId: node.id,
-      previousScheduleDayId: previous?.id,
-      nextScheduleDayId: next?.id,
-      scheduleEventsSlugRegex: `/^${node.slug}.+/`,
+      scheduleDay,
+      scheduleEventsSlugRegex: `/^${slug}/`,
+      previousScheduleDay: scheduleDays[scheduleDayIndex - 1] ?? null,
+      nextScheduleDay: scheduleDays[scheduleDayIndex + 1] ?? null,
     };
+
     createPage({
       component: path.resolve(`./src/templates/scheduleDayTemplate.tsx`),
-      path: node.slug,
+      path: slug,
       context,
     });
   });

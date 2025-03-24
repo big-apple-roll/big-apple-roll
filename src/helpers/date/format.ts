@@ -1,10 +1,7 @@
 import { DateTime } from "luxon";
 
 import assertNever from "src/helpers/assertNever";
-
-const parseDate = (date: string): DateTime => {
-  return DateTime.fromISO(date, { zone: "utc" });
-};
+import parseDate from "src/helpers/date/parseDate";
 
 export const formatDate = (
   date: string,

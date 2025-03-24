@@ -3,33 +3,19 @@ import React from "react";
 
 import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
-import { formatDate, formatTime } from "src/helpers/date";
-import getParentSlug from "src/helpers/getParentSlug";
+import { formatDate, formatTime } from "src/helpers/date/format";
+import toTitleCase from "src/helpers/toTitleCase";
 import * as classNames from "src/templates/scheduleDayTemplate.module.css";
 
 export type ScheduleDayTemplateContext = {
-  scheduleDayId: string;
-  previousScheduleDayId?: string;
-  nextScheduleDayId?: string;
+  scheduleDay: string;
   scheduleEventsSlugRegex: string;
+  previousScheduleDay?: string;
+  nextScheduleDay?: string;
 };
 
 export const query = graphql`
-  query ScheduleDayTemplate(
-    $scheduleDayId: String!
-    $previousScheduleDayId: String = ""
-    $nextScheduleDayId: String = ""
-    $scheduleEventsSlugRegex: String!
-  ) {
-    scheduleDay: markdownRemark(id: { eq: $scheduleDayId }) {
-      ...ScheduleDayFragment
-    }
-    previousScheduleDay: markdownRemark(id: { eq: $previousScheduleDayId }) {
-      ...ScheduleDayFragment
-    }
-    nextScheduleDay: markdownRemark(id: { eq: $nextScheduleDayId }) {
-      ...ScheduleDayFragment
-    }
+  query ScheduleDayTemplate($scheduleEventsSlugRegex: String!) {
     scheduleEvents: allMarkdownRemark(
       filter: { slug: { regex: $scheduleEventsSlugRegex } }
       sort: { frontmatter: { date: ASC } }
@@ -43,21 +29,20 @@ export const query = graphql`
 
 export default function ScheduleDayTemplate(
   props: PageProps<Queries.ScheduleDayTemplateQuery, ScheduleDayTemplateContext>,
-): React.JSX.Element {
-  const { data } = props;
-  const { scheduleDay, previousScheduleDay, nextScheduleDay, scheduleEvents } = data;
+): React.JSX.Element | null {
+  const { data, pageContext } = props;
+  const { scheduleEvents } = data;
+  const { previousScheduleDay, nextScheduleDay } = pageContext;
 
-  if (!scheduleDay || !scheduleDay.frontmatter?.date) {
-    return <div />;
+  const scheduleEvent = scheduleEvents.nodes[0];
+  if (!scheduleEvent) {
+    return null;
   }
 
   return (
     <>
-      <Navigation
-        previousSlug={getParentSlug(scheduleDay?.slug)}
-        previousTitle="Schedule"
-      ></Navigation>
-      <h1>{formatDate(scheduleDay.frontmatter.date)}</h1>
+      <Navigation previousSlug="/schedule/" previousTitle="Schedule"></Navigation>
+      <h1>{scheduleEvent.frontmatter?.date ? formatDate(scheduleEvent.frontmatter?.date) : ""}</h1>
       <div className={classNames.events}>
         {scheduleEvents.nodes.map((node) => {
           const { title, date } = node.frontmatter ?? {};
@@ -84,10 +69,10 @@ export default function ScheduleDayTemplate(
       </div>
       <div className={classNames.pagination}>
         <Navigation
-          previousSlug={previousScheduleDay?.slug ?? undefined}
-          previousTitle={previousScheduleDay?.frontmatter?.title ?? undefined}
-          nextSlug={nextScheduleDay?.slug ?? undefined}
-          nextTitle={nextScheduleDay?.frontmatter?.title ?? undefined}
+          previousSlug={previousScheduleDay ? `/schedule/${previousScheduleDay}/` : undefined}
+          previousTitle={previousScheduleDay ? toTitleCase(previousScheduleDay) : undefined}
+          nextSlug={nextScheduleDay ? `/schedule/${nextScheduleDay}/` : undefined}
+          nextTitle={nextScheduleDay ? toTitleCase(nextScheduleDay) : undefined}
         ></Navigation>
       </div>
     </>
@@ -97,6 +82,6 @@ export default function ScheduleDayTemplate(
 export function Head(
   props: HeadProps<Queries.ScheduleDayTemplateQuery, ScheduleDayTemplateContext>,
 ): React.JSX.Element {
-  const { data } = props;
-  return <HeadLayout pageTitle={data.scheduleDay?.frontmatter?.title ?? undefined} />;
+  const { pageContext } = props;
+  return <HeadLayout pageTitle={toTitleCase(pageContext.scheduleDay)} />;
 }

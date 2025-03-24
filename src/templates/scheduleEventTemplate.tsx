@@ -6,7 +6,7 @@ import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
 import { ScheduleEventDifficulty } from "src/fragments/schedule/scheduleEventFragment";
-import { formatDate, formatDateTime } from "src/helpers/date";
+import { formatDate, formatDateTime } from "src/helpers/date/format";
 import getParentSlug from "src/helpers/getParentSlug";
 import isEnumValue from "src/helpers/isEnumValue";
 import switchOn from "src/helpers/switchOn";
@@ -49,7 +49,9 @@ export default function ScheduleEventTemplate(
     <>
       <Navigation
         previousSlug={getParentSlug(scheduleEvent?.slug)}
-        previousTitle={formatDate(scheduleEvent.frontmatter.date, { format: "weekday" })}
+        previousTitle={formatDate(scheduleEvent.frontmatter.date, {
+          format: "weekday",
+        })}
       ></Navigation>
       <h1>{scheduleEvent.frontmatter.title}</h1>
       <h2>{formatDateTime(scheduleEvent.frontmatter.date)}</h2>

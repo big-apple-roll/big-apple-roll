@@ -5,7 +5,7 @@ import React from "react";
 import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
-import { formatDateInterval } from "src/helpers/date";
+import { formatDateInterval } from "src/helpers/date/format";
 import * as classNames from "src/pages/index.module.css";
 
 export default function Index() {

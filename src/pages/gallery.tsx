@@ -54,14 +54,10 @@ export default function Gallery(): React.JSX.Element {
                   }
 
                   if (YOUTUBE_REGEX.test(link)) {
-                    return (
-                      <YouTubeEmbed key={link} url={link} width={"100%"} />
-                    );
+                    return <YouTubeEmbed key={link} url={link} width={"100%"} />;
                   }
                   if (FACEBOOK_REGEX.test(link)) {
-                    return (
-                      <FacebookEmbed key={link} url={link} width={"100%"} />
-                    );
+                    return <FacebookEmbed key={link} url={link} width={"100%"} />;
                   }
 
                   return null;
