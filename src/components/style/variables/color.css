@@ -12,12 +12,12 @@
   --color-background: white;
 
   /* Color */
-  --color-blue: #6699cf;
-  --color-green: #7fb64d;
-  --color-orange: #f69a34;
+  --color-blue: #0039a5;
+  --color-green: #09a753;
+  --color-red: #eb2527;
 
   /* Accent */
-  --color-accent-1: var(--color-orange);
+  --color-accent-1: var(--color-red);
   --color-accent-2: var(--color-green);
   --color-accent-3: var(--color-blue);
 }
