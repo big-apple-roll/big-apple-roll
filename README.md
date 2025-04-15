@@ -100,6 +100,8 @@ The website is built with [Gatsby](https://www.gatsbyjs.com), a React-based fram
 yarn install
 ```
 
+- Duplicate `.env.sample` to `.env.development` and `.env.production`
+
 ### Run dev server
 
 ```sh

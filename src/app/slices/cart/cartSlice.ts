@@ -36,6 +36,9 @@ const cartSlice = createSlice({
     removeCartEntry: (state, action: PayloadAction<CartEntryKey>) => {
       delete state.cartEntriesByKey[action.payload];
     },
+    removeAllCartEntries: (state) => {
+      state.cartEntriesByKey = {};
+    },
   },
 });
 

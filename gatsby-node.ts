@@ -87,6 +87,9 @@ export const createResolvers: GatsbyNode["createResolvers"] = ({ createResolvers
       await context.nodeModel.findAll<FileNode>({
         type: `File`,
         query: {
+          sort: {
+            name: "ASC",
+          },
           filter: {
             relativeDirectory: { eq: parentFileNode.relativeDirectory },
           },

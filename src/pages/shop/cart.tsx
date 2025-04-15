@@ -5,11 +5,12 @@ import {
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
 import { graphql, useStaticQuery } from "gatsby";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import useAppDispatch from "src/app/hooks/useAppDispatch";
 import cartSlice from "src/app/slices/cart/cartSlice";
 import { CartEntryKey } from "src/app/slices/cart/types";
+import LinkButton from "src/components/buttons/linkButton";
 import TextButton from "src/components/buttons/textButton";
 import useCallbackId from "src/components/hooks/useCallbackId";
 import Image from "src/components/image";
@@ -47,6 +48,8 @@ export default function Cart(): React.JSX.Element {
   const { cartItems, cartItemCount, cartTotalUndiscountedPrice, cartTotalDiscountedPrice } =
     useShop(allShopProducts);
 
+  const [confirmed, setConfirmed] = useState(false);
+
   const handleIncrementCartItem = useCallback(
     (cartItem: CartItem) => {
       dispatch(cartSlice.actions.incrementCartEntry(cartItem.key));
@@ -74,6 +77,9 @@ export default function Cart(): React.JSX.Element {
     return async (data, actions) => {
       return actions.order.create({
         intent: "CAPTURE",
+        application_context: {
+          shipping_preference: "NO_SHIPPING",
+        },
         purchase_units: [
           {
             items: cartItems.map((cartItem) => {
@@ -110,72 +116,91 @@ export default function Cart(): React.JSX.Element {
   const handleApproveOrder = useMemo((): PayPalButtonOnApprove => {
     return async (data, actions) => {
       await actions.order?.capture();
-      alert("Transaction completed");
+      dispatch(cartSlice.actions.removeAllCartEntries());
+      setConfirmed(true);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
       <ShopNavigation cartItemCount={cartItemCount} goToShop />
       <h1>Cart</h1>
       <div className={classNames.cart}>
-        <div className={classNames.cartItems}>
-          {cartItems.map((cartItem) => {
-            const hasDiscount =
-              cartItem.totalUndiscountedPrice &&
-              cartItem.totalUndiscountedPrice !== cartItem.totalDiscountedPrice;
-            return (
-              <React.Fragment key={cartItem.key}>
-                <div>
-                  <Image
-                    className={classNames.cartItemImage}
-                    src={
-                      cartItem.shopProduct.linkedFiles[0] ?? cartItem.shopProduct.linkedImages[0]
-                    }
-                    alt={cartItem.shopProduct.frontmatter?.title}
-                  />
-                </div>
-                <div className={classNames.cartItemDetails}>
-                  <div>
-                    <strong>{cartItem.shopProduct.frontmatter?.title}</strong> - $
-                    {cartItem.productPrice}
-                  </div>
-                  {cartItem.cartEntry.size ? <div>{cartItem.cartEntry.size}</div> : null}
-                  <div>
-                    {hasDiscount ? (
-                      <s className={classNames.discount}>${cartItem.totalUndiscountedPrice}</s>
-                    ) : null}{" "}
-                    <span>${cartItem.totalDiscountedPrice}</span>
-                  </div>
-                  <div>
-                    <ShopCounter
-                      cartItem={cartItem}
-                      onIncrement={handleIncrementCartItem}
-                      onDecrement={handleDecrementCartItem}
-                    ></ShopCounter>
-                  </div>
-                </div>
-                <div>
-                  <TextButton id={cartItem.key} onClick={handleRemoveCartItem}>
-                    Remove
-                  </TextButton>
-                </div>
-              </React.Fragment>
-            );
-          })}
-        </div>
-        <div>
-          <h2 className={classNames.summary}>Order summary</h2>
-          <div className={classNames.total}>
-            <span>Total</span>
-            <span>${cartTotalDiscountedPrice}</span>
+        {confirmed ? (
+          <div>
+            <p>Thank you for your support!</p>
+            <p>
+              All items must be must be picked-up during registration on{" "}
+              <LinkButton internalHref="/schedule/friday/registration-and-expo/">Friday</LinkButton>{" "}
+              or{" "}
+              <LinkButton internalHref="/schedule/saturday/registration-and-expo/">
+                Saturday
+              </LinkButton>
+              .
+            </p>
           </div>
-          <div className={classNames.paypal}>
-            <PayPalScriptProvider options={PAYPAL_OPTIONS}>
-              <PayPalButtons createOrder={handleCreateOrder} onApprove={handleApproveOrder} />
-            </PayPalScriptProvider>
-          </div>
-        </div>
+        ) : (
+          <>
+            <div className={classNames.cartItems}>
+              {cartItems.map((cartItem) => {
+                const hasDiscount =
+                  cartItem.totalUndiscountedPrice &&
+                  cartItem.totalUndiscountedPrice !== cartItem.totalDiscountedPrice;
+                return (
+                  <React.Fragment key={cartItem.key}>
+                    <div>
+                      <Image
+                        className={classNames.cartItemImage}
+                        src={
+                          cartItem.shopProduct.linkedFiles[0] ??
+                          cartItem.shopProduct.linkedImages[0]
+                        }
+                        alt={cartItem.shopProduct.frontmatter?.title}
+                      />
+                    </div>
+                    <div className={classNames.cartItemDetails}>
+                      <div>
+                        <strong>{cartItem.shopProduct.frontmatter?.title}</strong> - $
+                        {cartItem.productPrice}
+                      </div>
+                      {cartItem.cartEntry.size ? <div>{cartItem.cartEntry.size}</div> : null}
+                      <div>
+                        {hasDiscount ? (
+                          <s className={classNames.discount}>${cartItem.totalUndiscountedPrice}</s>
+                        ) : null}{" "}
+                        <span>${cartItem.totalDiscountedPrice}</span>
+                      </div>
+                      <div>
+                        <ShopCounter
+                          cartItem={cartItem}
+                          onIncrement={handleIncrementCartItem}
+                          onDecrement={handleDecrementCartItem}
+                        ></ShopCounter>
+                      </div>
+                    </div>
+                    <div>
+                      <TextButton id={cartItem.key} onClick={handleRemoveCartItem}>
+                        Remove
+                      </TextButton>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+            <div>
+              <h2 className={classNames.summary}>Order summary</h2>
+              <div className={classNames.total}>
+                <span>Total</span>
+                <span>${cartTotalDiscountedPrice}</span>
+              </div>
+              <div className={classNames.paypal}>
+                <PayPalScriptProvider options={PAYPAL_OPTIONS}>
+                  <PayPalButtons createOrder={handleCreateOrder} onApprove={handleApproveOrder} />
+                </PayPalScriptProvider>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

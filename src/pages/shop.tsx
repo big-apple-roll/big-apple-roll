@@ -24,6 +24,8 @@ export default function Shop(): React.JSX.Element {
 
   const { cartItemCount } = useShop(allShopProducts);
 
+  console.log("DEBUG: shop", { allShopProducts }, JSON.stringify({}, null, 2));
+
   return (
     <>
       <ShopNavigation cartItemCount={cartItemCount} goToCart />

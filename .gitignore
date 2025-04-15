@@ -16,3 +16,4 @@ node_modules
 public
 src/gatsby-types.d.ts
 .env.*
+!.env.sample

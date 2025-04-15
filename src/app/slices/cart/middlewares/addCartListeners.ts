@@ -11,6 +11,7 @@ const addCartListeners = (startListening: AppStartListening) => {
       cartSlice.actions.incrementCartEntry,
       cartSlice.actions.decrementCartEntry,
       cartSlice.actions.removeCartEntry,
+      cartSlice.actions.removeAllCartEntries,
     ),
     effect: (action, api) => {
       saveCartState(api.getState().cart);
