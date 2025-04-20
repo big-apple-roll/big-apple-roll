@@ -134,6 +134,6 @@ yarn upgrade-interactive
 
 If Dependabot can't update a dependency, edit the `resolutions` field in `package.json` to force the version.
 
-## External services
+## Paypal
 
-- Registration form: [https://www.formbackend.com](https://www.formbackend.com)
+The shop payments are sent to Paypal. Export an activity report from Paypal to see all orders.

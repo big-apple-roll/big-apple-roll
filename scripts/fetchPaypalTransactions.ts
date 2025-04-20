@@ -6,7 +6,9 @@ import { ClientCredentials } from "simple-oauth2";
 
 const run = async () => {
   // Load env
-  const dotenvConfig: DotenvConfigOptions = { path: `.env.${process.env.NODE_ENV}` };
+  const dotenvConfig: DotenvConfigOptions = {
+    path: `.env.${process.env.NODE_ENV ?? "development"}`,
+  };
   dotenv.config(dotenvConfig);
   console.log("Loaded env with", { dotenvConfig });
 
@@ -25,10 +27,12 @@ const run = async () => {
   console.log("Got access token", { accessToken: accessToken.token.access_token });
 
   const query = new URLSearchParams({
-    start_date: new Date(2025, 1, 1).toISOString(),
-    end_date: new Date(2025, 1, 28).toISOString(),
+    start_date: new Date(2025, 3, 1).toISOString(),
+    end_date: new Date(2025, 3, 30).toISOString(),
   }).toString();
 
+  // This is work in progress, doesn't show items yet
+  // TODO: include items
   const resp = await fetch(`https://api-m.sandbox.paypal.com/v1/reporting/transactions?${query}`, {
     method: "GET",
     headers: {
