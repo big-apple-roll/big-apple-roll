@@ -5,7 +5,8 @@ import LinkButton from "src/components/buttons/linkButton";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import ShopNavigation from "src/components/shop/shopNavigation";
-import useShop from "src/components/shop/useShop";
+import ShopPrice from "src/components/shop/shopPrice";
+import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
 import * as classNames from "src/pages/shop.module.css";
 
 export default function Shop(): React.JSX.Element {
@@ -43,7 +44,15 @@ export default function Shop(): React.JSX.Element {
                   alt={shopProductNode.frontmatter.title}
                 />
                 <div>{shopProductNode.frontmatter.title}</div>
-                <div>${shopProductNode.frontmatter.price}</div>
+                <div>
+                  <ShopPrice
+                    price={shopProductNode.frontmatter.price ?? 0}
+                    discountedPrice={
+                      validateDateDiscounts(shopProductNode.frontmatter.date_discounts ?? [])[0]
+                        ?.price
+                    }
+                  />
+                </div>
               </LinkButton>
             </div>
           );
