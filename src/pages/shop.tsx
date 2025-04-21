@@ -38,11 +38,15 @@ export default function Shop(): React.JSX.Element {
           return (
             <div key={shopProductNode.id}>
               <LinkButton internalHref={shopProductNode.slug} noDecoration>
-                <Image
-                  className={classNames.shopProductImage}
-                  src={shopProductNode.linkedFiles?.[0] ?? shopProductNode.linkedImages?.[0]}
-                  alt={shopProductNode.frontmatter.title}
-                />
+                <div className={classNames.shopProductImageContainer}>
+                  <div className={classNames.shopProductImageContainer2}>
+                    <Image
+                      className={classNames.shopProductImage}
+                      src={shopProductNode.linkedFiles?.[0] ?? shopProductNode.linkedImages?.[0]}
+                      alt={shopProductNode.frontmatter.title}
+                    />
+                  </div>
+                </div>
                 <div>{shopProductNode.frontmatter.title}</div>
                 <div>
                   <ShopPrice
