@@ -104,7 +104,7 @@ export default function Cart(): React.JSX.Element {
                 },
                 discount: {
                   currency_code: "USD",
-                  value: (cartTotalUndiscountedPrice - cartTotalDiscountedPrice).toString(),
+                  value: (cartTotalUndiscountedPrice - cartTotalDiscountedPrice).toFixed(2),
                 },
               },
             },
