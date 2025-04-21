@@ -14,6 +14,7 @@ import ShopPrice from "src/components/shop/shopPrice";
 import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
 import { ShopProductButtonColor } from "src/fragments/shop/shopProductFragment";
 import { formatDate } from "src/helpers/date/format";
+import parseDate from "src/helpers/date/parseDate";
 import isEnumValue from "src/helpers/isEnumValue";
 import switchOn from "src/helpers/switchOn";
 import * as classNames from "src/templates/shopProductTemplate.module.css";
@@ -54,6 +55,15 @@ export default function ShopProductTemplate(
   const needsSize = useMemo(() => {
     return !!shopProduct?.frontmatter?.sizes?.length;
   }, [shopProduct?.frontmatter?.sizes?.length]);
+
+  const isCutoff = useMemo(() => {
+    const cutoffDate = shopProduct?.frontmatter?.cutoff_date;
+    if (!cutoffDate) {
+      return false;
+    }
+    const now = parseDate(new Date().toISOString());
+    return now > parseDate(cutoffDate);
+  }, [shopProduct?.frontmatter?.cutoff_date]);
 
   const buttonColor = useMemo((): SurfaceButtonColor | undefined => {
     if (
@@ -207,11 +217,17 @@ export default function ShopProductTemplate(
 
             return <div>${shopProduct.frontmatter?.price}</div>;
           })()}
+          {isCutoff ? <div className={classNames.cutoffClosed}>Orders are closed</div> : null}
+          {!isCutoff && shopProduct.frontmatter?.cutoff_date ? (
+            <div>
+              Orders close on {formatDate(shopProduct.frontmatter.cutoff_date, { format: "short" })}
+            </div>
+          ) : null}
           <div>
             <SurfaceButton
               internalHref="/shop/cart/"
               color={buttonColor}
-              disabled={needsSize && !size}
+              disabled={(needsSize && !size) || isCutoff}
               onClick={handleAddToCart}
             >
               Add to cart

@@ -10,3 +10,4 @@ export const isSelected: string;
 export const quantityDiscounts: string;
 export const quantityDiscountsSelect: string;
 export const dateDiscounts: string;
+export const cutoffClosed: string;

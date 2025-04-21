@@ -57,6 +57,10 @@
   color: var(--color-green);
 }
 
+.cutoffClosed {
+  color: var(--color-red);
+}
+
 @media (--tablet-breakpoint) {
   .shopProduct {
     grid-template-columns: 100%;

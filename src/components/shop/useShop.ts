@@ -115,6 +115,8 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
       };
     }, {});
 
+    const now = parseDate(new Date().toISOString());
+
     return compact(
       cartEntries.map((cartEntry): CartItem | null => {
         const shopProduct = shopProductsByName[cartEntry.name];
@@ -122,7 +124,9 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
           !shopProduct ||
           !shopProduct.frontmatter?.price ||
           (shopProduct.frontmatter?.sizes &&
-            !shopProduct.frontmatter.sizes.includes(cartEntry.size))
+            !shopProduct.frontmatter.sizes.includes(cartEntry.size)) ||
+          (shopProduct.frontmatter?.cutoff_date &&
+            now > parseDate(shopProduct.frontmatter.cutoff_date))
         ) {
           return null;
         }

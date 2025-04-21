@@ -15,6 +15,7 @@ export const shopProductFragment = graphql`
       button_color # Either "green", "orange", or "blue"
       order_index # Number to order items by
       price # Number (no currency symbol)
+      cutoff_date # Date
       quantity_discounts {
         count # Number
         price # Number (no currency symbol)
