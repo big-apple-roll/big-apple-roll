@@ -5,14 +5,16 @@ import React, { useCallback, useMemo, useState } from "react";
 import useAppDispatch from "src/app/hooks/useAppDispatch";
 import cartSlice from "src/app/slices/cart/cartSlice";
 import SurfaceButton, { SurfaceButtonColor } from "src/components/buttons/surfaceButton";
+import TextButton from "src/components/buttons/textButton";
 import useCallbackId from "src/components/hooks/useCallbackId";
 import HTML from "src/components/html";
+import Icon, { IconName } from "src/components/icon";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import ShopNavigation from "src/components/shop/shopNavigation";
 import ShopPrice from "src/components/shop/shopPrice";
 import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
-import { ShopProductButtonColor } from "src/fragments/shop/shopProductFragment";
+import { ShopProductButtonColor, ShopProductSizing } from "src/fragments/shop/shopProductFragment";
 import { formatDate } from "src/helpers/date/format";
 import parseDate from "src/helpers/date/parseDate";
 import isEnumValue from "src/helpers/isEnumValue";
@@ -50,6 +52,7 @@ export default function ShopProductTemplate(
   const { cartItemCount } = useShop(allShopProducts);
 
   const [size, setSize] = useState<string | null>(null);
+  const [showSizingGuide, setShowSizingGuide] = useState(false);
   const [count, setCount] = useState(1);
 
   const needsSize = useMemo(() => {
@@ -84,6 +87,10 @@ export default function ShopProductTemplate(
   }, [shopProduct?.frontmatter?.date_discounts]);
 
   const handleSelectSize = useCallbackId(setSize);
+
+  const handleToggleSizingGuide = useCallback(() => {
+    setShowSizingGuide((prevShowSizingGuide) => !prevShowSizingGuide);
+  }, []);
 
   const handleSelectCount = useCallback((event: React.ChangeEvent) => {
     const { target } = event;
@@ -152,6 +159,116 @@ export default function ShopProductTemplate(
                   );
                 })}
               </div>
+              {shopProduct.frontmatter?.sizing &&
+              isEnumValue(shopProduct.frontmatter.sizing, ShopProductSizing) ? (
+                <>
+                  <div className={classNames.sizingGuide}>
+                    <TextButton onClick={handleToggleSizingGuide}>
+                      <span className={classNames.sizingGuideText}>
+                        <Icon
+                          name={
+                            showSizingGuide
+                              ? IconName.KeyboardArrowDown
+                              : IconName.KeyboardArrowRight
+                          }
+                        ></Icon>{" "}
+                        Sizing guide
+                      </span>
+                    </TextButton>
+                  </div>
+                  {showSizingGuide ? (
+                    <>
+                      <table className={classNames.sizingGuideTable}>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>S</th>
+                            <th>M</th>
+                            <th>L</th>
+                            <th>XL</th>
+                            <th>XXL</th>
+                          </tr>
+                        </thead>
+                        {switchOn(shopProduct.frontmatter.sizing, {
+                          cotton: (
+                            <tbody>
+                              <tr>
+                                <th>Body length</th>
+                                <td>28</td>
+                                <td>29</td>
+                                <td>30</td>
+                                <td>31</td>
+                                <td>32</td>
+                              </tr>
+                              <tr>
+                                <th>Body width</th>
+                                <td>18</td>
+                                <td>20</td>
+                                <td>22</td>
+                                <td>24</td>
+                                <td>26</td>
+                              </tr>
+                              <tr>
+                                <th>Sleeve length</th>
+                                <td>15.62</td>
+                                <td>17</td>
+                                <td>18.5</td>
+                                <td>20</td>
+                                <td>21.5</td>
+                              </tr>
+                            </tbody>
+                          ),
+                          performance: (
+                            <tbody>
+                              <tr>
+                                <th>Body length</th>
+                                <td>28</td>
+                                <td>29</td>
+                                <td>30</td>
+                                <td>31</td>
+                                <td>32</td>
+                              </tr>
+                              <tr>
+                                <th>Body width</th>
+                                <td>18</td>
+                                <td>20</td>
+                                <td>22</td>
+                                <td>24</td>
+                                <td>26</td>
+                              </tr>
+                              <tr>
+                                <th>Sleeve length</th>
+                                <td>16.25</td>
+                                <td>17.75</td>
+                                <td>19</td>
+                                <td>20.25</td>
+                                <td>21.5</td>
+                              </tr>
+                            </tbody>
+                          ),
+                        })}
+                      </table>
+                      <dl>
+                        <dt>Body length</dt>
+                        <dd>
+                          Lay garment flat (face down). Measure from center back neckline seam
+                          straight down to bottom of the front hem.
+                        </dd>
+                        <dt>Body width</dt>
+                        <dd>
+                          Lay garment flat. 1" below the armhole flat measure the garment across the
+                          chest.
+                        </dd>
+                        <dt>Sleeve length</dt>
+                        <dd>
+                          Lay garment flat(face down). Measure from center back neck to outer edge
+                          of shoulder seam, then along outer edge to sleeve end.
+                        </dd>
+                      </dl>
+                    </>
+                  ) : null}
+                </>
+              ) : null}
             </div>
           ) : null}
           {(() => {
@@ -199,10 +316,19 @@ export default function ShopProductTemplate(
                     })}
                     <div>${shopProduct.frontmatter?.price}</div>
                     <div>
-                      If ordered on or after{" "}
-                      {formatDate(dateDiscounts[dateDiscounts.length - 1].cutoff_date, {
-                        format: "short",
-                      })}
+                      {shopProduct.frontmatter?.cutoff_date ? (
+                        <>
+                          If ordered before{" "}
+                          {formatDate(shopProduct.frontmatter.cutoff_date, { format: "short" })}
+                        </>
+                      ) : (
+                        <>
+                          If ordered on or after{" "}
+                          {formatDate(dateDiscounts[dateDiscounts.length - 1].cutoff_date, {
+                            format: "short",
+                          })}
+                        </>
+                      )}
                     </div>
                   </div>
                   <div>
@@ -218,11 +344,6 @@ export default function ShopProductTemplate(
             return <div>${shopProduct.frontmatter?.price}</div>;
           })()}
           {isCutoff ? <div className={classNames.cutoffClosed}>Orders are closed</div> : null}
-          {!isCutoff && shopProduct.frontmatter?.cutoff_date ? (
-            <div>
-              Orders close on {formatDate(shopProduct.frontmatter.cutoff_date, { format: "short" })}
-            </div>
-          ) : null}
           <div>
             <SurfaceButton
               internalHref="/shop/cart/"

@@ -96,6 +96,8 @@ iframe {
   border: none;
 }
 
-strong {
+strong,
+th,
+dt {
   font-weight: var(--font-weight-600);
 }

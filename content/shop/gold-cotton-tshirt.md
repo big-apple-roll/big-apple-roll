@@ -6,6 +6,7 @@ cutoff_date: 2025-07-11
 date_discounts:
   [{ cutoff_date: 2025-05-15, price: 19.99 }, { cutoff_date: 2025-06-15, price: 24.99 }]
 sizes: [S, M, L, XL, XXL]
+sizing: cotton
 ---
 
 Gildan Adult Ultra Cotton T-Shirt

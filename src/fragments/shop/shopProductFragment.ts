@@ -6,6 +6,11 @@ export enum ShopProductButtonColor {
   Blue = "blue",
 }
 
+export enum ShopProductSizing {
+  Cotton = "cotton",
+  Performance = "performance",
+}
+
 export const shopProductFragment = graphql`
   fragment ShopProductFragment on MarkdownRemark {
     id
@@ -25,6 +30,7 @@ export const shopProductFragment = graphql`
         price # Number (no currency symbol)
       }
       sizes # Array of strings
+      sizing # Either "cotton"
     }
     html
     linkedFiles {
