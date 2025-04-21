@@ -19,6 +19,7 @@ export default function HeadLayout(props: Props): React.JSX.Element {
   return (
     <>
       <title>{`${pageTitle ? `${pageTitle} - ` : ""}${index?.frontmatter?.title ?? ""}`}</title>
+      <link rel="icon" href={index?.linkedImages?.[0]?.publicURL ?? ""} />
     </>
   );
 }

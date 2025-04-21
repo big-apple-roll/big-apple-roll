@@ -7,6 +7,7 @@ export const imageFragment = graphql`
       gatsbyImageData(placeholder: NONE)
     }
     name
+    publicURL
     relativePath
     relativeDirectory
   }
