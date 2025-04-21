@@ -1,0 +1,7 @@
+.shopPrice {
+  &.has-discount .shopPrice-original {
+    margin-right: var(--spacing-0_5);
+    color: var(--color-text-secondary);
+    text-decoration: line-through;
+  }
+}

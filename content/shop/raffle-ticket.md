@@ -2,7 +2,7 @@
 title: Raffle ticket
 title_plural: Raffle tickets
 price: 5.00
-discounts: [{ count: 3, price: 12.00 }, { count: 6, price: 20.00 }]
+quantity_discounts: [{ count: 3, price: 12.00 }, { count: 6, price: 20.00 }]
 ---
 
 The more raffle tickets you buy, the cheaper they are!

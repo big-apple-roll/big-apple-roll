@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import useAppSelector from "src/app/hooks/useAppSelector";
 import selectCartEntries from "src/app/slices/cart/selectors/selectCartEntries";
 import { CartEntry, CartEntryKey } from "src/app/slices/cart/types";
+import parseDate from "src/helpers/date/parseDate";
 
 export type CartItem = {
   key: CartEntryKey;
@@ -14,29 +15,80 @@ export type CartItem = {
   totalDiscountedPrice: number;
 };
 
-type NullableDiscount = NonNullable<
-  NonNullable<Queries.ShopQuery["allShopProducts"]["nodes"][number]["frontmatter"]>["discounts"]
+type NullableQuantityDiscount = NonNullable<
+  NonNullable<
+    Queries.ShopQuery["allShopProducts"]["nodes"][number]["frontmatter"]
+  >["quantity_discounts"]
 >[number];
 
-type Discount = {
-  [P in keyof NonNullable<NullableDiscount>]: NonNullable<NonNullable<NullableDiscount>[P]>;
+type QuantityDiscount = {
+  [P in keyof NonNullable<NullableQuantityDiscount>]: NonNullable<
+    NonNullable<NullableQuantityDiscount>[P]
+  >;
+};
+
+type NullableDateDiscount = NonNullable<
+  NonNullable<
+    Queries.ShopQuery["allShopProducts"]["nodes"][number]["frontmatter"]
+  >["date_discounts"]
+>[number];
+
+type DateDiscount = {
+  [P in keyof NonNullable<NullableDateDiscount>]: NonNullable<NonNullable<NullableDateDiscount>[P]>;
+};
+
+export const validateDateDiscounts = (
+  nullableDateDiscounts: ReadonlyArray<NullableDateDiscount> | null,
+): Array<DateDiscount> => {
+  const dateDiscounts = (nullableDateDiscounts ?? []).filter(
+    (dateDiscount): dateDiscount is DateDiscount => {
+      return !!dateDiscount?.cutoff_date && !!dateDiscount.price;
+    },
+  );
+
+  const orderedDateDiscounts = sortBy(dateDiscounts, "price");
+
+  const now = parseDate(new Date().toISOString());
+  const validDateDiscounts = orderedDateDiscounts.filter((dateDiscount) => {
+    return now < parseDate(dateDiscount.cutoff_date);
+  });
+
+  return validDateDiscounts;
 };
 
 const computePrice = (
   count: number,
   price: number,
-  nullableDiscounts: ReadonlyArray<NullableDiscount> | null,
+  nullableQuantityDiscounts: ReadonlyArray<NullableQuantityDiscount> | null,
+  nullableDateDiscounts: ReadonlyArray<NullableDateDiscount> | null,
 ): number => {
-  const discounts = (nullableDiscounts ?? []).filter((discount): discount is Discount => {
-    return !!discount?.count && !!discount.price;
-  });
+  const quantityDiscounts = (nullableQuantityDiscounts ?? []).filter(
+    (quantityDiscount): quantityDiscount is QuantityDiscount => {
+      return !!quantityDiscount?.count && !!quantityDiscount.price;
+    },
+  );
 
-  if (discounts.length) {
-    const orderedDiscounts = sortBy(discounts, "count");
-    const discount = orderedDiscounts.findLast((discount) => count >= discount.count);
-    if (discount) {
-      return discount.price + computePrice(count - discount.count, price, discounts);
+  if (quantityDiscounts.length) {
+    const orderedQuantityDiscounts = sortBy(quantityDiscounts, "count");
+    const quantityDiscount = orderedQuantityDiscounts.findLast(
+      (discount) => count >= discount.count,
+    );
+    if (quantityDiscount) {
+      return (
+        quantityDiscount.price +
+        computePrice(
+          count - quantityDiscount.count,
+          price,
+          quantityDiscounts,
+          nullableDateDiscounts,
+        )
+      );
     }
+  }
+
+  const dateDiscount = validateDateDiscounts(nullableDateDiscounts)[0];
+  if (dateDiscount) {
+    return count * dateDiscount.price;
   }
 
   return count * price;
@@ -81,13 +133,14 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
           shopProduct,
           productPrice: toFixedNumber(shopProduct.frontmatter.price),
           totalUndiscountedPrice: toFixedNumber(
-            computePrice(cartEntry.count, shopProduct.frontmatter.price, null),
+            computePrice(cartEntry.count, shopProduct.frontmatter.price, null, null),
           ),
           totalDiscountedPrice: toFixedNumber(
             computePrice(
               cartEntry.count,
               shopProduct.frontmatter.price,
-              shopProduct.frontmatter.discounts,
+              shopProduct.frontmatter.quantity_discounts,
+              shopProduct.frontmatter.date_discounts,
             ),
           ),
         };

@@ -42,12 +42,19 @@
   }
 }
 
-.discounts {
+.quantityDiscounts {
   display: flex;
 }
 
-.discountsSelect {
+.quantityDiscountsSelect {
   flex: 1;
+}
+
+.dateDiscounts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--spacing-0_5) var(--spacing-1);
+  color: var(--color-green);
 }
 
 @media (--tablet-breakpoint) {

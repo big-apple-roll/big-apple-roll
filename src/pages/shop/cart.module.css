@@ -21,11 +21,6 @@
   gap: var(--spacing-0_25);
 }
 
-.discount {
-  margin-right: var(--spacing-0_5);
-  color: var(--color-text-secondary);
-}
-
 .summary {
   margin-top: 0;
 }

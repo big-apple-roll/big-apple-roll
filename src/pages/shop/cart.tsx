@@ -17,6 +17,7 @@ import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import ShopCounter from "src/components/shop/shopCounter";
 import ShopNavigation from "src/components/shop/shopNavigation";
+import ShopPrice from "src/components/shop/shopPrice";
 import useShop, { CartItem } from "src/components/shop/useShop";
 import * as classNames from "src/pages/shop/cart.module.css";
 
@@ -143,32 +144,33 @@ export default function Cart(): React.JSX.Element {
           <>
             <div className={classNames.cartItems}>
               {cartItems.map((cartItem) => {
-                const hasDiscount =
-                  cartItem.totalUndiscountedPrice &&
-                  cartItem.totalUndiscountedPrice !== cartItem.totalDiscountedPrice;
                 return (
                   <React.Fragment key={cartItem.key}>
                     <div>
-                      <Image
-                        className={classNames.cartItemImage}
-                        src={
-                          cartItem.shopProduct.linkedFiles[0] ??
-                          cartItem.shopProduct.linkedImages[0]
-                        }
-                        alt={cartItem.shopProduct.frontmatter?.title}
-                      />
+                      <LinkButton internalHref={cartItem.shopProduct.slug} noDecoration>
+                        <Image
+                          className={classNames.cartItemImage}
+                          src={
+                            cartItem.shopProduct.linkedFiles[0] ??
+                            cartItem.shopProduct.linkedImages[0]
+                          }
+                          alt={cartItem.shopProduct.frontmatter?.title}
+                        />
+                      </LinkButton>
                     </div>
                     <div className={classNames.cartItemDetails}>
                       <div>
-                        <strong>{cartItem.shopProduct.frontmatter?.title}</strong> - $
-                        {cartItem.productPrice}
+                        <LinkButton internalHref={cartItem.shopProduct.slug} noDecoration>
+                          <strong>{cartItem.shopProduct.frontmatter?.title}</strong>
+                        </LinkButton>{" "}
+                        - <ShopPrice price={cartItem.productPrice}></ShopPrice>
                       </div>
                       {cartItem.cartEntry.size ? <div>{cartItem.cartEntry.size}</div> : null}
                       <div>
-                        {hasDiscount ? (
-                          <s className={classNames.discount}>${cartItem.totalUndiscountedPrice}</s>
-                        ) : null}{" "}
-                        <span>${cartItem.totalDiscountedPrice}</span>
+                        <ShopPrice
+                          price={cartItem.totalUndiscountedPrice}
+                          discountedPrice={cartItem.totalDiscountedPrice}
+                        />
                       </div>
                       <div>
                         <ShopCounter

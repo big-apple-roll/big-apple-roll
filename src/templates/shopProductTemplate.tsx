@@ -10,8 +10,10 @@ import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
 import ShopNavigation from "src/components/shop/shopNavigation";
-import useShop from "src/components/shop/useShop";
+import ShopPrice from "src/components/shop/shopPrice";
+import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
 import { ShopProductButtonColor } from "src/fragments/shop/shopProductFragment";
+import { formatDate } from "src/helpers/date/format";
 import isEnumValue from "src/helpers/isEnumValue";
 import switchOn from "src/helpers/switchOn";
 import * as classNames from "src/templates/shopProductTemplate.module.css";
@@ -66,6 +68,10 @@ export default function ShopProductTemplate(
     }
     return undefined;
   }, [shopProduct?.frontmatter?.button_color]);
+
+  const dateDiscounts = useMemo(() => {
+    return validateDateDiscounts(shopProduct?.frontmatter?.date_discounts ?? []);
+  }, [shopProduct?.frontmatter?.date_discounts]);
 
   const handleSelectSize = useCallbackId(setSize);
 
@@ -138,30 +144,69 @@ export default function ShopProductTemplate(
               </div>
             </div>
           ) : null}
-          {shopProduct.frontmatter?.discounts?.length ? (
-            <div className={classNames.discounts}>
-              <select className={classNames.discountsSelect} onChange={handleSelectCount}>
-                <option key={1} value={1}>
-                  1 {shopProduct.frontmatter.title?.toLocaleLowerCase()} - $
-                  {shopProduct.frontmatter.price}
-                </option>
-                {shopProduct.frontmatter.discounts.map((discount) => {
-                  if (!discount) {
-                    return null;
-                  }
-
-                  return (
-                    <option key={discount.count} value={discount.count ?? 0}>
-                      {discount.count} {shopProduct.frontmatter?.title_plural?.toLocaleLowerCase()}{" "}
-                      - ${discount.price}
+          {(() => {
+            if (shopProduct.frontmatter?.quantity_discounts?.length) {
+              return (
+                <div className={classNames.quantityDiscounts}>
+                  <select
+                    className={classNames.quantityDiscountsSelect}
+                    onChange={handleSelectCount}
+                  >
+                    <option key={1} value={1}>
+                      1 {shopProduct.frontmatter.title?.toLocaleLowerCase()} - $
+                      {shopProduct.frontmatter.price}
                     </option>
-                  );
-                })}
-              </select>
-            </div>
-          ) : (
-            <div>${shopProduct.frontmatter?.price}</div>
-          )}
+                    {shopProduct.frontmatter.quantity_discounts.map((discount) => {
+                      if (!discount) {
+                        return null;
+                      }
+
+                      return (
+                        <option key={discount.count} value={discount.count ?? 0}>
+                          {discount.count}{" "}
+                          {shopProduct.frontmatter?.title_plural?.toLocaleLowerCase()} - $
+                          {discount.price}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              );
+            } else if (dateDiscounts.length) {
+              return (
+                <>
+                  <div className={classNames.dateDiscounts}>
+                    {dateDiscounts.map((discount) => {
+                      return (
+                        <React.Fragment key={discount.cutoff_date}>
+                          <div>${discount.price}</div>
+                          <div>
+                            If ordered before{" "}
+                            {formatDate(discount.cutoff_date, { format: "short" })}
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+                    <div>${shopProduct.frontmatter?.price}</div>
+                    <div>
+                      If ordered on or after{" "}
+                      {formatDate(dateDiscounts[dateDiscounts.length - 1].cutoff_date, {
+                        format: "short",
+                      })}
+                    </div>
+                  </div>
+                  <div>
+                    <ShopPrice
+                      price={shopProduct.frontmatter?.price ?? 0}
+                      discountedPrice={dateDiscounts[0].price}
+                    />
+                  </div>
+                </>
+              );
+            }
+
+            return <div>${shopProduct.frontmatter?.price}</div>;
+          })()}
           <div>
             <SurfaceButton
               internalHref="/shop/cart/"
