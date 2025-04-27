@@ -34,7 +34,7 @@ const run = async () => {
 
   // Get transactions
   // This is work in progress, doesn't show items yet
-  // TODO: include items
+  // TODO: paginate
   const transactionUrl = new URL(host);
   transactionUrl.pathname = "/v1/reporting/transactions";
   transactionUrl.searchParams.set("start_date", new Date(2025, 3, 1).toISOString());
