@@ -85,7 +85,8 @@ export default function Cart(): React.JSX.Element {
           {
             items: cartItems.map((cartItem) => {
               return {
-                name: `${cartItem.cartEntry.name} ${cartItem.cartEntry.size ?? ""}`,
+                name: `${cartItem.shopProduct.frontmatter?.title ?? cartItem.cartEntry.name} ${cartItem.cartEntry.size ?? ""}`,
+                description: `${cartItem.cartEntry.name} ${cartItem.cartEntry.size ?? ""}`,
                 quantity: cartItem.cartEntry.count.toString(),
                 unit_amount: {
                   currency_code: "USD",
