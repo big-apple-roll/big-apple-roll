@@ -1,6 +1,6 @@
 ---
 title: Navy tank top
-order_index: 3
+order_index: 12
 price: 29.99
 cutoff_date: 2025-07-11
 date_discounts:

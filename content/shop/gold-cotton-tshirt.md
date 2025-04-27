@@ -1,6 +1,6 @@
 ---
 title: Gold cotton t-shirt
-order_index: 2
+order_index: 7
 price: 29.99
 cutoff_date: 2025-07-11
 date_discounts:

@@ -1,6 +1,6 @@
 ---
 title: Gold performance t-shirt
-order_index: 1
+order_index: 2
 price: 34.99
 cutoff_date: 2025-07-11
 date_discounts:
