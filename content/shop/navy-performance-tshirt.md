@@ -1,10 +1,10 @@
 ---
 title: Navy performance t-shirt
 order_index: 4
-price: 34.99
+price: 29.99
 cutoff_date: 2025-07-11
 date_discounts:
-  [{ cutoff_date: 2025-05-15, price: 24.99 }, { cutoff_date: 2025-06-15, price: 29.99 }]
+  [{ cutoff_date: 2025-05-05, price: 19.99 }, { cutoff_date: 2025-07-11, price: 24.99 }]
 sizes: [S, M, L, XL, XXL]
 sizing: performance
 ---

@@ -314,6 +314,7 @@ export default function ShopProductTemplate(
                         </React.Fragment>
                       );
                     })}
+                    {/* 
                     <div>${shopProduct.frontmatter?.price}</div>
                     <div>
                       {shopProduct.frontmatter?.cutoff_date ? (
@@ -329,7 +330,7 @@ export default function ShopProductTemplate(
                           })}
                         </>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                   <div>
                     <ShopPrice

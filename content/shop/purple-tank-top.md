@@ -1,10 +1,10 @@
 ---
 title: Purple tank top
 order_index: 11
-price: 29.99
+price: 27.49
 cutoff_date: 2025-07-11
 date_discounts:
-  [{ cutoff_date: 2025-05-15, price: 19.99 }, { cutoff_date: 2025-06-15, price: 24.99 }]
+  [{ cutoff_date: 2025-05-05, price: 17.49 }, { cutoff_date: 2025-07-11, price: 22.49 }]
 sizes: [XS, S, M, L, XL]
 ---
 
