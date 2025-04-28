@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 
+import SurfaceButton from "src/components/buttons/surfaceButton";
 import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
@@ -50,10 +51,10 @@ export default function Index() {
           ) : null}
         </h2>
       ) : null}
-      <HTML html={index?.html} />
       <div className={classNames.menu}>
-        {/* <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton> */}
+        <SurfaceButton internalHref="/shop/">Buy a t-shirt</SurfaceButton>
       </div>
+      <HTML html={index?.html} />
     </>
   );
 }
