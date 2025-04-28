@@ -6,6 +6,7 @@ import SurfaceButton from "src/components/buttons/surfaceButton";
 import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
+import useShowSale from "src/components/shop/useShowSale";
 import { formatDateInterval } from "src/helpers/date/format";
 import * as classNames from "src/pages/index.module.css";
 
@@ -17,6 +18,8 @@ export default function Index() {
       }
     }
   `);
+
+  const showSale = useShowSale();
 
   return (
     <>
@@ -52,7 +55,9 @@ export default function Index() {
         </h2>
       ) : null}
       <div className={classNames.menu}>
-        <SurfaceButton internalHref="/shop/">Buy a t-shirt</SurfaceButton>
+        <SurfaceButton internalHref="/shop/">
+          Buy a t-shirt! {showSale ? "Lowest pricing until May 5th!" : null}
+        </SurfaceButton>
       </div>
       <HTML html={index?.html} />
     </>
