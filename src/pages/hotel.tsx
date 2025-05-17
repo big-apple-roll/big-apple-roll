@@ -1,10 +1,12 @@
 import * as classNames from "src/pages/hotel.module.css";
+import "src/pages/hotel.css";
 
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 
 import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
+import SurfaceButton from "src/components/buttons/surfaceButton";
 
 export default function Hotel(): React.JSX.Element {
   const { hotel } = useStaticQuery<Queries.HotelQuery>(graphql`
@@ -17,8 +19,10 @@ export default function Hotel(): React.JSX.Element {
 
   return (
     <>
-      <HTML html={hotel?.html}></HTML>
-      <iframe src={hotel?.frontmatter?.map ?? undefined} className={classNames.frame} />
+      <HTML className="hotel-content" html={hotel?.html}></HTML>
+      <div className={classNames.buttonContainer}>
+        <SurfaceButton externalHref={hotel?.frontmatter?.link}>Book your room online</SurfaceButton>
+      </div>
     </>
   );
 }
