@@ -1,3 +1,5 @@
+import * as classNames from "src/pages/hotel.module.css";
+
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 
@@ -8,12 +10,17 @@ export default function Hotel(): React.JSX.Element {
   const { hotel } = useStaticQuery<Queries.HotelQuery>(graphql`
     query Hotel {
       hotel: markdownRemark(name: { eq: "hotel" }, relativeDirectory: { eq: "hotel" }) {
-        html
+        ...HotelFragment
       }
     }
   `);
 
-  return <HTML html={hotel?.html}></HTML>;
+  return (
+    <>
+      <HTML html={hotel?.html}></HTML>
+      <iframe src={hotel?.frontmatter?.map ?? undefined} className={classNames.frame} />
+    </>
+  );
 }
 
 export function Head() {

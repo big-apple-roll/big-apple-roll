@@ -55,8 +55,9 @@ export default function Index() {
         </h2>
       ) : null}
       <div className={classNames.menu}>
+        <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton>
         <SurfaceButton internalHref="/shop/">
-          Buy a t-shirt! {showSale ? "Lowest pricing until May 5th!" : null}
+          Buy a t-shirt {showSale ? "Lowest pricing until May 5th!" : null}
         </SurfaceButton>
       </div>
       <HTML html={index?.html} />
