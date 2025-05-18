@@ -21,6 +21,10 @@ For the first time in BAR’s history, our host hotel is in iconic Times Square!
 - Destination fees waived
 - Guaranteed 12:30 late checkout on Sunday
 
+## Reservation cut-off date
+
+- June 6, 2025.
+
 </div>
 <div>
 
@@ -29,9 +33,9 @@ For the first time in BAR’s history, our host hotel is in iconic Times Square!
 - [Book your room online](https://www.millenniumhotels.com/en/bookings/?hotelcode=13507&checkin=2025-07-29&groupcode=2507BIGAPB&fbclid=IwZXh0bgNhZW0CMTEAAR7ZHoZWHwXr82Ik9zxOGqQogzlTWZHfb2TXcCaeeg0nAHLh6zQKEIg5bn1Vxg_aem_FdQ8XuS7qj4gvukXG9zfSA&viewrates=rooms)
 - Or call 212-768-4400 and mention Big Apple Roll (group Code: 2507BIGAPB).
 
-## Reservation cut-off date
+## Cancellation policy
 
-- June 6, 2025.
+- Free cancellation up to five days before arrival. Cancel by 4pm local hotel time five days before arrival to avoid a one-night room charge.
 
 </div>
 </div>
