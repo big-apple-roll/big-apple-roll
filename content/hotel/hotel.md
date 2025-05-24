@@ -18,8 +18,11 @@ For the first time in BAR’s 22 year history, our host hotel is in iconic Times
 
 ## Includes
 
-- Destination fees waived
+- All Resort & Facility fees waived
 - Guaranteed 12:30 late checkout on Sunday
+- Breakfast NOT Included
+- NOTE: Please ignore the automated info in your reservation confirmation. The above information is CORRECT!!
+- If you have trouble booking your rooms, contact <hotel@bigappleroll.org>
 
 </div>
 <div>
