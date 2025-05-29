@@ -256,8 +256,8 @@ export default function ShopProductTemplate(
                         </dd>
                         <dt>Body width</dt>
                         <dd>
-                          Lay garment flat. 1" below the armhole flat measure the garment across the
-                          chest.
+                          Lay garment flat. 1&quot; below the armhole flat measure the garment
+                          across the chest.
                         </dd>
                         <dt>Sleeve length</dt>
                         <dd>
