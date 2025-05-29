@@ -4,6 +4,7 @@ export enum SponsorType {
   Presenting = "presenting",
   Supporting = "supporting",
   General = "general",
+  Saturday = "saturday",
 }
 
 export const sponsorFragment = graphql`

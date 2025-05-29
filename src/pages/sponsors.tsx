@@ -41,6 +41,7 @@ export default function Sponsors(): React.JSX.Element {
       },
       {
         [SponsorType.Presenting]: [],
+        [SponsorType.Saturday]: [],
         [SponsorType.Supporting]: [],
         [SponsorType.General]: [],
       },
@@ -52,7 +53,16 @@ export default function Sponsors(): React.JSX.Element {
       {Object.entries(sponsorsByType).map(([type, sponsors]) => {
         return (
           <React.Fragment key={type}>
-            <h1>{type} sponsors</h1>
+            <h1>
+              {isEnumValue(type, SponsorType)
+                ? switchOn(type, {
+                    [SponsorType.Presenting]: "Presenting sponsors",
+                    [SponsorType.Saturday]: "Saturday night party sponsors",
+                    [SponsorType.Supporting]: "Supporting sponsors",
+                    [SponsorType.General]: "General sponsors",
+                  })
+                : ""}
+            </h1>
             {type === SponsorType.Presenting ? (
               <p className={classNames.description}>
                 A huge “Thank You” to all of our generous sponsors. BAR Sponsors donate money,
@@ -69,6 +79,7 @@ export default function Sponsors(): React.JSX.Element {
                 isEnumValue(type, SponsorType)
                   ? switchOn(type, {
                       [SponsorType.Presenting]: classNames.isPresenting,
+                      [SponsorType.Saturday]: classNames.isSupporting,
                       [SponsorType.Supporting]: classNames.isSupporting,
                       [SponsorType.General]: null,
                     })
