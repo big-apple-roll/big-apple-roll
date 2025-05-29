@@ -27,6 +27,7 @@
   justify-content: center;
   align-items: center;
   padding: var(--spacing-0_75);
+  user-select: none;
 
   &:hover::before {
     content: "";
