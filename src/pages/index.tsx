@@ -59,6 +59,7 @@ export default function Index() {
         <SurfaceButton internalHref="/shop/">
           Buy a t-shirt {showSale ? "Lowest pricing until May 5th!" : null}
         </SurfaceButton>
+        <SurfaceButton internalHref="https://forms.gle/FAyavPYAUDXMEfqD6">Register</SurfaceButton>
       </div>
       <HTML html={index?.html} />
     </>
