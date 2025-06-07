@@ -29,7 +29,7 @@ For the first time in BAR’s 22 year history, our host hotel is in iconic Times
 
 ## Reservation cut-off date
 
-- June 6, 2025.
+- June 20, 2025.
 
 ## Cancellation policy
 
