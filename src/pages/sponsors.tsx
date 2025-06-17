@@ -57,7 +57,7 @@ export default function Sponsors(): React.JSX.Element {
               {isEnumValue(type, SponsorType)
                 ? switchOn(type, {
                     [SponsorType.Presenting]: "Presenting sponsors",
-                    [SponsorType.Saturday]: "Saturday night party sponsors",
+                    [SponsorType.Saturday]: "Saturday night party sponsor",
                     [SponsorType.Supporting]: "Supporting sponsors",
                     [SponsorType.General]: "General sponsors",
                   })
