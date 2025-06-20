@@ -22,18 +22,23 @@ For the first time in BAR’s 22 year history, our host hotel is in iconic Times
 - Guaranteed 12:30 late checkout on Sunday
 - Breakfast NOT Included
 - NOTE: Please ignore the automated info in your reservation confirmation. The above information is CORRECT!!
-- If you have trouble booking your rooms, contact <hotel@bigappleroll.org>
-
-</div>
-<div>
 
 ## Reservation cut-off date
 
 - June 20, 2025.
 
+</div>
+<div>
+
 ## Cancellation policy
 
 - Free cancellation up to five days before arrival. Cancel by 4pm local hotel time five days before arrival to avoid a one-night room charge.
+
+## Booking
+
+- [Book your room online](https://www.millenniumhotels.com/en/bookings/?hotelcode=13507&checkin=2025-07-29&groupcode=2507BIGAPB&viewrates=rooms)
+- If you have any trouble booking your rooms, please call hotel reservations at [(212) 768-4400](tel:2127684400) and use code: `2507BIGAPB` for the Big Apple Roll group.
+- If you still have trouble contact <hotel@bigappleroll.org>
 
 </div>
 </div>
