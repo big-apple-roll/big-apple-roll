@@ -15,3 +15,5 @@ route_map: https://www.google.com/maps/d/u/0/embed?mid=1UitxN43IhgbqrXnXY3wbwRon
 <!--
 highlights
  -->
+
+Spend the evening skating some of our favorite waterfront views and avenues, with a few twists and turns for good measure. A moderate 13 miles with minimal hills, this route should cool you down after a long Thursday morning skate, or warm you up for the weekend miles ahead.
