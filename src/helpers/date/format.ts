@@ -50,6 +50,7 @@ export const formatDateTime = (date: string): string => {
     day: "numeric",
     weekday: "long",
     hour: "numeric",
+    minute: "numeric",
   });
 };
 

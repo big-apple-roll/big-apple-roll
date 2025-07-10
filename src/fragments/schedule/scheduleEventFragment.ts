@@ -18,6 +18,7 @@ export const scheduleEventFragment = graphql`
       location # string, optional
       start # string, optional
       start_map # Link to google maps, optional
+      start_time # date
       end # string, optional
       leader # string, optional
       distance # string, optional
@@ -30,3 +31,17 @@ export const scheduleEventFragment = graphql`
     slug
   }
 `;
+
+/*
+<!--
+difficulty
+start
+start_map
+start_time
+end
+leader
+distance
+highlights
+route_map
+ -->
+ */

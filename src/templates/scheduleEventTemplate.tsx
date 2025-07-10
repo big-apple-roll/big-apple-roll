@@ -6,7 +6,7 @@ import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
 import { ScheduleEventDifficulty } from "src/fragments/schedule/scheduleEventFragment";
-import { formatDate, formatDateTime } from "src/helpers/date/format";
+import { formatDate, formatDateTime, formatTime } from "src/helpers/date/format";
 import getParentSlug from "src/helpers/getParentSlug";
 import isEnumValue from "src/helpers/isEnumValue";
 import switchOn from "src/helpers/switchOn";
@@ -93,6 +93,15 @@ export default function ScheduleEventTemplate(
               <dt className={classNames.detailsListTerm}>Start:</dt>
               <dd className={classNames.detailsListDescription}>
                 {scheduleEvent.frontmatter.start}
+              </dd>
+            </>
+          ) : null}
+          {scheduleEvent.frontmatter.start_time ? (
+            <>
+              <dt className={classNames.detailsListTerm}>Start time:</dt>
+              <dd className={classNames.detailsListDescription}>
+                {formatTime(scheduleEvent.frontmatter.date)} meetup,{" "}
+                {formatTime(scheduleEvent.frontmatter.start_time)} rollout
               </dd>
             </>
           ) : null}
