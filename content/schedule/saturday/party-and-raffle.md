@@ -9,3 +9,5 @@ start_map: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.8545913473
 Celebrate street skating in New York City and the end of the 2024 Big Apple Roll at our annual Saturday Night Party & Raffle.
 
 This year’s Saturday night party will be held at Sean’s Bar and Kitchen! The BAR is providing a wide selection of heavy appetizers to accommodate most diets (reach out with any questions). Drinks on your own—Sean’s has a full bar with 54 beers on tap!
+
+This is where our famous raffle is held, featuring prizes from all our wonderful sponsors. You need a [ticket to attend which you can buy here](/shop/saturday-party-ticket/), and you probably want to get some [raffle tickets](/shop/raffle-ticket/) as well.

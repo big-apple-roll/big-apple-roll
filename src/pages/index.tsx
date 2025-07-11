@@ -60,6 +60,10 @@ export default function Index() {
           Buy a t-shirt {showSale ? "Lowest pricing until May 5th!" : null}
         </SurfaceButton>
         <SurfaceButton internalHref="https://forms.gle/FAyavPYAUDXMEfqD6">Register</SurfaceButton>
+        <SurfaceButton internalHref="/shop/saturday-party-ticket/">
+          Get Saturday night party tickets
+        </SurfaceButton>
+        <SurfaceButton internalHref="/shop/raffle-ticket/">Get raffle tickets</SurfaceButton>
       </div>
       <HTML html={index?.html} />
     </>
