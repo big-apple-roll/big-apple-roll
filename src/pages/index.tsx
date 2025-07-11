@@ -6,20 +6,38 @@ import SurfaceButton from "src/components/buttons/surfaceButton";
 import HTML from "src/components/html";
 import Image from "src/components/image";
 import HeadLayout from "src/components/layouts/headLayout";
-import useShowSale from "src/components/shop/useShowSale";
-import { formatDateInterval } from "src/helpers/date/format";
+import useTimeline from "src/components/timeline/useTimeline";
+import { formatDate, formatDateInterval } from "src/helpers/date/format";
+import parseDate from "src/helpers/date/parseDate";
 import * as classNames from "src/pages/index.module.css";
 
 export default function Index() {
-  const { index } = useStaticQuery<Queries.IndexQuery>(graphql`
+  const { allShopProducts, hotel, index } = useStaticQuery<Queries.IndexQuery>(graphql`
     query Index {
+      allShopProducts: allMarkdownRemark(
+        sort: { frontmatter: { order_index: ASC } }
+        filter: { relativeDirectory: { eq: "shop" } }
+      ) {
+        nodes {
+          ...ShopProductFragment
+        }
+      }
+      hotel: markdownRemark(relativePath: { eq: "hotel/hotel.md" }) {
+        ...HotelFragment
+      }
       index: markdownRemark(relativePath: { eq: "index/index.md" }) {
         ...IndexFragment
       }
     }
   `);
 
-  const showSale = useShowSale();
+  const {
+    showShopApparel,
+    shopApparelSaleCutoffDate,
+    showShopTicket,
+    showHotel,
+    showRegistration,
+  } = useTimeline(allShopProducts, hotel, index);
 
   return (
     <>
@@ -39,7 +57,10 @@ export default function Index() {
                 index.frontmatter.next_year.start_date !== index.frontmatter.start_date,
             })}
           >
-            {formatDateInterval(index.frontmatter.start_date, index.frontmatter.end_date)}
+            {formatDateInterval(
+              parseDate(index.frontmatter.start_date),
+              parseDate(index.frontmatter.end_date),
+            )}
           </div>
           {index?.frontmatter?.next_year?.start_date &&
           index.frontmatter.next_year.end_date &&
@@ -47,23 +68,34 @@ export default function Index() {
             <div>
               Join us next year:{" "}
               {formatDateInterval(
-                index.frontmatter.next_year.start_date,
-                index.frontmatter.next_year.end_date,
+                parseDate(index.frontmatter.next_year.start_date),
+                parseDate(index.frontmatter.next_year.end_date),
               )}
             </div>
           ) : null}
         </h2>
       ) : null}
       <div className={classNames.menu}>
-        <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton>
-        <SurfaceButton internalHref="/shop/">
-          Buy a t-shirt {showSale ? "Lowest pricing until May 5th!" : null}
-        </SurfaceButton>
-        <SurfaceButton internalHref="https://forms.gle/FAyavPYAUDXMEfqD6">Register</SurfaceButton>
-        <SurfaceButton internalHref="/shop/saturday-party-ticket/">
-          Get Saturday night party tickets
-        </SurfaceButton>
-        <SurfaceButton internalHref="/shop/raffle-ticket/">Get raffle tickets</SurfaceButton>
+        {showHotel ? <SurfaceButton internalHref="/hotel/">Book a room</SurfaceButton> : null}
+        {showShopApparel ? (
+          <SurfaceButton internalHref="/shop/">
+            Buy a t-shirt{" "}
+            {shopApparelSaleCutoffDate
+              ? `Lowest pricing until ${formatDate(shopApparelSaleCutoffDate)}!`
+              : null}
+          </SurfaceButton>
+        ) : null}
+        {showRegistration ? (
+          <SurfaceButton internalHref="https://forms.gle/FAyavPYAUDXMEfqD6">Register</SurfaceButton>
+        ) : null}
+        {showShopTicket ? (
+          <SurfaceButton internalHref="/shop/saturday-party-ticket/">
+            Get Saturday night party tickets
+          </SurfaceButton>
+        ) : null}
+        {showShopTicket ? (
+          <SurfaceButton internalHref="/shop/raffle-ticket/">Get raffle tickets</SurfaceButton>
+        ) : null}
       </div>
       <HTML html={index?.html} />
     </>

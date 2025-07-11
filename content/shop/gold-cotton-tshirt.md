@@ -1,5 +1,6 @@
 ---
 title: Gold cotton t-shirt
+category: apparel
 order_index: 7
 price: 24.99
 cutoff_date: 2025-07-11

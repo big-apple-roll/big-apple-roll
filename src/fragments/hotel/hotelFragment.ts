@@ -5,6 +5,7 @@ export const hotelFragment = graphql`
     id
     frontmatter {
       link
+      cutoff_date # Date
     }
     html
   }

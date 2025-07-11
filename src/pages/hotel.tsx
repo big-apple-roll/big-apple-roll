@@ -11,7 +11,7 @@ import * as classNames from "src/pages/hotel.module.css";
 export default function Hotel(): React.JSX.Element {
   const { hotel } = useStaticQuery<Queries.HotelQuery>(graphql`
     query Hotel {
-      hotel: markdownRemark(name: { eq: "hotel" }, relativeDirectory: { eq: "hotel" }) {
+      hotel: markdownRemark(relativePath: { eq: "hotel/hotel.md" }) {
         ...HotelFragment
       }
     }

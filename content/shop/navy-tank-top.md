@@ -1,5 +1,6 @@
 ---
 title: Navy tank top
+category: apparel
 order_index: 12
 price: 27.49
 cutoff_date: 2025-07-11

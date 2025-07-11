@@ -1,10 +1,9 @@
 import { DateTime } from "luxon";
 
 import assertNever from "src/helpers/assertNever";
-import parseDate from "src/helpers/date/parseDate";
 
 export const formatDate = (
-  date: string,
+  date: DateTime,
   options: { format?: "huge" | "short" | "weekday" | "year" } = {},
 ): string => {
   const { format = "huge" } = options;
@@ -37,15 +36,15 @@ export const formatDate = (
     }
   })();
 
-  return parseDate(date).toLocaleString(dateTimeFormatOptions);
+  return date.toLocaleString(dateTimeFormatOptions);
 };
 
-export const formatTime = (date: string): string => {
-  return parseDate(date).toLocaleString(DateTime.TIME_SIMPLE);
+export const formatTime = (date: DateTime): string => {
+  return date.toLocaleString(DateTime.TIME_SIMPLE);
 };
 
-export const formatDateTime = (date: string): string => {
-  return parseDate(date).toLocaleString({
+export const formatDateTime = (date: DateTime): string => {
+  return date.toLocaleString({
     month: "long",
     day: "numeric",
     weekday: "long",
@@ -54,13 +53,11 @@ export const formatDateTime = (date: string): string => {
   });
 };
 
-export const formatDateInterval = (start: string, end: string): string => {
-  const startDate = parseDate(start);
-  const endDate = parseDate(end);
-  const interval = startDate.until(endDate);
+export const formatDateInterval = (start: DateTime, end: DateTime): string => {
+  const interval = start.until(end);
   return interval.toLocaleString(DateTime.DATE_FULL);
 };
 
-export const currentDateInput = () => {
-  return DateTime.now().toFormat("yyyy-MM-dd");
+export const formatDateInput = (date: DateTime) => {
+  return date.toFormat("yyyy-MM-dd");
 };

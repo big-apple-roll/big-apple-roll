@@ -1,5 +1,6 @@
 ---
 title: Green performance t-shirt
+category: apparel
 order_index: 3
 price: 29.99
 cutoff_date: 2025-07-11

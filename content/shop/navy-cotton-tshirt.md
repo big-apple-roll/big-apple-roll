@@ -1,5 +1,6 @@
 ---
 title: Navy cotton t-shirt
+category: apparel
 order_index: 9
 price: 24.99
 cutoff_date: 2025-07-11

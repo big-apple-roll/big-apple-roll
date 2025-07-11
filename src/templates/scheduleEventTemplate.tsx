@@ -7,6 +7,7 @@ import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
 import { ScheduleEventDifficulty } from "src/fragments/schedule/scheduleEventFragment";
 import { formatDate, formatDateTime, formatTime } from "src/helpers/date/format";
+import parseDate from "src/helpers/date/parseDate";
 import getParentSlug from "src/helpers/getParentSlug";
 import isEnumValue from "src/helpers/isEnumValue";
 import switchOn from "src/helpers/switchOn";
@@ -49,12 +50,12 @@ export default function ScheduleEventTemplate(
     <>
       <Navigation
         previousSlug={getParentSlug(scheduleEvent?.slug)}
-        previousTitle={formatDate(scheduleEvent.frontmatter.date, {
+        previousTitle={formatDate(parseDate(scheduleEvent.frontmatter.date), {
           format: "weekday",
         })}
       ></Navigation>
       <h1>{scheduleEvent.frontmatter.title}</h1>
-      <h2>{formatDateTime(scheduleEvent.frontmatter.date)}</h2>
+      <h2>{formatDateTime(parseDate(scheduleEvent.frontmatter.date))}</h2>
       {scheduleEvent.frontmatter.difficulty &&
       isEnumValue(scheduleEvent.frontmatter.difficulty, ScheduleEventDifficulty) ? (
         <div
@@ -100,8 +101,8 @@ export default function ScheduleEventTemplate(
             <>
               <dt className={classNames.detailsListTerm}>Start time:</dt>
               <dd className={classNames.detailsListDescription}>
-                {formatTime(scheduleEvent.frontmatter.date)} meetup,{" "}
-                {formatTime(scheduleEvent.frontmatter.start_time)} rollout
+                {formatTime(parseDate(scheduleEvent.frontmatter.date))} meetup,{" "}
+                {formatTime(parseDate(scheduleEvent.frontmatter.start_time))} rollout
               </dd>
             </>
           ) : null}

@@ -1,5 +1,6 @@
 ---
 title: Purple tank top
+category: apparel
 order_index: 11
 price: 27.49
 cutoff_date: 2025-07-11

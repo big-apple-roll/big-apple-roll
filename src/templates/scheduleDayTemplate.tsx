@@ -4,6 +4,7 @@ import React from "react";
 import HeadLayout from "src/components/layouts/headLayout";
 import Navigation from "src/components/navigation";
 import { formatDate, formatTime } from "src/helpers/date/format";
+import parseDate from "src/helpers/date/parseDate";
 import toTitleCase from "src/helpers/toTitleCase";
 import * as classNames from "src/templates/scheduleDayTemplate.module.css";
 
@@ -42,7 +43,11 @@ export default function ScheduleDayTemplate(
   return (
     <>
       <Navigation previousSlug="/schedule/" previousTitle="Schedule"></Navigation>
-      <h1>{scheduleEvent.frontmatter?.date ? formatDate(scheduleEvent.frontmatter?.date) : ""}</h1>
+      <h1>
+        {scheduleEvent.frontmatter?.date
+          ? formatDate(parseDate(scheduleEvent.frontmatter?.date))
+          : ""}
+      </h1>
       <div className={classNames.events}>
         {scheduleEvents.nodes.map((node) => {
           const { title, date } = node.frontmatter ?? {};
@@ -53,7 +58,7 @@ export default function ScheduleDayTemplate(
           return (
             <div key={node.id} className={classNames.event}>
               <div>
-                <span className={classNames.eventTimeText}>{formatTime(date)}</span>
+                <span className={classNames.eventTimeText}>{formatTime(parseDate(date))}</span>
               </div>
               <div className={classNames.eventSeparator}></div>
               <div className={classNames.eventName}>

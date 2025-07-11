@@ -7,7 +7,8 @@ import HeadLayout from "src/components/layouts/headLayout";
 import ShopNavigation from "src/components/shop/shopNavigation";
 import ShopPrice from "src/components/shop/shopPrice";
 import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
-import useShowSale from "src/components/shop/useShowSale";
+import { useShopTimeline } from "src/components/timeline/useTimeline";
+import { formatDate } from "src/helpers/date/format";
 import * as classNames from "src/pages/shop.module.css";
 
 export default function Shop(): React.JSX.Element {
@@ -25,14 +26,15 @@ export default function Shop(): React.JSX.Element {
   `);
 
   const { cartItemCount } = useShop(allShopProducts);
-
-  const showSale = useShowSale();
+  const { shopApparelSaleCutoffDate } = useShopTimeline(allShopProducts);
 
   return (
     <>
       <ShopNavigation cartItemCount={cartItemCount} goToCart />
       <h1>Shop</h1>
-      {showSale ? <h2>Lowest pricing on t-shirts until May 5th!</h2> : null}
+      {shopApparelSaleCutoffDate ? (
+        <h2>Lowest pricing on t-shirts until {formatDate(shopApparelSaleCutoffDate)}!</h2>
+      ) : null}
       <div className={classNames.shopProducts}>
         {allShopProducts.nodes.map((shopProductNode) => {
           if (!shopProductNode.name || !shopProductNode.frontmatter) {

@@ -1,5 +1,6 @@
 ---
 title: Red performance t-shirt
+category: apparel
 order_index: 5
 price: 29.99
 cutoff_date: 2025-07-11

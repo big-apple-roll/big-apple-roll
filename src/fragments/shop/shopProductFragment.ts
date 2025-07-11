@@ -11,6 +11,11 @@ export enum ShopProductSizing {
   Performance = "performance",
 }
 
+export enum ShopProductCategory {
+  Apparel = "apparel",
+  Ticket = "ticket",
+}
+
 export const shopProductFragment = graphql`
   fragment ShopProductFragment on MarkdownRemark {
     id
@@ -18,6 +23,7 @@ export const shopProductFragment = graphql`
       title
       title_plural
       button_color # Either "green", "orange", or "blue"
+      category # Either "apparel" or "ticket"
       order_index # Number to order items by
       price # Number (no currency symbol)
       cutoff_date # Date

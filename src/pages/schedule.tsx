@@ -57,7 +57,7 @@ export default function Schedule(): React.JSX.Element {
             banner={
               preBar
                 ? "Pre bar"
-                : formatDate(scheduleEvent.frontmatter.date, {
+                : formatDate(parseDate(scheduleEvent.frontmatter.date), {
                     format: "short",
                   })
             }

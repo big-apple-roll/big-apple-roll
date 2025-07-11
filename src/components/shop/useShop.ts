@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import useAppSelector from "src/app/hooks/useAppSelector";
 import selectCartEntries from "src/app/slices/cart/selectors/selectCartEntries";
 import { CartEntry, CartEntryKey } from "src/app/slices/cart/types";
+import { today } from "src/helpers/date/create";
 import parseDate from "src/helpers/date/parseDate";
 
 export type CartItem = {
@@ -48,9 +49,8 @@ export const validateDateDiscounts = (
 
   const orderedDateDiscounts = sortBy(dateDiscounts, "price");
 
-  const now = parseDate(new Date().toISOString());
   const validDateDiscounts = orderedDateDiscounts.filter((dateDiscount) => {
-    return now < parseDate(dateDiscount.cutoff_date);
+    return today() < parseDate(dateDiscount.cutoff_date);
   });
 
   return validDateDiscounts;
@@ -115,8 +115,6 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
       };
     }, {});
 
-    const now = parseDate(new Date().toISOString());
-
     return compact(
       cartEntries.map((cartEntry): CartItem | null => {
         const shopProduct = shopProductsByName[cartEntry.name];
@@ -126,7 +124,7 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
           (shopProduct.frontmatter?.sizes &&
             !shopProduct.frontmatter.sizes.includes(cartEntry.size)) ||
           (shopProduct.frontmatter?.cutoff_date &&
-            now > parseDate(shopProduct.frontmatter.cutoff_date))
+            today() >= parseDate(shopProduct.frontmatter.cutoff_date))
         ) {
           return null;
         }

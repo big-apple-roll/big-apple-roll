@@ -8,7 +8,9 @@ import TextInput from "src/components/form/textInput";
 import HTML from "src/components/html";
 import HeadLayout from "src/components/layouts/headLayout";
 import assertNever from "src/helpers/assertNever";
-import { currentDateInput, formatDate } from "src/helpers/date/format";
+import { today } from "src/helpers/date/create";
+import { formatDateInput, formatDate } from "src/helpers/date/format";
+import parseDate from "src/helpers/date/parseDate";
 import * as classNames from "src/pages/registration.module.css";
 
 enum Page {
@@ -55,7 +57,7 @@ export default function Registration(): React.JSX.Element {
   const [phone, setPhone] = useState("");
 
   const [signature, setSignature] = useState("");
-  const [date, setDate] = useState(currentDateInput());
+  const [date, setDate] = useState(formatDateInput(today()));
 
   const [emergencyName, setEmergencyName] = useState("");
   const [emergencyEmail, setEmergencyEmail] = useState("");
@@ -175,7 +177,7 @@ export default function Registration(): React.JSX.Element {
       <p>
         Welcome to Big Apple Roll{" "}
         {index?.frontmatter?.start_date
-          ? formatDate(index.frontmatter.start_date, { format: "year" })
+          ? formatDate(parseDate(index.frontmatter.start_date), { format: "year" })
           : ""}
         ! All skaters are required to complete this registration form and sign the Release of
         Participation before attending any Big Apple Roll skates.

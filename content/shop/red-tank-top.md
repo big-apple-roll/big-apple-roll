@@ -1,5 +1,6 @@
 ---
 title: Red tank top
+category: apparel
 order_index: 13
 price: 27.49
 cutoff_date: 2025-07-11
