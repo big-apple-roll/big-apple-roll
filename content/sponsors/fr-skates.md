@@ -1,6 +1,6 @@
 ---
 title: FR Skates
 
-type: general
+type: supporting
 url: https://frskates.com/
 ---
