@@ -71,7 +71,7 @@ type Summary = {
   [size: string]: string | number;
 };
 
-const RAFFLE_TRANSACTIONS_FILE = "./exports/raffle_transactions.csv";
+const TICKET_TRANSACTIONS_FILE = "./exports/ticket_transactions.csv";
 const SHIRT_TRANSACTIONS_FILE = "./exports/shirt_transactions.csv";
 const SUMMARY_FILE = "./exports/summary.csv";
 
@@ -174,10 +174,10 @@ const mapPaypalTransactionDetailToTransaction = (
 };
 
 const partitionTransactions = (transactions: Array<Transaction>) => {
-  const [raffleTransactions, shirtTransaction] = partition(transactions, (transaction) => {
-    return parseItemDescription(transaction.item_description).name === "raffle-ticket";
+  const [ticketTransactions, shirtTransactions] = partition(transactions, (transaction) => {
+    return /ticket/.test(parseItemDescription(transaction.item_description).name);
   });
-  return { raffleTransactions, shirtTransaction };
+  return { ticketTransactions, shirtTransactions };
 };
 
 const parseItemDescription = (itemDescription: string) => {
@@ -202,16 +202,25 @@ const computeSummaries = (transactions: Array<Transaction>): Array<Summary> => {
     return file.endsWith(".md");
   });
 
-  const shopItemOrderIndexesByName = shopItems.reduce<Record<string, number>>((acc, shopItem) => {
-    const name = parseShopItemName(shopItem);
-    const orderIndex = parseShopItemOrderIndex(
-      readFileSync(`./content/shop/${shopItem}`).toString(),
-    );
-    return {
-      ...acc,
-      [name]: orderIndex,
-    };
-  }, {});
+  const { shopItemOrderIndexesByName } = shopItems.reduce<{
+    shopItemOrderIndexesByName: Record<string, number>;
+    shopItemSizes: Array<string>;
+  }>(
+    (acc, shopItem) => {
+      const name = parseShopItemName(shopItem);
+      const orderIndex = parseShopItemOrderIndex(
+        readFileSync(`./content/shop/${shopItem}`).toString(),
+      );
+      return {
+        ...acc,
+        [name]: orderIndex,
+      };
+    },
+    {
+      shopItemOrderIndexesByName: {},
+      shopItemSizes: [],
+    },
+  );
 
   const orderedShopItemNames = sortBy(Object.keys(shopItemOrderIndexesByName), (name) => {
     return shopItemOrderIndexesByName[name];
@@ -222,6 +231,7 @@ const computeSummaries = (transactions: Array<Transaction>): Array<Summary> => {
       ...acc,
       [name]: {
         countsBySize: {
+          XS: 0,
           S: 0,
           M: 0,
           L: 0,
@@ -314,15 +324,23 @@ const run = async () => {
   const transactions = filteredPaypalTransactionDetails.flatMap(
     mapPaypalTransactionDetailToTransaction,
   );
-  const { raffleTransactions, shirtTransaction } = partitionTransactions(transactions);
+  const { ticketTransactions, shirtTransactions } = partitionTransactions(transactions);
 
-  await exportToCSV(raffleTransactions, { fileName: RAFFLE_TRANSACTIONS_FILE });
-  await exportToCSV(shirtTransaction, { fileName: SHIRT_TRANSACTIONS_FILE });
+  console.log("Imported data", {
+    transactions: paypalTransactionDetails.length,
+    filteredTransactions: filterBARPaypalTransactionDetails.length,
+    totalShirts: shirtTransactions.reduce((acc, shirtTransaction) => {
+      return acc + shirtTransaction.item_quantity;
+    }, 0),
+  });
 
-  const summaries = computeSummaries(shirtTransaction);
+  await exportToCSV(ticketTransactions, { fileName: TICKET_TRANSACTIONS_FILE });
+  await exportToCSV(shirtTransactions, { fileName: SHIRT_TRANSACTIONS_FILE });
+
+  const summaries = computeSummaries(shirtTransactions);
   await exportToCSV(summaries, { fileName: SUMMARY_FILE });
 
-  console.log("Exported data", RAFFLE_TRANSACTIONS_FILE, SHIRT_TRANSACTIONS_FILE, SUMMARY_FILE);
+  console.log("Exported data", TICKET_TRANSACTIONS_FILE, SHIRT_TRANSACTIONS_FILE, SUMMARY_FILE);
 };
 
 run();
