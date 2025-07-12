@@ -10,4 +10,4 @@ order_index: 15
 
 The more raffle tickets you buy, the cheaper they are!
 
-**The raffle will be held at the [Saturday Night Party](/schedule/saturday/party-and-raffle/)!**
+**The raffle will be held at the [Saturday Night Party, presented by Rollerblade](/schedule/saturday/party-and-raffle/)!**
