@@ -2,5 +2,7 @@
 node = "20"
 yarn = "latest"
 
-[env]
-NODE_ENV = 'production'
+[tasks.exportTransactions]
+description = "Export Paypal transactions to CSV"
+env = { NODE_ENV = 'production' }
+run = "./scripts/fetchPaypalTransactions.ts"
