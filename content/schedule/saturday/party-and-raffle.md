@@ -2,7 +2,7 @@
 title: Saturday night party & raffle presented by Rollerblade
 date: 2025-08-02 19:00:00
 
-location: Sean’s Bar and Kitchen
+location: Sean’s Bar and Kitchen (42 W 48th St, New York, NY 10036)
 start_map: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.8545913473213!2d-73.98191515298603!3d40.75854017181714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c258ff1d76cd17%3A0x265d59241d5038d4!2sSean's%20Bar%20%26%20Kitchen!5e0!3m2!1sen!2sus!4v1752180342695!5m2!1sen!2sus
 ---
 
