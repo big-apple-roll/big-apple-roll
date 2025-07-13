@@ -71,9 +71,11 @@ type Summary = {
   [size: string]: string | number;
 };
 
+const APPAREL_TRANSACTIONS_FILE = "./exports/apparel_transactions.csv";
+const APPAREL_SUMMARY_FILE = "./exports/apparel_summary.csv";
+
 const TICKET_TRANSACTIONS_FILE = "./exports/ticket_transactions.csv";
-const SHIRT_TRANSACTIONS_FILE = "./exports/shirt_transactions.csv";
-const SUMMARY_FILE = "./exports/summary.csv";
+const TICKET_SUMMARY_FILE = "./exports/ticket_summary.csv";
 
 const getMonthlyTransactions = async (
   options: {
@@ -173,11 +175,15 @@ const mapPaypalTransactionDetailToTransaction = (
   });
 };
 
+const isTicketName = (name: string) => {
+  return /ticket/.test(name);
+};
+
 const partitionTransactions = (transactions: Array<Transaction>) => {
-  const [ticketTransactions, shirtTransactions] = partition(transactions, (transaction) => {
-    return /ticket/.test(parseItemDescription(transaction.item_description).name);
+  const [ticketTransactions, apparelTransactions] = partition(transactions, (transaction) => {
+    return isTicketName(parseItemDescription(transaction.item_description).name);
   });
-  return { ticketTransactions, shirtTransactions };
+  return { ticketTransactions, apparelTransactions };
 };
 
 const parseItemDescription = (itemDescription: string) => {
@@ -197,30 +203,33 @@ const parseShopItemOrderIndex = (shopItemContent: string): number => {
   return !isNaN(orderIndex) ? orderIndex : Number.MAX_SAFE_INTEGER;
 };
 
-const computeSummaries = (transactions: Array<Transaction>): Array<Summary> => {
+const computeApparelSummaries = (transactions: Array<Transaction>): Array<Summary> => {
+  const EMPTY_APPAREL_SUMMARY: Record<string, number> = {
+    XS: 0,
+    S: 0,
+    M: 0,
+    L: 0,
+    XL: 0,
+    XXL: 0,
+  };
+
   const shopItems = readdirSync("./content/shop").filter((file) => {
     return file.endsWith(".md");
   });
 
-  const { shopItemOrderIndexesByName } = shopItems.reduce<{
-    shopItemOrderIndexesByName: Record<string, number>;
-    shopItemSizes: Array<string>;
-  }>(
-    (acc, shopItem) => {
-      const name = parseShopItemName(shopItem);
-      const orderIndex = parseShopItemOrderIndex(
-        readFileSync(`./content/shop/${shopItem}`).toString(),
-      );
-      return {
-        ...acc,
-        [name]: orderIndex,
-      };
-    },
-    {
-      shopItemOrderIndexesByName: {},
-      shopItemSizes: [],
-    },
-  );
+  const shopItemOrderIndexesByName = shopItems.reduce<Record<string, number>>((acc, shopItem) => {
+    const name = parseShopItemName(shopItem);
+    if (isTicketName(name)) {
+      return acc;
+    }
+
+    const shopItemContent = readFileSync(`./content/shop/${shopItem}`).toString();
+    const orderIndex = parseShopItemOrderIndex(shopItemContent);
+    return {
+      ...acc,
+      [name]: orderIndex,
+    };
+  }, {});
 
   const orderedShopItemNames = sortBy(Object.keys(shopItemOrderIndexesByName), (name) => {
     return shopItemOrderIndexesByName[name];
@@ -230,14 +239,7 @@ const computeSummaries = (transactions: Array<Transaction>): Array<Summary> => {
     return {
       ...acc,
       [name]: {
-        countsBySize: {
-          XS: 0,
-          S: 0,
-          M: 0,
-          L: 0,
-          XL: 0,
-          XXL: 0,
-        },
+        countsBySize: { ...EMPTY_APPAREL_SUMMARY },
       },
     };
   }, {});
@@ -264,11 +266,44 @@ const computeSummaries = (transactions: Array<Transaction>): Array<Summary> => {
           [size]: count,
         };
       },
-      { name },
+      { name, ...EMPTY_APPAREL_SUMMARY },
     );
   });
 
+  // console.log(
+  //   "DEBUG: sum",
+  //   {},
+  //   JSON.stringify(
+  //     {
+  //       orderedShopItemNames,
+  //       emptyCountsByName,
+  //       countsByName,
+  //       summaries,
+  //     },
+  //     null,
+  //     2,
+  //   ),
+  // );
+
   return summaries;
+};
+
+const computeTicketSummaries = (ticketTransactions: Array<Transaction>): Array<Summary> => {
+  const summariesByName = ticketTransactions.reduce<Record<string, Summary>>(
+    (acc, ticketTransaction) => {
+      const { name } = parseItemDescription(ticketTransaction.item_description);
+      return {
+        ...acc,
+        [name]: {
+          name,
+          count: Number(acc[name]?.count ?? 0) + ticketTransaction.item_quantity,
+        },
+      };
+    },
+    {},
+  );
+
+  return Object.values(summariesByName);
 };
 
 const exportToCSV = async (data: Array<Record<string, unknown>>, options: { fileName: string }) => {
@@ -324,23 +359,37 @@ const run = async () => {
   const transactions = filteredPaypalTransactionDetails.flatMap(
     mapPaypalTransactionDetailToTransaction,
   );
-  const { ticketTransactions, shirtTransactions } = partitionTransactions(transactions);
+  const { ticketTransactions, apparelTransactions } = partitionTransactions(transactions);
 
   console.log("Imported data", {
-    transactions: paypalTransactionDetails.length,
+    paypalTransactions: paypalTransactionDetails.length,
     filteredTransactions: filterBARPaypalTransactionDetails.length,
-    totalShirts: shirtTransactions.reduce((acc, shirtTransaction) => {
-      return acc + shirtTransaction.item_quantity;
+    apparelTransactions: apparelTransactions.length,
+    apparelTotal: apparelTransactions.reduce((acc, apparelTransaction) => {
+      return acc + apparelTransaction.item_quantity;
+    }, 0),
+    ticketTransactions: ticketTransactions.length,
+    ticketTotal: ticketTransactions.reduce((acc, ticketTransaction) => {
+      return acc + ticketTransaction.item_quantity;
     }, 0),
   });
 
   await exportToCSV(ticketTransactions, { fileName: TICKET_TRANSACTIONS_FILE });
-  await exportToCSV(shirtTransactions, { fileName: SHIRT_TRANSACTIONS_FILE });
+  await exportToCSV(apparelTransactions, { fileName: APPAREL_TRANSACTIONS_FILE });
 
-  const summaries = computeSummaries(shirtTransactions);
-  await exportToCSV(summaries, { fileName: SUMMARY_FILE });
+  const apparelSummaries = computeApparelSummaries(apparelTransactions);
+  await exportToCSV(apparelSummaries, { fileName: APPAREL_SUMMARY_FILE });
 
-  console.log("Exported data", TICKET_TRANSACTIONS_FILE, SHIRT_TRANSACTIONS_FILE, SUMMARY_FILE);
+  const ticketSummaries = computeTicketSummaries(ticketTransactions);
+  await exportToCSV(ticketSummaries, { fileName: TICKET_SUMMARY_FILE });
+
+  console.log(
+    "Exported data",
+    APPAREL_TRANSACTIONS_FILE,
+    APPAREL_SUMMARY_FILE,
+    TICKET_TRANSACTIONS_FILE,
+    TICKET_SUMMARY_FILE,
+  );
 };
 
 run();
