@@ -24,6 +24,9 @@ type PaypalTransactionDetail = {
     transaction_amount: {
       value: string;
     };
+    fee_amount: {
+      value: string;
+    };
   };
   payer_info: {
     email_address: string;
@@ -160,6 +163,18 @@ const filterRefundedPaypalTransactionDetails = (
   return paymentTransactions;
 };
 
+const computeTotalTransactionAmount = (transactions: Array<PaypalTransactionDetail>) => {
+  return transactions.reduce((acc, transaction) => {
+    const amount =
+      parseFloat(transaction.transaction_info.transaction_amount.value) -
+      parseFloat(transaction.transaction_info.fee_amount.value);
+    if (isNaN(amount)) {
+      return acc;
+    }
+    return acc + amount;
+  }, 0.0);
+};
+
 const mapPaypalTransactionDetailToTransaction = (
   paypalTransactionDetail: PaypalTransactionDetail,
 ): Array<Transaction> => {
@@ -270,21 +285,6 @@ const computeApparelSummaries = (transactions: Array<Transaction>): Array<Summar
     );
   });
 
-  // console.log(
-  //   "DEBUG: sum",
-  //   {},
-  //   JSON.stringify(
-  //     {
-  //       orderedShopItemNames,
-  //       emptyCountsByName,
-  //       countsByName,
-  //       summaries,
-  //     },
-  //     null,
-  //     2,
-  //   ),
-  // );
-
   return summaries;
 };
 
@@ -356,6 +356,8 @@ const run = async () => {
     filterBARPaypalTransactionDetails(paypalTransactionDetails),
   );
 
+  const totalTransactionAmount = computeTotalTransactionAmount(filteredPaypalTransactionDetails);
+
   const transactions = filteredPaypalTransactionDetails.flatMap(
     mapPaypalTransactionDetailToTransaction,
   );
@@ -364,6 +366,7 @@ const run = async () => {
   console.log("Imported data", {
     paypalTransactions: paypalTransactionDetails.length,
     filteredTransactions: filterBARPaypalTransactionDetails.length,
+    totalTransactionAmount: totalTransactionAmount.toFixed(2),
     apparelTransactions: apparelTransactions.length,
     apparelTotal: apparelTransactions.reduce((acc, apparelTransaction) => {
       return acc + apparelTransaction.item_quantity;
