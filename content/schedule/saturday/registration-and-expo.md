@@ -7,6 +7,6 @@ start_map: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2196170074
 end: 9:45 AM
 ---
 
-Stop by registration in the **lobby** of the **Millennium Hotel**, to pick up your pre-ordered shirts, chat with local NYC skate vendors, purchase tickets to the Saturday night party, and to buy raffle tickets! Raffle items include, but are not limited to: wheels, bearings, shirts, skate bags, skates, Luminous wheels, and entries to skate events and races around the country!
+Stop by registration in the **lobby** of the **Millennium Hotel**, to pick up your pre-ordered shirts, chat with local NYC skate vendors and some of our [amazing sponsors](/sponsors/), purchase tickets to the Saturday night party, and to buy raffle tickets! Raffle items include, but are not limited to: wheels, bearings, shirts, skate bags, skates, Luminous wheels, and entries to skate events and races around the country!
 
 Skates are not allowed in the lobby of the hotel, please wear shoes.
