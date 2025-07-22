@@ -363,6 +363,9 @@ const run = async () => {
   );
   const { ticketTransactions, apparelTransactions } = partitionTransactions(transactions);
 
+  const apparelSummaries = computeApparelSummaries(apparelTransactions);
+  const ticketSummaries = computeTicketSummaries(ticketTransactions);
+
   console.log("Imported data", {
     paypalTransactions: paypalTransactionDetails.length,
     filteredTransactions: filterBARPaypalTransactionDetails.length,
@@ -372,6 +375,7 @@ const run = async () => {
       return acc + apparelTransaction.item_quantity;
     }, 0),
     ticketTransactions: ticketTransactions.length,
+    ticketSummaries,
     ticketTotal: ticketTransactions.reduce((acc, ticketTransaction) => {
       return acc + ticketTransaction.item_quantity;
     }, 0),
@@ -379,11 +383,7 @@ const run = async () => {
 
   await exportToCSV(ticketTransactions, { fileName: TICKET_TRANSACTIONS_FILE });
   await exportToCSV(apparelTransactions, { fileName: APPAREL_TRANSACTIONS_FILE });
-
-  const apparelSummaries = computeApparelSummaries(apparelTransactions);
   await exportToCSV(apparelSummaries, { fileName: APPAREL_SUMMARY_FILE });
-
-  const ticketSummaries = computeTicketSummaries(ticketTransactions);
   await exportToCSV(ticketSummaries, { fileName: TICKET_SUMMARY_FILE });
 
   console.log(
