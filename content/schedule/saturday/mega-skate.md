@@ -8,5 +8,6 @@ start_map: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d377.79528089955
 start_time: 2025-08-02 10:00:00
 end: Garment District Plaza
 leader: Luis M & Michael Grebinsky
-distance: 25-30 miles
+distance: 26 miles
+route_map: https://www.google.com/maps/d/u/0/embed?mid=1R8_LxDo7L43qAKsqLnAZ8wB9M15zC4Q&ehbc=2E312F&noprof=1
 ---
