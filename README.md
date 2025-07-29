@@ -140,5 +140,5 @@ The shop payments are sent to Paypal. Export an activity report from Paypal to s
 
 Export transactions:
 
-- Copy `.env.sample` to `.env.production`
+- Copy `.env.sample` to `.env.production` and add secrets
 - Run `NODE_ENV=production ./scripts/fetchPaypalTransactions.ts`
