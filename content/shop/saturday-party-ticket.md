@@ -7,4 +7,4 @@ category: ticket
 order_index: 14
 ---
 
-Get your ticket for the terrific [Saturday night party, presented by Rollerblade](/schedule/saturday/party-and-raffle/)!
+Get your ticket for the terrific [Saturday night party, presented by Rollerblade](/schedule/saturday/party-and-raffle/)! Tickets for the Saturday party will also be on sale during registration on [Friday](/schedule/friday/registration-and-expo/) and [Saturday](/schedule/saturday/registration-and-expo/).
