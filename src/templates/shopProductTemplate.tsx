@@ -344,7 +344,9 @@ export default function ShopProductTemplate(
 
             return <div>${shopProduct.frontmatter?.price}</div>;
           })()}
-          {isCutoff ? <div className={classNames.cutoffClosed}>Orders are closed</div> : null}
+          {isCutoff ? (
+            <div className={classNames.cutoffClosed}>Online orders are closed</div>
+          ) : null}
           <div>
             <SurfaceButton
               internalHref="/shop/cart/"
