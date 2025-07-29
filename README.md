@@ -137,3 +137,8 @@ If Dependabot can't update a dependency, edit the `resolutions` field in `packag
 ## Paypal
 
 The shop payments are sent to Paypal. Export an activity report from Paypal to see all orders.
+
+Export transactions:
+
+- Copy `.env.sample` to `.env.production`
+- Run `NODE_ENV=production ./scripts/fetchPaypalTransactions.ts`
