@@ -9,7 +9,7 @@ import { ScheduleDayTemplateContext } from "src/templates/scheduleDayTemplate";
 import { ScheduleEventTemplateContext } from "src/templates/scheduleEventTemplate";
 import { ShopProductTemplateContext } from "src/templates/shopProductTemplate";
 
-const SUPPORTED_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp"]);
+const SUPPORTED_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
 
 interface FileNode extends Node {
   extension: string; // no leading dot
