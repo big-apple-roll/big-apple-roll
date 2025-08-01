@@ -5,5 +5,18 @@ export const createDate = (options: { year: number; month: number; day: number }
 };
 
 export const today = () => {
-  return DateTime.utc().startOf("day");
+  return now().startOf("day");
+};
+
+export const now = (): DateTime => {
+  const now = DateTime.local();
+  return DateTime.utc(
+    now.year,
+    now.month,
+    now.day,
+    now.hour,
+    now.minute,
+    now.second,
+    now.millisecond,
+  );
 };

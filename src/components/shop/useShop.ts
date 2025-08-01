@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import useAppSelector from "src/app/hooks/useAppSelector";
 import selectCartEntries from "src/app/slices/cart/selectors/selectCartEntries";
 import { CartEntry, CartEntryKey } from "src/app/slices/cart/types";
-import { today } from "src/helpers/date/create";
+import { now } from "src/helpers/date/create";
 import parseDate from "src/helpers/date/parseDate";
 
 export type CartItem = {
@@ -50,7 +50,7 @@ export const validateDateDiscounts = (
   const orderedDateDiscounts = sortBy(dateDiscounts, "price");
 
   const validDateDiscounts = orderedDateDiscounts.filter((dateDiscount) => {
-    return today() < parseDate(dateDiscount.cutoff_date);
+    return now() < parseDate(dateDiscount.cutoff_date);
   });
 
   return validDateDiscounts;
@@ -124,7 +124,7 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
           (shopProduct.frontmatter?.sizes &&
             !shopProduct.frontmatter.sizes.includes(cartEntry.size)) ||
           (shopProduct.frontmatter?.cutoff_date &&
-            today() >= parseDate(shopProduct.frontmatter.cutoff_date))
+            now() >= parseDate(shopProduct.frontmatter.cutoff_date))
         ) {
           return null;
         }

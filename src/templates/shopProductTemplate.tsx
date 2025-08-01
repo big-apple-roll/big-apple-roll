@@ -15,6 +15,7 @@ import ShopNavigation from "src/components/shop/shopNavigation";
 import ShopPrice from "src/components/shop/shopPrice";
 import useShop, { validateDateDiscounts } from "src/components/shop/useShop";
 import { ShopProductButtonColor, ShopProductSizing } from "src/fragments/shop/shopProductFragment";
+import { now } from "src/helpers/date/create";
 import { formatDate } from "src/helpers/date/format";
 import parseDate from "src/helpers/date/parseDate";
 import isEnumValue from "src/helpers/isEnumValue";
@@ -64,8 +65,7 @@ export default function ShopProductTemplate(
     if (!cutoffDate) {
       return false;
     }
-    const now = parseDate(new Date().toISOString());
-    return now > parseDate(cutoffDate);
+    return now() >= parseDate(cutoffDate);
   }, [shopProduct?.frontmatter?.cutoff_date]);
 
   const buttonColor = useMemo((): SurfaceButtonColor | undefined => {

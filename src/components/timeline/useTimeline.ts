@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 
 import { ShopProductCategory } from "src/fragments/shop/shopProductFragment";
 import assertNever from "src/helpers/assertNever";
-import { today } from "src/helpers/date/create";
+import { now } from "src/helpers/date/create";
 import parseDate from "src/helpers/date/parseDate";
 
 export const useShopTimeline = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
@@ -67,12 +67,12 @@ export const useShopTimeline = (allShopProducts: Queries.ShopQuery["allShopProdu
       },
     );
 
-  const showShopApparel = maxApparelCutoffDate ? today() < maxApparelCutoffDate : false;
+  const showShopApparel = maxApparelCutoffDate ? now() < maxApparelCutoffDate : false;
   const shopApparelSaleCutoffDate =
-    minApparelDiscountCutoffDate && today() < minApparelDiscountCutoffDate
+    minApparelDiscountCutoffDate && now() < minApparelDiscountCutoffDate
       ? minApparelDiscountCutoffDate
       : null;
-  const showShopTicket = maxTicketCutoffDate ? today() < maxTicketCutoffDate : false;
+  const showShopTicket = maxTicketCutoffDate ? now() < maxTicketCutoffDate : false;
 
   return { showShopApparel, shopApparelSaleCutoffDate, showShopTicket };
 };
@@ -88,7 +88,7 @@ const useTimeline = (
       return true;
     }
 
-    return today() < parseDate(hotelCutoffDate);
+    return now() < parseDate(hotelCutoffDate);
   })();
 
   const showRegistration = (() => {
@@ -96,7 +96,7 @@ const useTimeline = (
     if (!endDate) {
       return false;
     }
-    return today() <= parseDate(endDate);
+    return now() <= parseDate(endDate);
   })();
 
   return {
