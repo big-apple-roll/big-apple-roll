@@ -1,6 +1,6 @@
 ---
 title: Sunday morning cool down roll
-date: 2025-08-03 09:30:00
+date: 2025-08-03 09:45:00
 
 difficulty: easy
 start: Garment District Plaza, on Broadway between 40th st and 39th st
