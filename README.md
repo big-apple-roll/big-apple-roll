@@ -94,9 +94,10 @@ The website is built with [Gatsby](https://www.gatsbyjs.com), a React-based fram
 
 ### Install
 
-- Depends on node v20. (Install with [nvm](https://github.com/nvm-sh/nvm))
+- Install [Mise](https://mise.jdx.dev)
 
 ```sh
+mise install
 yarn install
 ```
 
