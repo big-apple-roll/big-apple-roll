@@ -1,6 +1,6 @@
 [tools]
-node = "20"
-yarn = "latest"
+node = "20"     # Use same version in .node-version
+yarn = "4.10.3" # Use same version in package.json
 
 [tasks.exportTransactions]
 description = "Export Paypal transactions to CSV"
