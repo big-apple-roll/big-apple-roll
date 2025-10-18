@@ -1,4 +1,4 @@
-# 2025 design
+# 2026 design
 
 Each year we use a different design for the event.
 Here are the things we need for the 2025 edition.
@@ -7,11 +7,9 @@ Here are the things we need for the 2025 edition.
 
 The logo should represents Big Apple Roll: an international rollerblading event taking place in New York City.
 
-Some examples of the previous year can be found in [archives](archives). Some early explorations can also be found in [archives/2025](archives/2025).
+Some examples of the previous year can be found in this folder.
 
 The logo should be delivered in vectorial format (SVG, AI, EPS) and in raster format (PNG, JPG).
-
-Deadline: Mid-March
 
 ### Social media variants and color palette
 
@@ -27,13 +25,11 @@ We'll also need a color palette that can be used for the website, social media, 
 ## 2. T-shirts
 
 Once the logo is finalized, we'll need a design for the t-shirt. We usually use [https://www.customink.com](https://www.customink.com) to print them.
-The t-shirt should use the logo, and mention "Big Apple Roll" and "2025"
+The t-shirt should use the logo, and mention "Big Apple Roll" and "2026"
 
 We also need a t-shirt for staff. It should use another color and mention "Staff".
 
 We could also use some design for some other merchandising like stickers, caps, etc.
-
-Deadline: End of March
 
 ## 3. Web design (optional)
 
