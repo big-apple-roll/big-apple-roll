@@ -1,6 +1,6 @@
 ---
 title: Wednesday night skate
-date: 2026-07-29 20:00:00
+date: 2025-07-30 20:00:00
 
 difficulty: moderate
 start: Union Square Park
@@ -9,5 +9,7 @@ end: 10:00 PM at Union Square Park
 leader: WNS Staff
 distance: 10-15 miles
 ---
+
+**Mike Gundert will be leading an escort from the hotel to Union Square, leaving from the front of the hotel at 7:15PM.**
 
 Join the country’s largest social skate, Wednesday Night Skate, for some of the best street skating NYC has to offer. WNS at last year’s BAR saw over 400 skaters, so if you’re in NYC early, don’t sleep on this long-standing NYC tradition. WNS is a fairly casual, social skate around the streets of NYC. It may or may not include bridges, hills, ramps, overpasses, sidewalks, etc. Check out [Wednesday Night Skate on Instagram](https://www.instagram.com/wednesdaynightskatenyc/).

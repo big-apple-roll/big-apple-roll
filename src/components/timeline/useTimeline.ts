@@ -92,11 +92,12 @@ const useTimeline = (
   })();
 
   const showRegistration = (() => {
+    const startDate = index?.frontmatter?.start_date;
     const endDate = index?.frontmatter?.end_date;
-    if (!endDate) {
+    if (!startDate || !endDate) {
       return false;
     }
-    return now() <= parseDate(endDate);
+    return parseDate(startDate).minus({ month: 2 }) <= now() && now() <= parseDate(endDate);
   })();
 
   return {

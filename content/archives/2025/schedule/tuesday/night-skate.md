@@ -1,6 +1,6 @@
 ---
 title: Empire's Tuesday night skate
-date: 2026-07-28 20:00:00
+date: 2025-07-29 20:00:00
 
 difficulty: advanced
 start: Grand Army Plaza (59th & Fifth)

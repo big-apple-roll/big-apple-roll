@@ -1,6 +1,6 @@
 ---
 title: We Skate NJ's Monday night skate
-date: 2026-07-27 18:45:00
+date: 2025-07-28 18:45:00
 
 difficulty: easy
 start: Riverwalk Pl

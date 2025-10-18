@@ -35,6 +35,11 @@ export default function Shop(): React.JSX.Element {
       {shopApparelSaleCutoffDate ? (
         <h2>Lowest pricing on t-shirts until {formatDate(shopApparelSaleCutoffDate)}!</h2>
       ) : null}
+      {allShopProducts.nodes.length === 0 ? (
+        <div>
+          The shop isn&apos;t open yet. Stay tuned while we design this year&apos;s apparel!
+        </div>
+      ) : null}
       <div className={classNames.shopProducts}>
         {allShopProducts.nodes.map((shopProductNode) => {
           if (!shopProductNode.name || !shopProductNode.frontmatter) {
