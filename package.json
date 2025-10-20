@@ -26,7 +26,7 @@
     "@types/react-dom": "^18.3.7",
     "@types/react-helmet": "^6.1.11",
     "@types/simple-oauth2": "^5.0.7",
-    "@typescript-eslint/parser": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.2",
     "concurrently": "^9.2.1",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
@@ -44,7 +44,7 @@
     "stylelint-config-standard": "^39.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.1",
+    "typescript-eslint": "^8.46.2",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
