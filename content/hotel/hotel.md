@@ -1,5 +1,5 @@
 ---
-link: https://www.millenniumhotels.com/en/bookings/?hotelcode=13507&checkin=2025-07-29&groupcode=2507BIGAPB&fbclid=IwZXh0bgNhZW0CMTEAAR7ZHoZWHwXr82Ik9zxOGqQogzlTWZHfb2TXcCaeeg0nAHLh6zQKEIg5bn1Vxg_aem_FdQ8XuS7qj4gvukXG9zfSA&viewrates=rooms
+link: https://www.millenniumhotels.com/en/bookings/?hotelcode=13507&checkin=2026-07-28&groupcode=2607BIGAPP&viewrates=rooms
 # cutoff_date: 2025-06-20
 ---
 
