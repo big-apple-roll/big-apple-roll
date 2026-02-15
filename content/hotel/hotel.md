@@ -15,7 +15,7 @@ For the second time in a row in BAR’s 22 year history, our host hotel is in ic
 ## Rates
 
 - Superior King Room – $229
-<!-- - Superior Two Doubles Room – $249 -->
+- Superior Two Doubles Room – $259
 
 ## Includes
 
