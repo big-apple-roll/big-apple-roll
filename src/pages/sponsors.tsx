@@ -50,6 +50,12 @@ export default function Sponsors(): React.JSX.Element {
 
   return (
     <div>
+      <p className={classNames.description}>
+        A huge “Thank You” to all of our generous sponsors. BAR Sponsors donate money, services,
+        skate equipment, accessories and free or discounted entrance fees to skating instruction &
+        events. We use many of these items as prizes in our raffle, which help pay for the whole
+        event. This event would not be possible without your support.
+      </p>
       {Object.entries(sponsorsByType).map(([type, sponsors]) => {
         return (
           <React.Fragment key={type}>
@@ -63,15 +69,6 @@ export default function Sponsors(): React.JSX.Element {
                   })
                 : ""}
             </h1>
-            {type === SponsorType.Presenting ? (
-              <p className={classNames.description}>
-                A huge “Thank You” to all of our generous sponsors. BAR Sponsors donate money,
-                services, skate equipment, accessories and free or discounted entrance fees to
-                skating instruction & events. We use many of these items as prizes in our raffle,
-                which help pay for the whole event. This event would not be possible without your
-                support.
-              </p>
-            ) : null}
             {!sponsors.length ? <p>No sponsors yet</p> : null}
             <div
               className={clsx(
