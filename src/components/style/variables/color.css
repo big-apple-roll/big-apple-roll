@@ -14,11 +14,12 @@
 
   /* Color */
   --color-blue: #0039a5;
-  --color-green: #09a753;
-  --color-red: #eb2527;
+  --color-green: #0fcb9b;
+  --color-red: #f20d15;
+  --color-yellow: #d4c000;
 
   /* Accent */
-  --color-accent-1: var(--color-red);
-  --color-accent-2: var(--color-green);
-  --color-accent-3: var(--color-blue);
+  --color-accent-1: #f20d15;
+  --color-accent-2: #0fcb9b;
+  --color-accent-3: #d4c000;
 }
