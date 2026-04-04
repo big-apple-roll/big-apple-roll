@@ -86,7 +86,7 @@ export default function Index() {
           </SurfaceButton>
         ) : null}
         {showRegistration ? (
-          <SurfaceButton internalHref="https://forms.gle/FAyavPYAUDXMEfqD6">Register</SurfaceButton>
+          <SurfaceButton externalHref="https://forms.gle/U7ghZevnJF3tCbd4A">Register</SurfaceButton>
         ) : null}
         {showShopTicket ? (
           <SurfaceButton internalHref="/shop/saturday-party-ticket/">

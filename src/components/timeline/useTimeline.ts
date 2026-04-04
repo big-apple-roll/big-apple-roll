@@ -97,7 +97,7 @@ const useTimeline = (
     if (!startDate || !endDate) {
       return false;
     }
-    return parseDate(startDate).minus({ month: 2 }) <= now() && now() <= parseDate(endDate);
+    return parseDate(startDate).minus({ month: 4 }) <= now() && now() <= parseDate(endDate);
   })();
 
   return {
