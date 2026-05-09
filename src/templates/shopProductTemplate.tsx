@@ -309,28 +309,11 @@ export default function ShopProductTemplate(
                           <div>${discount.price}</div>
                           <div>
                             If ordered before{" "}
-                            {formatDate(discount.cutoff_date, { format: "short" })}
+                            {formatDate(parseDate(discount.cutoff_date), { format: "short" })}
                           </div>
                         </React.Fragment>
                       );
                     })}
-                    {/* 
-                    <div>${shopProduct.frontmatter?.price}</div>
-                    <div>
-                      {shopProduct.frontmatter?.cutoff_date ? (
-                        <>
-                          If ordered before{" "}
-                          {formatDate(shopProduct.frontmatter.cutoff_date, { format: "short" })}
-                        </>
-                      ) : (
-                        <>
-                          If ordered on or after{" "}
-                          {formatDate(dateDiscounts[dateDiscounts.length - 1].cutoff_date, {
-                            format: "short",
-                          })}
-                        </>
-                      )}
-                    </div> */}
                   </div>
                   <div>
                     <ShopPrice
