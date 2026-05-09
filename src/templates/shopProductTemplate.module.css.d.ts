@@ -7,6 +7,7 @@ export const sizeLabel: string;
 export const sizes: string;
 export const size: string;
 export const isSelected: string;
+export const sizeDescription: string;
 export const sizingGuide: string;
 export const sizingGuideText: string;
 export const sizingGuideTable: string;

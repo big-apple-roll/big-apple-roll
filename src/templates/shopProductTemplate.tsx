@@ -162,6 +162,10 @@ export default function ShopProductTemplate(
               {shopProduct.frontmatter?.sizing &&
               isEnumValue(shopProduct.frontmatter.sizing, ShopProductSizing) ? (
                 <>
+                  <div className={classNames.sizeDescription}>
+                    This style has a slim fit. If you are between sizes, we recommend ordering the
+                    larger size.
+                  </div>
                   <div className={classNames.sizingGuide}>
                     <TextButton onClick={handleToggleSizingGuide}>
                       <span className={classNames.sizingGuideText}>
