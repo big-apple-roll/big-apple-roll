@@ -2,10 +2,10 @@
 title: Women's navy tank top - color print
 category: apparel
 order_index: 3
-price: 37.49
+price: 42.49
 cutoff_date: 2026-07-11
 date_discounts:
-  [{ cutoff_date: 2026-06-01, price: 27.49 }, { cutoff_date: 2026-07-11, price: 32.49 }]
+  [{ cutoff_date: 2026-06-01, price: 32.49 }, { cutoff_date: 2026-07-11, price: 37.49 }]
 sizes: [S, M, L, XL, XXL]
 ---
 

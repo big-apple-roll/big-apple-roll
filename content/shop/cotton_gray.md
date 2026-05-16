@@ -2,10 +2,10 @@
 title: Gray cotton t-shirt - color print
 category: apparel
 order_index: 2
-price: 34.99
+price: 39.99
 cutoff_date: 2026-07-11
 date_discounts:
-  [{ cutoff_date: 2026-06-01, price: 24.99 }, { cutoff_date: 2026-07-11, price: 29.99 }]
+  [{ cutoff_date: 2026-06-01, price: 29.99 }, { cutoff_date: 2026-07-11, price: 34.99 }]
 sizes: [S, M, L, XL, XXL]
 sizing: cotton
 ---
