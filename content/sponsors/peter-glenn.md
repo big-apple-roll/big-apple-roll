@@ -1,6 +1,6 @@
 ---
 title: Peter Glenn
 
-type: general
+type: supporting
 url: https://peterglenn.com
 ---
