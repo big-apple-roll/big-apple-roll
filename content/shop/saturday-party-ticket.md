@@ -2,7 +2,7 @@
 title: Ticket to the Saturday night party
 title_plural: Saturday party tickets
 price: 15.00
-cutoff_date: 2025-08-02 00:00:00
+cutoff_date: 2026-06-02 00:00:00
 category: ticket
 order_index: 14
 ---
