@@ -1,8 +1,9 @@
 ---
 title: Ticket to the Saturday night party
 title_plural: Saturday party tickets
-price: 15.00
-cutoff_date: 2026-06-02 00:00:00
+price: 20.00
+cutoff_date: 2026-08-02 00:00:00
+date_discounts: [{ cutoff_date: 2026-07-01, price: 15.00 }]
 category: ticket
 order_index: 14
 ---
