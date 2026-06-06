@@ -1,6 +1,6 @@
 ---
 title: Traxart
 
-type: general
+type: supporting
 url: https://shoptraxart.com
 ---
