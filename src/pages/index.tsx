@@ -90,7 +90,7 @@ export default function Index() {
         ) : null}
         {showShopTicket ? (
           <SurfaceButton internalHref="/shop/saturday-party-ticket/">
-            Get Saturday night party tickets
+            Get Saturday night party tickets (presented by Rollerblade)
           </SurfaceButton>
         ) : null}
         {showShopTicket ? (
