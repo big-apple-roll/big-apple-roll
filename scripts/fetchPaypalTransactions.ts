@@ -1,7 +1,8 @@
 #!/usr/bin/env yarn ts-node
 /* eslint-disable no-console */
 
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 
 import { writeToBuffer } from "@fast-csv/format";
 import dotenv, { DotenvConfigOptions } from "dotenv";
@@ -80,6 +81,8 @@ const APPAREL_SUMMARY_FILE = "./exports/apparel_summary.csv";
 const TICKET_TRANSACTIONS_FILE = "./exports/ticket_transactions.csv";
 const TICKET_SUMMARY_FILE = "./exports/ticket_summary.csv";
 
+const ALL_TRANSACTIONS_FILE = "./exports/all_transactions.csv";
+
 const getMonthlyTransactions = async (
   options: {
     year: number;
@@ -115,7 +118,7 @@ const getMonthlyTransactions = async (
     const paypalTransactionResponse = JSON.parse(text) as PaypalTransactionResponse;
 
     totalPages = paypalTransactionResponse.total_pages;
-    paypalTransactionDetails.push(...paypalTransactionResponse.transaction_details);
+    paypalTransactionDetails.push(...(paypalTransactionResponse.transaction_details ?? []));
   } while (page < totalPages);
 
   return paypalTransactionDetails;
@@ -308,6 +311,7 @@ const computeTicketSummaries = (ticketTransactions: Array<Transaction>): Array<S
 
 const exportToCSV = async (data: Array<Record<string, unknown>>, options: { fileName: string }) => {
   const buffer = await writeToBuffer(data, { headers: true });
+  mkdirSync(dirname(options.fileName), { recursive: true });
   writeFileSync(options.fileName, buffer);
 };
 
@@ -385,6 +389,7 @@ const run = async () => {
   await exportToCSV(apparelTransactions, { fileName: APPAREL_TRANSACTIONS_FILE });
   await exportToCSV(apparelSummaries, { fileName: APPAREL_SUMMARY_FILE });
   await exportToCSV(ticketSummaries, { fileName: TICKET_SUMMARY_FILE });
+  await exportToCSV(transactions, { fileName: ALL_TRANSACTIONS_FILE });
 
   console.log(
     "Exported data",
@@ -392,6 +397,7 @@ const run = async () => {
     APPAREL_SUMMARY_FILE,
     TICKET_TRANSACTIONS_FILE,
     TICKET_SUMMARY_FILE,
+    ALL_TRANSACTIONS_FILE,
   );
 };
 
