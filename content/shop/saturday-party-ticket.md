@@ -10,4 +10,6 @@ order_index: 14
 
 Memorial week sale [2026 Saturday Night Party, presented by Rollerblade](/schedule/saturday/party-and-raffle/) Sale extended sold at $15 per ticket!!
 
-<!-- Get your ticket for the terrific [Saturday night party, presented by Rollerblade](/schedule/saturday/party-and-raffle/)! Tickets for the Saturday party will also be on sale during registration on [Friday](/schedule/friday/registration-and-expo/) and [Saturday](/schedule/saturday/registration-and-expo/). -->
+Get your ticket for the terrific [Saturday night party, presented by Rollerblade](/schedule/saturday/party-and-raffle/)! The raffle will be held at the party.
+
+<!-- Tickets for the Saturday party will also be on sale during registration on [Friday](/schedule/friday/registration-and-expo/) and [Saturday](/schedule/saturday/registration-and-expo/). -->

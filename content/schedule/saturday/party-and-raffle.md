@@ -8,8 +8,8 @@ date: 2026-08-01 19:00:00
 
 Celebrate street skating in New York City and the end of the 2026 Big Apple Roll at our annual Saturday Night Party & Raffle presented by Rollerblade.
 
-<!--
-This year’s Saturday night party, presented by Rollerblade, will be held at Connolly's on 47th St! The BAR is providing a wide selection of heavy appetizers to accommodate most diets (reach out with any questions). Drinks on your own—Connolly's has a full bar and a great selection of beers on tap!
+<!-- This year’s Saturday night party, presented by Rollerblade, will be held at Connolly's on 47th St! —Connolly's has a full bar and a great selection of beers on tap! -->
+
+The BAR is providing a wide selection of heavy appetizers to accommodate most diets (reach out with any questions). Drinks on your own.
 
 This is where our famous raffle is held, featuring prizes from all our wonderful sponsors. You need a [ticket to attend which you can buy here](/shop/saturday-party-ticket/), and you probably want to get some [raffle tickets](/shop/raffle-ticket/) as well.
--->
