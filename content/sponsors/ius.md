@@ -1,6 +1,6 @@
 ---
 title: International Urban Skate
 
-type: supporting
+type: presenting
 url: https://iusskate.com
 ---
