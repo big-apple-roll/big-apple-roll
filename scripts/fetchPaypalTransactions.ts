@@ -347,13 +347,23 @@ const run = async () => {
   };
   console.log("Got access token", { apiOptions });
 
-  // Get transactions
-  const paypalTransactionDetails: Array<PaypalTransactionDetail> = [];
+  // Get transactions from September 1st last year through this month
   const now = new Date();
-  for (let month = 0; month <= now.getMonth(); month++) {
+  const exportStartDate = new Date(now.getFullYear() - 1, 8, 1);
+  console.log("Export start date", exportStartDate.toISOString());
+
+  const paypalTransactionDetails: Array<PaypalTransactionDetail> = [];
+  const currentMonth = new Date(exportStartDate.getFullYear(), exportStartDate.getMonth(), 1);
+  const endMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  while (currentMonth <= endMonth) {
     paypalTransactionDetails.push(
-      ...(await getMonthlyTransactions({ year: now.getFullYear(), month }, apiOptions)),
+      ...(await getMonthlyTransactions(
+        { year: currentMonth.getFullYear(), month: currentMonth.getMonth() },
+        apiOptions,
+      )),
     );
+    currentMonth.setMonth(currentMonth.getMonth() + 1);
   }
 
   const filteredPaypalTransactionDetails = filterRefundedPaypalTransactionDetails(
