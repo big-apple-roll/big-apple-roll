@@ -1,6 +1,6 @@
 ---
 title: Wizard workshop
-date: 2026-07-30 11:45:00
+date: 2026-07-30 12:00:00
 
 # teaser: true
 # difficulty: advanced

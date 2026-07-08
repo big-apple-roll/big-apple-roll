@@ -101,8 +101,18 @@ export default function ScheduleEventTemplate(
             <>
               <dt className={classNames.detailsListTerm}>Start time:</dt>
               <dd className={classNames.detailsListDescription}>
-                {formatTime(parseDate(scheduleEvent.frontmatter.date))} meetup,{" "}
-                {formatTime(parseDate(scheduleEvent.frontmatter.start_time))} rollout
+                {(() => {
+                  const meetupTime = parseDate(scheduleEvent.frontmatter.date);
+                  const startTime = parseDate(scheduleEvent.frontmatter.start_time);
+                  if (meetupTime.toMillis() === startTime.toMillis()) {
+                    return formatTime(startTime);
+                  }
+                  return (
+                    <>
+                      {formatTime(meetupTime)} meetup, {formatTime(startTime)} rollout
+                    </>
+                  );
+                })()}
               </dd>
             </>
           ) : null}
