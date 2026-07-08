@@ -13,10 +13,4 @@ leader: Josh Davis and Austin Paz
 # route_map: https://www.google.com/maps/d/u/0/embed?mid=1Iv1S8fESFTdUM2fxysv0F080mCOBldc&ehbc=2E312F&noprof=1
 ---
 
-<!--
-
-
-A faster paced day skate with landmark views over the manhattan bridge, prospect park, and ditmas park brooklyn. Skate culminates at Rockaway beach skate park where skaters will have an opportunity to rent surf boards, grab food and drink or jump in the ocean to cool off.
-
-Return options include either a relaxing ferry ride back to wall street or the train. Skaters must **bring shoes** for both options.
--->
+Join Rollerblade’s Josh Davis and Austin Paz for a workshop on skatepark basics! Meet them at the skatepark or depart with the [Thursday morning skate](/schedule/thursday/morning-skate/), which will head straight to the skate park before heading on.
