@@ -13,10 +13,9 @@ leader: Arnav “Sonic” Shah
 # route_map: https://www.google.com/maps/d/u/0/embed?mid=1Iv1S8fESFTdUM2fxysv0F080mCOBldc&ehbc=2E312F&noprof=1
 ---
 
-<!--
+Level up your stopping power and handle the BAR routes through NYC streets with better control than ever before! This workshop will cover a number of stopping and slide techniques including the step stop, check stop (t-stop), parallel turn slowdowns, front powerslide, rear powerslide, and magic slide.
 
+Level: Beginner, intermediate, advanced
+Pre-reqs: Comfort with moving forward on skates
 
-A faster paced day skate with landmark views over the manhattan bridge, prospect park, and ditmas park brooklyn. Skate culminates at Rockaway beach skate park where skaters will have an opportunity to rent surf boards, grab food and drink or jump in the ocean to cool off.
-
-Return options include either a relaxing ferry ride back to wall street or the train. Skaters must **bring shoes** for both options.
--->
+Sonic is a SkateIA Certified Master Instructor and also heads the development of curriculums for specialized skating disciplines. He's been an active contributor to BAR for over 15 years.

@@ -13,10 +13,11 @@ leader: Arnav “Sonic” Shah
 # route_map: https://www.google.com/maps/d/u/0/embed?mid=1Iv1S8fESFTdUM2fxysv0F080mCOBldc&ehbc=2E312F&noprof=1
 ---
 
-<!--
+Back by popular demand, this workshop will cover fundamentals of wizard style skating, help you put together a wizard combo, and give you opportunities to level up your style.
 
+Level: Advanced-beginner, intermediate, advanced
+Pre-reqs: Some comfort with forward skating, backwards skating, and parallel turns
 
-A faster paced day skate with landmark views over the manhattan bridge, prospect park, and ditmas park brooklyn. Skate culminates at Rockaway beach skate park where skaters will have an opportunity to rent surf boards, grab food and drink or jump in the ocean to cool off.
+Workshop will take place immediately after the skate park workshop at Sarges park
 
-Return options include either a relaxing ferry ride back to wall street or the train. Skaters must **bring shoes** for both options.
--->
+Sonic is a SkateIA Certified Master Instructor and also heads the development of curriculums for specialized skating disciplines. He's been an active contributor to BAR for over 15 years.
