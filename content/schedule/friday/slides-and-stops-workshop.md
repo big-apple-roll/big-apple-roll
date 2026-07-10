@@ -1,5 +1,5 @@
 ---
-title: Slides and Stops workshop
+title: Slides and Stops workshop with Sonic
 date: 2026-07-31 09:45:00
 
 # teaser: true

@@ -1,5 +1,5 @@
 ---
-title: Wizard workshop
+title: Wizard workshop with Sonic
 date: 2026-07-30 12:00:00
 
 # teaser: true
