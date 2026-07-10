@@ -9,4 +9,4 @@ end: 9:45 AM
 
 Stop by registration on the **6th floor** of the **Millennium Hotel**, to pick up your pre-ordered shirts, chat with local NYC skate vendors and some of our [amazing sponsors](/sponsors/), purchase tickets to the Saturday night party, presented by Rollerblade, and to buy raffle tickets! Raffle items include, but are not limited to: wheels, bearings, shirts, skate bags, skates, Luminous wheels, and entries to skate events and races around the country!
 
-Skates are not allowed in the lobby of the hotel, please wear shoes.
+Skates are not allowed anywhere in the hotel, please wear shoes. No food or drinks are allowed in the registration room or hallway.
