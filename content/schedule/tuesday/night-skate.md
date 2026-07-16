@@ -6,7 +6,7 @@ difficulty: advanced
 start: Grand Army Plaza (59th & Fifth)
 start_map: https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6043.75708814473!2d-73.973144!3d40.764696!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x792ab6262d9ff738!2sGrand%20Army%20Plaza!5e0!3m2!1sen!2sus!4v1652370977567!5m2!1sen!2sus
 end: Local bar for drinks, food & music
-leader: “French” Eric & Jim Marx
+leader: Stuart F. and Jim M.
 distance: 20 – 25 miles
 ---
 
