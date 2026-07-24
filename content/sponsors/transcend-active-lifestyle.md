@@ -1,6 +1,6 @@
 ---
 title: Transcend Active Lifestyle
 
-type: general
+type: supporting
 url: https://transcendactivelifestyle.com
 ---
