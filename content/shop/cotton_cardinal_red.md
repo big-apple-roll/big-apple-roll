@@ -1,7 +1,7 @@
 ---
 title: Cardinal red cotton t-shirt
 category: apparel
-order_index: 7
+order_index: 9
 price: 29.99
 cutoff_date: 2026-07-11
 date_discounts:

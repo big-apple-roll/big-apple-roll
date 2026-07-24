@@ -1,7 +1,7 @@
 ---
 title: Men's red tank top
 category: apparel
-order_index: 10
+order_index: 12
 price: 32.49
 cutoff_date: 2026-07-11
 date_discounts:

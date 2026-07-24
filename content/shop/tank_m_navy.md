@@ -1,7 +1,7 @@
 ---
 title: Men's navy tank top - color print
 category: apparel
-order_index: 3
+order_index: 5
 price: 42.49
 cutoff_date: 2026-07-11
 date_discounts:

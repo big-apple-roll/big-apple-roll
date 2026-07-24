@@ -1,7 +1,7 @@
 ---
 title: Yellow cotton t-shirt
 category: apparel
-order_index: 8
+order_index: 10
 price: 29.99
 cutoff_date: 2026-07-11
 date_discounts:

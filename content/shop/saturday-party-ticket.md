@@ -5,7 +5,7 @@ price: 20.00
 cutoff_date: 2026-08-02 00:00:00
 date_discounts: [{ cutoff_date: 2026-06-25, price: 15.00 }]
 category: ticket
-order_index: 14
+order_index: 1
 ---
 
 <!-- Memorial week sale [2026 Saturday Night Party, presented by Rollerblade](/schedule/saturday/party-and-raffle/) Sale extended sold at $15 per ticket!! -->

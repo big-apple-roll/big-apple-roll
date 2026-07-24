@@ -1,7 +1,7 @@
 ---
 title: Gray performance t-shirt - color print
 category: apparel
-order_index: 1
+order_index: 3
 price: 44.99
 cutoff_date: 2026-07-11
 date_discounts:
