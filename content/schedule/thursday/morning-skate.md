@@ -1,5 +1,5 @@
 ---
-title: Thursday Morning skate
+title: Thursday 4 Boroughs Morning skate
 date: 2026-07-30 09:45:00
 
 # teaser: true
