@@ -8,6 +8,8 @@ category: ticket
 order_index: 2
 ---
 
-The more raffle tickets you buy, the cheaper they are!
+<!-- The more raffle tickets you buy, the cheaper they are! -->
+
+**More raffle tickets will be available at the party!**
 
 **The raffle will be held at the [Saturday Night Party](/schedule/saturday/party-and-raffle/)!**
