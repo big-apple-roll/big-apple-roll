@@ -2,7 +2,7 @@
 title: Ticket to the Saturday night party, presented by Rollerblade
 title_plural: Saturday party tickets
 price: 20.00
-cutoff_date: 2026-08-01 19:30:00
+cutoff_date: 2026-08-03 19:30:00
 date_discounts: [{ cutoff_date: 2026-06-25, price: 15.00 }]
 category: ticket
 order_index: 1
