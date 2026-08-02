@@ -2,7 +2,7 @@
 title: "Big Apple Roll"
 start_date: 2026-07-30
 end_date: 2026-08-02
-# next_year: { start_date: , end_date:  }
+next_year: { start_date: 2027-08-05, end_date: 2027-08-08 }
 ---
 
 ### What is Big Apple Roll?
@@ -14,7 +14,3 @@ Last year we had over 1,000 registrants and the community was electric — we ex
 ### Stay Tuned for Updates
 
 We’re still in the early stages of planning this year’s BAR, so stay tuned for more details! As we lock down the schedule and other info, we’ll keep you posted. Be sure to follow us on [Instagram](https://www.instagram.com/bigappleroll/) for the latest updates and announcements — you won’t want to miss it!
-
-### Hotel
-
-Great news: our Amazing Times Square host hotel is available earlier this year and is ready for booking. We’ve secured a group block with special rates and perks; see the [Hotel page](/hotel/) for full details and the booking link.
