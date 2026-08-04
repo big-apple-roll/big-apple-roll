@@ -72,10 +72,28 @@
 
 .quantityDiscounts {
   display: flex;
+  gap: var(--spacing-0_5);
 }
 
 .quantityDiscountsSelect {
   flex: 1;
+}
+
+.customDonation {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-0_25);
+  flex: 1;
+}
+
+.customDonationPrefix {
+  color: var(--color-text);
+}
+
+.customDonationInput {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 .dateDiscounts {

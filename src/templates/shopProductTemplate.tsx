@@ -55,9 +55,11 @@ export default function ShopProductTemplate(
   const [size, setSize] = useState<string | null>(null);
   const [showSizingGuide, setShowSizingGuide] = useState(false);
   const [count, setCount] = useState(1);
-  const [donationAmount, setDonationAmount] = useState<number | null>(() => {
-    return shopProduct?.frontmatter?.donation_prices?.find((price) => price != null) ?? null;
+  const [donationSelection, setDonationSelection] = useState<string>(() => {
+    const firstPrice = shopProduct?.frontmatter?.donation_prices?.find((price) => price != null);
+    return firstPrice != null ? String(firstPrice) : "custom";
   });
+  const [customDonationAmount, setCustomDonationAmount] = useState("");
 
   const needsSize = useMemo(() => {
     return !!shopProduct?.frontmatter?.sizes?.length;
@@ -66,6 +68,18 @@ export default function ShopProductTemplate(
   const needsDonationAmount = useMemo(() => {
     return !!shopProduct?.frontmatter?.donation_prices?.length;
   }, [shopProduct?.frontmatter?.donation_prices?.length]);
+
+  const isCustomDonation = donationSelection === "custom";
+
+  const donationAmount = useMemo(() => {
+    if (isCustomDonation) {
+      const parsed = parseFloat(customDonationAmount);
+      return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+    }
+
+    const parsed = parseFloat(donationSelection);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  }, [customDonationAmount, donationSelection, isCustomDonation]);
 
   const isCutoff = useMemo(() => {
     const cutoffDate = shopProduct?.frontmatter?.cutoff_date;
@@ -112,7 +126,15 @@ export default function ShopProductTemplate(
     if (!(target instanceof HTMLSelectElement)) {
       return;
     }
-    setDonationAmount(parseFloat(target.value));
+    setDonationSelection(target.value);
+  }, []);
+
+  const handleCustomDonationAmountChange = useCallback((event: React.ChangeEvent) => {
+    const { target } = event;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+    setCustomDonationAmount(target.value);
   }, []);
 
   const handleAddToCart = useCallback(() => {
@@ -351,7 +373,7 @@ export default function ShopProductTemplate(
                 <div className={classNames.quantityDiscounts}>
                   <select
                     className={classNames.quantityDiscountsSelect}
-                    value={donationAmount ?? undefined}
+                    value={donationSelection}
                     onChange={handleSelectDonationAmount}
                   >
                     {shopProduct.frontmatter.donation_prices.map((price) => {
@@ -365,7 +387,23 @@ export default function ShopProductTemplate(
                         </option>
                       );
                     })}
+                    <option value="custom">Custom amount</option>
                   </select>
+                  {isCustomDonation ? (
+                    <label className={classNames.customDonation}>
+                      <span className={classNames.customDonationPrefix}>$</span>
+                      <input
+                        className={classNames.customDonationInput}
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        inputMode="decimal"
+                        placeholder="Amount"
+                        value={customDonationAmount}
+                        onChange={handleCustomDonationAmountChange}
+                      />
+                    </label>
+                  ) : null}
                 </div>
               );
             }

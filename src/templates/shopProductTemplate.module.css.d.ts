@@ -13,5 +13,8 @@ export const sizingGuideText: string;
 export const sizingGuideTable: string;
 export const quantityDiscounts: string;
 export const quantityDiscountsSelect: string;
+export const customDonation: string;
+export const customDonationPrefix: string;
+export const customDonationInput: string;
 export const dateDiscounts: string;
 export const cutoffClosed: string;

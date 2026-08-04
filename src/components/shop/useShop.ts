@@ -119,17 +119,21 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
       cartEntries.map((cartEntry): CartItem | null => {
         const shopProduct = shopProductsByName[cartEntry.name];
         const donationPrices = compact(shopProduct?.frontmatter?.donation_prices ?? []);
+        const isDonation = donationPrices.length > 0;
+        const parsedDonationAmount =
+          isDonation && cartEntry.size != null ? parseFloat(cartEntry.size) : NaN;
         const donationAmount =
-          cartEntry.size != null
-            ? donationPrices.find((price) => String(price) === cartEntry.size)
+          Number.isFinite(parsedDonationAmount) && parsedDonationAmount > 0
+            ? parsedDonationAmount
             : undefined;
         const unitPrice = donationAmount ?? shopProduct?.frontmatter?.price;
 
         if (
           !shopProduct ||
           unitPrice == null ||
-          (donationPrices.length > 0 && donationAmount == null) ||
-          (shopProduct.frontmatter?.sizes &&
+          (isDonation && donationAmount == null) ||
+          (!isDonation &&
+            shopProduct.frontmatter?.sizes &&
             !shopProduct.frontmatter.sizes.includes(cartEntry.size)) ||
           (shopProduct.frontmatter?.cutoff_date &&
             now() >= parseDate(shopProduct.frontmatter.cutoff_date))
