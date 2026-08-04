@@ -5,7 +5,7 @@ price: 5.00
 cutoff_date: 2026-08-01 14:00:00
 quantity_discounts: [{ count: 3, price: 12.00 }, { count: 6, price: 20.00 }]
 category: ticket
-order_index: 2
+order_index: 3
 ---
 
 <!-- The more raffle tickets you buy, the cheaper they are! -->

@@ -55,10 +55,17 @@ export default function ShopProductTemplate(
   const [size, setSize] = useState<string | null>(null);
   const [showSizingGuide, setShowSizingGuide] = useState(false);
   const [count, setCount] = useState(1);
+  const [donationAmount, setDonationAmount] = useState<number | null>(() => {
+    return shopProduct?.frontmatter?.donation_prices?.find((price) => price != null) ?? null;
+  });
 
   const needsSize = useMemo(() => {
     return !!shopProduct?.frontmatter?.sizes?.length;
   }, [shopProduct?.frontmatter?.sizes?.length]);
+
+  const needsDonationAmount = useMemo(() => {
+    return !!shopProduct?.frontmatter?.donation_prices?.length;
+  }, [shopProduct?.frontmatter?.donation_prices?.length]);
 
   const isCutoff = useMemo(() => {
     const cutoffDate = shopProduct?.frontmatter?.cutoff_date;
@@ -100,20 +107,32 @@ export default function ShopProductTemplate(
     setCount(parseInt(target.value, 10));
   }, []);
 
+  const handleSelectDonationAmount = useCallback((event: React.ChangeEvent) => {
+    const { target } = event;
+    if (!(target instanceof HTMLSelectElement)) {
+      return;
+    }
+    setDonationAmount(parseFloat(target.value));
+  }, []);
+
   const handleAddToCart = useCallback(() => {
     const shopProductName = shopProduct?.name;
-    if (!shopProductName || (needsSize && !size)) {
+    if (
+      !shopProductName ||
+      (needsSize && !size) ||
+      (needsDonationAmount && donationAmount == null)
+    ) {
       return;
     }
 
     dispatch(
       cartSlice.actions.addCartEntry({
         name: shopProductName,
-        size: needsSize ? size : null,
+        size: needsSize ? size : needsDonationAmount ? String(donationAmount) : null,
         count,
       }),
     );
-  }, [count, dispatch, needsSize, shopProduct?.name, size]);
+  }, [count, dispatch, donationAmount, needsDonationAmount, needsSize, shopProduct?.name, size]);
 
   if (!shopProduct) {
     return <></>;
@@ -327,6 +346,28 @@ export default function ShopProductTemplate(
                   </div>
                 </>
               );
+            } else if (shopProduct.frontmatter?.donation_prices?.length) {
+              return (
+                <div className={classNames.quantityDiscounts}>
+                  <select
+                    className={classNames.quantityDiscountsSelect}
+                    value={donationAmount ?? undefined}
+                    onChange={handleSelectDonationAmount}
+                  >
+                    {shopProduct.frontmatter.donation_prices.map((price) => {
+                      if (price == null) {
+                        return null;
+                      }
+
+                      return (
+                        <option key={price} value={price}>
+                          ${price}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              );
             }
 
             return <div>${shopProduct.frontmatter?.price}</div>;
@@ -338,7 +379,9 @@ export default function ShopProductTemplate(
             <SurfaceButton
               internalHref="/shop/cart/"
               color={buttonColor}
-              disabled={(needsSize && !size) || isCutoff}
+              disabled={
+                (needsSize && !size) || (needsDonationAmount && donationAmount == null) || isCutoff
+              }
               onClick={handleAddToCart}
             >
               Add to cart

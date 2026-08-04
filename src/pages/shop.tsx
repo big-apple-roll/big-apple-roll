@@ -62,6 +62,9 @@ export default function Shop(): React.JSX.Element {
                 <div>
                   <ShopPrice
                     price={shopProductNode.frontmatter.price ?? 0}
+                    donationPrices={shopProductNode.frontmatter.donation_prices?.filter(
+                      (price): price is number => price !== null,
+                    )}
                     discountedPrice={
                       validateDateDiscounts(shopProductNode.frontmatter.date_discounts ?? [])[0]
                         ?.price

@@ -51,6 +51,9 @@ export const useShopTimeline = (allShopProducts: Queries.ShopQuery["allShopProdu
               }
               break;
             }
+            case ShopProductCategory.Donation: {
+              break;
+            }
             default: {
               assertNever(category);
               break;

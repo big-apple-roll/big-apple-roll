@@ -84,8 +84,14 @@ export default function Cart(): React.JSX.Element {
         purchase_units: [
           {
             items: cartItems.map((cartItem) => {
+              const isDonation = cartItem.shopProduct.frontmatter?.category === "donation";
+              const sizeLabel = cartItem.cartEntry.size
+                ? isDonation
+                  ? `$${cartItem.cartEntry.size}`
+                  : cartItem.cartEntry.size
+                : "";
               return {
-                name: `${cartItem.shopProduct.frontmatter?.title ?? cartItem.cartEntry.name} ${cartItem.cartEntry.size ?? ""}`,
+                name: `${cartItem.shopProduct.frontmatter?.title ?? cartItem.cartEntry.name} ${sizeLabel}`,
                 description: `bar_${cartItem.cartEntry.name}_${cartItem.cartEntry.size ?? ""}`,
                 quantity: cartItem.cartEntry.count.toString(),
                 unit_amount: {
@@ -166,7 +172,10 @@ export default function Cart(): React.JSX.Element {
                         </LinkButton>{" "}
                         - <ShopPrice price={cartItem.productPrice}></ShopPrice>
                       </div>
-                      {cartItem.cartEntry.size ? <div>{cartItem.cartEntry.size}</div> : null}
+                      {cartItem.cartEntry.size &&
+                      cartItem.shopProduct.frontmatter?.category !== "donation" ? (
+                        <div>{cartItem.cartEntry.size}</div>
+                      ) : null}
                       <div>
                         <ShopPrice
                           price={cartItem.totalUndiscountedPrice}

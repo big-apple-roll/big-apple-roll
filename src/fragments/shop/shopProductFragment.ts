@@ -13,6 +13,7 @@ export enum ShopProductSizing {
 
 export enum ShopProductCategory {
   Apparel = "apparel",
+  Donation = "donation",
   Ticket = "ticket",
 }
 
@@ -26,6 +27,7 @@ export const shopProductFragment = graphql`
       category # Either "apparel" or "ticket"
       order_index # Number to order items by
       price # Number (no currency symbol)
+      donation_prices # Array of numbers (no currency symbol)
       cutoff_date # Date
       quantity_discounts {
         count # Number

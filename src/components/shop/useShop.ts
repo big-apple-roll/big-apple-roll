@@ -118,9 +118,17 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
     return compact(
       cartEntries.map((cartEntry): CartItem | null => {
         const shopProduct = shopProductsByName[cartEntry.name];
+        const donationPrices = compact(shopProduct?.frontmatter?.donation_prices ?? []);
+        const donationAmount =
+          cartEntry.size != null
+            ? donationPrices.find((price) => String(price) === cartEntry.size)
+            : undefined;
+        const unitPrice = donationAmount ?? shopProduct?.frontmatter?.price;
+
         if (
           !shopProduct ||
-          !shopProduct.frontmatter?.price ||
+          unitPrice == null ||
+          (donationPrices.length > 0 && donationAmount == null) ||
           (shopProduct.frontmatter?.sizes &&
             !shopProduct.frontmatter.sizes.includes(cartEntry.size)) ||
           (shopProduct.frontmatter?.cutoff_date &&
@@ -133,14 +141,14 @@ const useShop = (allShopProducts: Queries.ShopQuery["allShopProducts"]) => {
           key: cartEntry.key,
           cartEntry,
           shopProduct,
-          productPrice: toFixedNumber(shopProduct.frontmatter.price),
+          productPrice: toFixedNumber(unitPrice),
           totalUndiscountedPrice: toFixedNumber(
-            computePrice(cartEntry.count, shopProduct.frontmatter.price, null, null),
+            computePrice(cartEntry.count, unitPrice, null, null),
           ),
           totalDiscountedPrice: toFixedNumber(
             computePrice(
               cartEntry.count,
-              shopProduct.frontmatter.price,
+              unitPrice,
               shopProduct.frontmatter.quantity_discounts,
               shopProduct.frontmatter.date_discounts,
             ),
